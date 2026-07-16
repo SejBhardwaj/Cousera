@@ -44,21 +44,21 @@ interface SidebarProps {
 }
 
 const navItems: NavItem[] = [
-  { icon: <Home size={18} />, label: 'Home', page: 'home' },
-  { icon: <Compass size={18} />, label: 'Explore', page: 'explore' },
-  { icon: <LayoutGrid size={18} />, label: 'Categories', page: 'categories' },
-  { icon: <BookOpen size={18} />, label: 'My Learning', page: 'my-learning' },
-  { icon: <Award size={18} />, label: 'Certificates', page: 'certificates' },
-  { icon: <TrendingUp size={18} />, label: 'Career Paths', page: 'career-paths' },
-  { icon: <GraduationCap size={18} />, label: 'Degrees', page: 'degrees' },
+  { icon: <Home size={22} />, label: 'Home', page: 'home' },
+  { icon: <Compass size={22} />, label: 'Explore', page: 'explore' },
+  { icon: <LayoutGrid size={22} />, label: 'Categories', page: 'categories' },
+  { icon: <BookOpen size={22} />, label: 'My Learning', page: 'my-learning' },
+  { icon: <Award size={22} />, label: 'Certificates', page: 'certificates' },
+  { icon: <TrendingUp size={22} />, label: 'Career Paths', page: 'career-paths' },
+  { icon: <GraduationCap size={22} />, label: 'Degrees', page: 'degrees' },
+  { icon: <Users size={22} />, label: 'Community', page: 'community' },
+  { icon: <MessageCircle size={22} />, label: 'Messages', page: 'messages' },
+  { icon: <Calendar size={22} />, label: 'Calendar', page: 'calendar' },
 ];
 
 const bottomItems: NavItem[] = [
-  { icon: <Users size={18} />, label: 'Community', page: 'community' },
-  { icon: <MessageCircle size={18} />, label: 'Messages', page: 'messages' },
-  { icon: <Calendar size={18} />, label: 'Calendar', page: 'calendar' },
-  { icon: <Bell size={18} />, label: 'Notifications', page: 'notifications' },
-  { icon: <Settings size={18} />, label: 'Settings', page: 'settings' },
+  { icon: <Bell size={22} />, label: 'Notifications', page: 'notifications' },
+  { icon: <Settings size={22} />, label: 'Settings', page: 'settings' },
 ];
 
 export default function Sidebar({ activePage, onNavigate }: SidebarProps) {
@@ -77,7 +77,7 @@ export default function Sidebar({ activePage, onNavigate }: SidebarProps) {
       }}
     >
       {/* Main Nav */}
-      <nav className="flex flex-col gap-1 flex-1 w-full overflow-visible">
+      <nav className="flex flex-col gap-1.5 flex-1 w-full overflow-visible">
         {navItems.map((item) => {
           const isActive = activePage === item.page;
           return (
@@ -88,7 +88,7 @@ export default function Sidebar({ activePage, onNavigate }: SidebarProps) {
               className="relative group w-full flex items-center justify-center"
             >
               <div
-                className="w-10 h-10 flex items-center justify-center rounded-full transition-all duration-200"
+                className="w-11 h-11 flex items-center justify-center rounded-full transition-all duration-200"
                 style={{
                   background: isActive ? '#D7FF54' : 'transparent',
                   color: isActive ? '#111111' : '#888888',
@@ -125,7 +125,7 @@ export default function Sidebar({ activePage, onNavigate }: SidebarProps) {
       <div className="w-8 h-px bg-white/10 my-2" />
 
       {/* Bottom Nav */}
-      <nav className="flex flex-col gap-1 w-full overflow-visible">
+      <nav className="flex flex-col gap-1.5 w-full overflow-visible">
         {bottomItems.map((item) => {
           const isActive = activePage === item.page && item.page !== 'home';
           return (
@@ -136,7 +136,7 @@ export default function Sidebar({ activePage, onNavigate }: SidebarProps) {
               className="relative group w-full flex items-center justify-center"
             >
               <div
-                className="w-10 h-10 flex items-center justify-center rounded-full transition-all duration-200"
+                className="w-11 h-11 flex items-center justify-center rounded-full transition-all duration-200"
                 style={{
                   background: isActive ? '#D7FF54' : 'transparent',
                   color: isActive ? '#111111' : '#888888',
@@ -169,7 +169,7 @@ export default function Sidebar({ activePage, onNavigate }: SidebarProps) {
       {/* Streak Indicator */}
       <div className="my-2 relative group">
         <div
-          className="w-10 h-10 rounded-full flex items-center justify-center"
+          className="w-11 h-11 rounded-full flex items-center justify-center"
           style={{ background: 'rgba(255,109,112,0.15)' }}
         >
           <StreakDisplay compact />
@@ -183,12 +183,12 @@ export default function Sidebar({ activePage, onNavigate }: SidebarProps) {
       <button
         onClick={() => onNavigate('profile')}
         title="Profile"
-        className="mt-3 group relative"
+        className="mt-2 group relative"
       >
         <img
           src="https://i.pravatar.cc/150?img=45"
           alt="Profile"
-          className="w-9 h-9 rounded-full object-cover border-2 transition-all duration-200"
+          className="w-10 h-10 rounded-full object-cover border-2 transition-all duration-200"
           style={{
             borderColor: activePage === 'profile' ? '#D7FF54' : 'rgba(255,255,255,0.2)',
           }}
