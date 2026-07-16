@@ -6,14 +6,12 @@ import {
   Award,
   TrendingUp,
   GraduationCap,
-  Building2,
   Users,
   MessageCircle,
   Calendar,
   Settings,
   User,
   Bell,
-  Zap,
 } from 'lucide-react';
 import StreakDisplay from './StreakDisplay';
 
@@ -53,7 +51,6 @@ const navItems: NavItem[] = [
   { icon: <Award size={18} />, label: 'Certificates', page: 'certificates' },
   { icon: <TrendingUp size={18} />, label: 'Career Paths', page: 'career-paths' },
   { icon: <GraduationCap size={18} />, label: 'Degrees', page: 'degrees' },
-  { icon: <Building2 size={18} />, label: 'For Business', page: 'explore' },
 ];
 
 const bottomItems: NavItem[] = [
@@ -76,18 +73,9 @@ export default function Sidebar({ activePage, onNavigate }: SidebarProps) {
         boxShadow: '0 8px 40px rgba(0,0,0,0.25)',
         zIndex: 10000,
         maxHeight: 'calc(100vh - 24px)',
+        paddingTop: '16px',
       }}
     >
-      {/* Logo */}
-      <div className="mb-4 flex items-center justify-center">
-        <div
-          className="w-10 h-10 flex items-center justify-center rounded-2xl"
-          style={{ background: '#D7FF54' }}
-        >
-          <Zap size={20} fill="#111111" color="#111111" />
-        </div>
-      </div>
-
       {/* Main Nav */}
       <nav className="flex flex-col gap-1 flex-1 w-full overflow-visible">
         {navItems.map((item) => {
