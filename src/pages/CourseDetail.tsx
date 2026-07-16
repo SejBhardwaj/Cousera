@@ -41,7 +41,7 @@ export default function CourseDetail({ onBack, onNavigate }: CourseDetailProps) 
   const [bookmarked, setBookmarked] = useState(false);
   const [activeTab, setActiveTab] = useState('About');
   const [progress, setProgress] = useState(68); // Current progress
-  const [showCelebration, setShowCelebration] = useState(true); // FORCE SHOW FOR TESTING
+  const [showCelebration, setShowCelebration] = useState(false);
   const [celebrationClosed, setCelebrationClosed] = useState(false); // Track if celebration was manually closed
   
   // Offline functionality

@@ -6,7 +6,7 @@ const EARNED = [
     org: 'University of Michigan',
     date: 'June 15, 2024',
     id: 'CERT-UOM-2024-001',
-    color: '#D7FF54',
+    logo: 'https://1000logos.net/wp-content/uploads/2021/04/University-of-Michigan-logo.png',
     skills: ['Python', 'JSON', 'APIs', 'SQLite'],
   },
   {
@@ -14,7 +14,7 @@ const EARNED = [
     org: 'IBM',
     date: 'April 2, 2024',
     id: 'CERT-IBM-2024-042',
-    color: '#83D6FF',
+    logo: 'https://1000logos.net/wp-content/uploads/2017/02/IBM-Logo.png',
     skills: ['Data Science', 'Machine Learning', 'Python', 'SQL', 'Tableau'],
   },
   {
@@ -22,7 +22,7 @@ const EARNED = [
     org: 'Duke University',
     date: 'December 10, 2023',
     id: 'CERT-DUKE-2023-189',
-    color: '#A98BFF',
+    logo: 'https://1000logos.net/wp-content/uploads/2018/04/Duke-Blue-Devils-Logo.png',
     skills: ['Statistics', 'R', 'Bayesian', 'Regression'],
   },
 ];
@@ -32,21 +32,21 @@ const UPCOMING = [
     title: 'Machine Learning Specialization',
     org: 'Stanford Online',
     progress: 68,
-    color: '#A98BFF',
+    logo: 'https://1000logos.net/wp-content/uploads/2018/10/Stanford-Logo.png',
     estComplete: 'Aug 2024',
   },
   {
     title: 'Google UX Design Certificate',
     org: 'Google',
     progress: 34,
-    color: '#FF6D70',
+    logo: 'https://1000logos.net/wp-content/uploads/2016/11/google-logo.png',
     estComplete: 'Nov 2024',
   },
   {
     title: 'AWS Solutions Architect',
     org: 'Amazon',
     progress: 12,
-    color: '#FFB259',
+    logo: 'https://1000logos.net/wp-content/uploads/2021/04/AWS-logo.png',
     estComplete: 'Jan 2025',
   },
 ];
@@ -58,17 +58,8 @@ const PROFESSIONAL_CERTS = [
     duration: '6 months',
     rating: 4.8,
     enrolled: '500K+',
-    color: '#D7FF54',
+    logo: 'https://1000logos.net/wp-content/uploads/2016/11/google-logo.png',
     thumbnail: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&q=80',
-  },
-  {
-    title: 'IBM Data Science',
-    org: 'IBM',
-    duration: '11 months',
-    rating: 4.7,
-    enrolled: '300K+',
-    color: '#83D6FF',
-    thumbnail: 'https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?w=600&q=80',
   },
   {
     title: 'Meta Front-End Developer',
@@ -76,8 +67,17 @@ const PROFESSIONAL_CERTS = [
     duration: '7 months',
     rating: 4.8,
     enrolled: '200K+',
-    color: '#A98BFF',
+    logo: 'https://1000logos.net/wp-content/uploads/2021/10/Meta-logo.png',
     thumbnail: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=600&q=80',
+  },
+  {
+    title: 'Microsoft Azure Fundamentals',
+    org: 'Microsoft',
+    duration: '3 months',
+    rating: 4.7,
+    enrolled: '350K+',
+    logo: 'https://1000logos.net/wp-content/uploads/2020/08/Microsoft-Logo.png',
+    thumbnail: 'https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?w=600&q=80',
   },
 ];
 
@@ -135,10 +135,9 @@ export default function Certificates() {
                   <div className="flex items-start justify-between">
                     <div className="flex items-start gap-4">
                       <div
-                        className="w-14 h-14 rounded-3xl flex items-center justify-center flex-shrink-0"
-                        style={{ background: cert.color }}
+                        className="w-14 h-14 rounded-3xl flex items-center justify-center flex-shrink-0 bg-white border border-border p-2"
                       >
-                        <Award size={24} color={cert.color === '#D7FF54' ? '#111' : 'white'} />
+                        <img src={cert.logo} alt={cert.org} className="w-full h-full object-contain" />
                       </div>
                       <div>
                         <h3 className="font-bold text-text text-base mb-0.5">{cert.title}</h3>
@@ -178,13 +177,13 @@ export default function Certificates() {
         <div className="grid grid-cols-3 gap-4">
           {UPCOMING.map((c) => (
             <div key={c.title} className="card-static p-5 rounded-3xl">
-              <div className="w-10 h-10 rounded-2xl mb-3 flex items-center justify-center" style={{ background: c.color }}>
-                <Award size={18} color={c.color === '#D7FF54' ? '#111' : 'white'} />
+              <div className="w-16 h-16 rounded-2xl mb-3 flex items-center justify-center bg-white border border-border p-2">
+                <img src={c.logo} alt={c.org} className="w-full h-full object-contain" />
               </div>
               <h3 className="font-bold text-text text-sm mb-1">{c.title}</h3>
               <p className="text-xs text-muted mb-4">{c.org} · Est. {c.estComplete}</p>
               <div className="h-2 bg-gray-100 rounded-full mb-2">
-                <div className="h-full rounded-full" style={{ width: `${c.progress}%`, background: c.color }} />
+                <div className="h-full rounded-full" style={{ width: `${c.progress}%`, background: 'linear-gradient(90deg, #A98BFF 0%, #D7FF54 100%)' }} />
               </div>
               <div className="flex justify-between text-xs">
                 <span className="text-muted">Progress</span>
@@ -212,8 +211,11 @@ export default function Certificates() {
               <div className="h-32 overflow-hidden relative">
                 <img src={c.thumbnail} alt={c.title} className="w-full h-full object-cover" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
-                <div className="absolute bottom-3 left-3">
-                  <span className="px-2.5 py-1 rounded-full text-[10px] font-bold text-white" style={{ background: c.color + '99' }}>{c.org}</span>
+                <div className="absolute bottom-3 left-3 right-3 flex items-center gap-2">
+                  <div className="w-8 h-8 rounded-xl bg-white flex items-center justify-center p-1">
+                    <img src={c.logo} alt={c.org} className="w-full h-full object-contain" />
+                  </div>
+                  <span className="px-2.5 py-1 rounded-full text-[10px] font-bold text-white bg-black/50">{c.org}</span>
                 </div>
               </div>
               <div className="p-4">

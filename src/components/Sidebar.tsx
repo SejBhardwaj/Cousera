@@ -1,13 +1,13 @@
 import {
   Home,
-  Compass,
-  LayoutGrid,
+  Search,
+  Grid3x3,
   BookOpen,
   Award,
   TrendingUp,
   GraduationCap,
   Users,
-  MessageCircle,
+  MessageSquare,
   Calendar,
   Settings,
   User,
@@ -44,21 +44,21 @@ interface SidebarProps {
 }
 
 const navItems: NavItem[] = [
-  { icon: <Home size={22} />, label: 'Home', page: 'home' },
-  { icon: <Compass size={22} />, label: 'Explore', page: 'explore' },
-  { icon: <LayoutGrid size={22} />, label: 'Categories', page: 'categories' },
-  { icon: <BookOpen size={22} />, label: 'My Learning', page: 'my-learning' },
-  { icon: <Award size={22} />, label: 'Certificates', page: 'certificates' },
-  { icon: <TrendingUp size={22} />, label: 'Career Paths', page: 'career-paths' },
-  { icon: <GraduationCap size={22} />, label: 'Degrees', page: 'degrees' },
-  { icon: <Users size={22} />, label: 'Community', page: 'community' },
-  { icon: <MessageCircle size={22} />, label: 'Messages', page: 'messages' },
-  { icon: <Calendar size={22} />, label: 'Calendar', page: 'calendar' },
+  { icon: <Home size={22} strokeWidth={2} />, label: 'Home', page: 'home' },
+  { icon: <Search size={22} strokeWidth={2} />, label: 'Explore', page: 'explore' },
+  { icon: <Grid3x3 size={22} strokeWidth={2} />, label: 'Categories', page: 'categories' },
+  { icon: <BookOpen size={22} strokeWidth={2} />, label: 'My Learning', page: 'my-learning' },
+  { icon: <Award size={22} strokeWidth={2} />, label: 'Certificates', page: 'certificates' },
+  { icon: <TrendingUp size={22} strokeWidth={2} />, label: 'Career Paths', page: 'career-paths' },
+  { icon: <GraduationCap size={22} strokeWidth={2} />, label: 'Degrees', page: 'degrees' },
+  { icon: <Users size={22} strokeWidth={2} />, label: 'Community', page: 'community' },
+  { icon: <MessageSquare size={22} strokeWidth={2} />, label: 'Messages', page: 'messages' },
+  { icon: <Calendar size={22} strokeWidth={2} />, label: 'Calendar', page: 'calendar' },
 ];
 
 const bottomItems: NavItem[] = [
-  { icon: <Bell size={22} />, label: 'Notifications', page: 'notifications' },
-  { icon: <Settings size={22} />, label: 'Settings', page: 'settings' },
+  { icon: <Bell size={22} strokeWidth={2} />, label: 'Notifications', page: 'notifications' },
+  { icon: <Settings size={22} strokeWidth={2} />, label: 'Settings', page: 'settings' },
 ];
 
 export default function Sidebar({ activePage, onNavigate }: SidebarProps) {

@@ -15,8 +15,8 @@ const DEADLINES = [
 ];
 
 const CERTS = [
-  { name: 'Python for Everybody', org: 'University of Michigan', date: 'Jun 2024', color: '#D7FF54' },
-  { name: 'Data Science', org: 'IBM', date: 'Apr 2024', color: '#A98BFF' },
+  { name: 'Python for Everybody', org: 'University of Michigan', date: 'Jun 2024', logo: 'https://1000logos.net/wp-content/uploads/2021/04/University-of-Michigan-logo.png' },
+  { name: 'Data Science', org: 'IBM', date: 'Apr 2024', logo: 'https://1000logos.net/wp-content/uploads/2017/02/IBM-Logo.png' },
 ];
 
 function ProgressRing({ percent, color, size = 80 }: { percent: number; color: string; size?: number }) {
@@ -239,7 +239,9 @@ export default function RightPanel() {
         <div className="space-y-3">
           {CERTS.map((c, i) => (
             <div key={i} className="flex items-center gap-3 p-3 rounded-2xl" style={{ background: '#F6F6F8' }}>
-              <div className="w-8 h-8 rounded-xl flex-shrink-0" style={{ background: c.color }} />
+              <div className="w-10 h-10 rounded-xl flex-shrink-0 bg-white border border-border p-1.5">
+                <img src={c.logo} alt={c.org} className="w-full h-full object-contain" />
+              </div>
               <div className="flex-1 min-w-0">
                 <p className="text-xs font-bold text-text truncate">{c.name}</p>
                 <p className="text-[10px] text-muted">{c.org} · {c.date}</p>
