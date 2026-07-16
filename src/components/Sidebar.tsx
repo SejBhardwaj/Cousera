@@ -81,10 +81,14 @@ export default function Sidebar({ activePage, onNavigate }: SidebarProps) {
       {/* Logo */}
       <div className="mb-4 flex items-center justify-center">
         <div
-          className="w-10 h-10 flex items-center justify-center rounded-2xl"
-          style={{ background: '#D7FF54' }}
+          className="w-10 h-10 flex items-center justify-center rounded-2xl overflow-hidden"
+          style={{ background: 'white' }}
         >
-          <Zap size={20} fill="#111111" color="#111111" />
+          <img 
+            src="/logo.png" 
+            alt="Coursera Logo" 
+            className="w-full h-full object-contain"
+          />
         </div>
       </div>
 
