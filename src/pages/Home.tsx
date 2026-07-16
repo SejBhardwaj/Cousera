@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Search, Sparkles, TrendingUp, Play, ArrowRight, Star, Users, Clock, Zap, ChevronRight, BookOpen, Award, GraduationCap } from 'lucide-react';
+import { Search, Sparkles, TrendingUp, Play, ArrowRight, Star, Users, Clock, Zap, ChevronRight, BookOpen, Award, GraduationCap, Flame } from 'lucide-react';
 import CourseCard, { Course } from '../components/CourseCard';
 import type { Page } from '../components/Sidebar';
 import { useOffline } from '../contexts/OfflineContext';
@@ -245,7 +245,7 @@ export default function Home({ onNavigate, onCourseClick }: HomeProps) {
                 className="px-3 py-1.5 rounded-full text-xs font-bold transition-all duration-200 hover:scale-105"
                 style={{ background: s.color, color: s.textColor }}
               >
-                {s.hot && '🔥 '}{s.label}
+                {s.hot && <Zap size={14} className="inline mr-1" />}{s.label}
               </button>
             ))}
           </div>
@@ -263,7 +263,10 @@ export default function Home({ onNavigate, onCourseClick }: HomeProps) {
                 <p className="text-white/50 text-xs">Keep it up!</p>
               </div>
             </div>
-            <div className="text-white text-3xl font-black">23 🔥</div>
+            <div className="text-white flex items-center gap-2 text-3xl font-black">
+              <span>23</span>
+              <Flame size={28} />
+            </div>
           </div>
           <div className="bg-white/10 backdrop-blur rounded-3xl p-4 w-52 border border-white/10">
             <p className="text-white/60 text-xs mb-1">This week</p>
@@ -511,8 +514,8 @@ export default function Home({ onNavigate, onCourseClick }: HomeProps) {
               }}
             >
               {p.popular && (
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full text-xs font-bold" style={{ background: '#D7FF54', color: '#111' }}>
-                  ⚡ {p.badge}
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full text-xs font-bold flex items-center gap-1" style={{ background: '#D7FF54', color: '#111' }}>
+                  <Zap size={12} /> {p.badge}
                 </div>
               )}
               <div className="mb-5">

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Search, Send, Paperclip, Smile, MoreVertical, Phone, Video, Info, Star, Archive, Trash2, MessageCircle, Users, Bell, BellOff, Image as ImageIcon } from 'lucide-react';
+import { Search, Send, Paperclip, Smile, MoreVertical, Phone, Video, Info, Star, Archive, Trash2, MessageCircle, Users, Bell, BellOff, Image as ImageIcon, User } from 'lucide-react';
 
 type Contact = {
   id: string;
@@ -477,11 +477,11 @@ export default function Messages() {
   const getTypeIcon = (type: Contact['type']) => {
     switch (type) {
       case 'instructor':
-        return '👨‍🏫';
+        return <User size={10} />;
       case 'group':
-        return '👥';
+        return <Users size={10} />;
       case 'peer':
-        return '👤';
+        return <MessageCircle size={10} />;
     }
   };
 
@@ -567,8 +567,8 @@ export default function Messages() {
                     <div className="absolute bottom-0 right-0 w-3.5 h-3.5 bg-green-500 rounded-full border-2 border-white" />
                   )}
                   <div
-                    className="absolute -top-1 -right-1 w-5 h-5 rounded-full flex items-center justify-center text-[10px] border-2 border-white"
-                    style={{ background: getTypeBadgeColor(contact.type) }}
+                    className="absolute -top-1 -right-1 w-5 h-5 rounded-full flex items-center justify-center border-2 border-white"
+                    style={{ background: getTypeBadgeColor(contact.type), color: '#111' }}
                   >
                     {getTypeIcon(contact.type)}
                   </div>

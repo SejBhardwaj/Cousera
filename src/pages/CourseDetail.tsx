@@ -41,7 +41,7 @@ export default function CourseDetail({ onBack, onNavigate }: CourseDetailProps) 
   const [bookmarked, setBookmarked] = useState(false);
   const [activeTab, setActiveTab] = useState('About');
   const [progress, setProgress] = useState(68); // Current progress
-  const [showCelebration, setShowCelebration] = useState(false);
+  const [showCelebration, setShowCelebration] = useState(true); // FORCE SHOW FOR TESTING
   const [celebrationClosed, setCelebrationClosed] = useState(false); // Track if celebration was manually closed
   
   // Offline functionality
@@ -75,7 +75,9 @@ export default function CourseDetail({ onBack, onNavigate }: CourseDetailProps) 
 
   useEffect(() => {
     console.log('🎭 showCelebration state:', showCelebration);
-  }, [showCelebration]);
+    console.log('🎯 Current progress:', progress);
+    console.log('🚪 Celebration closed:', celebrationClosed);
+  }, [showCelebration, progress, celebrationClosed]);
 
   const courseId = 'ml-specialization';
   const courseName = 'Machine Learning Specialization';
@@ -170,7 +172,9 @@ export default function CourseDetail({ onBack, onNavigate }: CourseDetailProps) 
 
   // Function to simulate course completion (for testing)
   const handleCompleteCourse = () => {
+    console.log('🚀 COMPLETE COURSE BUTTON CLICKED!');
     setProgress(100);
+    console.log('✅ Progress set to 100');
   };
 
   // Reset celebration for testing
@@ -922,15 +926,18 @@ export default function CourseDetail({ onBack, onNavigate }: CourseDetailProps) 
 
       {/* Completion Celebration Modal */}
       {showCelebration && (
-        <CompletionCelebration
-          courseName={courseName}
-          duration="21h 10m"
-          lessonsCompleted={86}
-          projectsCompleted={12}
-          onViewCertificate={handleViewCertificate}
-          onContinueLearning={handleContinueLearning}
-          onClose={handleCloseCelebration}
-        />
+        <>
+          {console.log('🎊🎊🎊 RENDERING CELEBRATION MODAL NOW!!!')}
+          <CompletionCelebration
+            courseName={courseName}
+            duration="21h 10m"
+            lessonsCompleted={86}
+            projectsCompleted={12}
+            onViewCertificate={handleViewCertificate}
+            onContinueLearning={handleContinueLearning}
+            onClose={handleCloseCelebration}
+          />
+        </>
       )}
 
       {/* Reminder Modal */}

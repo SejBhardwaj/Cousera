@@ -1,4 +1,4 @@
-import { Users, MessageCircle, TrendingUp, Heart, Share2, Bookmark, Plus } from 'lucide-react';
+import { Users, MessageCircle, TrendingUp, Heart, Share2, Bookmark, Plus, Flame } from 'lucide-react';
 
 const POSTS = [
   {
@@ -81,8 +81,12 @@ export default function Community() {
             <TrendingUp size={18} color="#111" />
           </div>
           <div>
-            <p className="text-white font-bold mb-1">Trending Topic</p>
-            <p className="text-white/50 text-xs mb-3">🔥 Generative AI discussion</p>
+            <p className="text-white font-bold mb-1 flex items-center gap-1">
+              Trending Topic
+            </p>
+            <p className="text-white/50 text-xs mb-3 flex items-center gap-1">
+              <Flame size={12} /> Generative AI discussion
+            </p>
             <button className="text-xs font-bold px-4 py-2 rounded-xl" style={{ background: '#D7FF54', color: '#111' }}>
               Join Discussion
             </button>

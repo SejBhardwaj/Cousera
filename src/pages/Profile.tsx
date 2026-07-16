@@ -1,4 +1,4 @@
-import { Edit3, Award, BookOpen, Clock, TrendingUp, Star, MapPin, Link2, Twitter, Linkedin } from 'lucide-react';
+import { Edit3, Award, BookOpen, Clock, TrendingUp, Star, MapPin, Link2, Twitter, Linkedin, Target, Trophy, Library, GraduationCap, Zap } from 'lucide-react';
 import StreakDisplay from '../components/StreakDisplay';
 import BadgeCollection from '../components/BadgeCollection';
 import { useStreak } from '../contexts/StreakContext';
@@ -14,10 +14,10 @@ const SKILLS = [
 ];
 
 const ACTIVITY = [
-  { date: 'Today', action: 'Completed', item: 'Neural Networks lecture', icon: '🎯' },
-  { date: 'Yesterday', action: 'Earned badge', item: 'Python Master', icon: '🏆' },
-  { date: '2 days ago', action: 'Enrolled in', item: 'AWS Solutions Architect', icon: '📚' },
-  { date: '1 week ago', action: 'Completed', item: 'IBM Data Science Certificate', icon: '🎓' },
+  { date: 'Today', action: 'Completed', item: 'Neural Networks lecture', icon: <Target size={16} /> },
+  { date: 'Yesterday', action: 'Earned badge', item: 'Python Master', icon: <Trophy size={16} /> },
+  { date: '2 days ago', action: 'Enrolled in', item: 'AWS Solutions Architect', icon: <Library size={16} /> },
+  { date: '1 week ago', action: 'Completed', item: 'IBM Data Science Certificate', icon: <GraduationCap size={16} /> },
 ];
 
 export default function Profile() {
@@ -132,19 +132,19 @@ export default function Profile() {
           <h2 className="text-card-title text-text mb-5">Achievements</h2>
           <div className="grid grid-cols-3 gap-3">
             {[
-              { icon: '🏆', label: 'Streak Master', unlocked: true, color: '#D7FF54' },
-              { icon: '🎯', label: 'Goal Crusher', unlocked: true, color: '#A98BFF' },
-              { icon: '📚', label: 'Bookworm', unlocked: true, color: '#83D6FF' },
-              { icon: '⚡', label: 'Speed Learner', unlocked: false, color: '#F0F0F5' },
-              { icon: '🌟', label: 'Top Learner', unlocked: false, color: '#F0F0F5' },
-              { icon: '🎓', label: 'Graduate', unlocked: false, color: '#F0F0F5' },
+              { icon: <Trophy size={20} />, label: 'Streak Master', unlocked: true, color: '#D7FF54' },
+              { icon: <Target size={20} />, label: 'Goal Crusher', unlocked: true, color: '#A98BFF' },
+              { icon: <Library size={20} />, label: 'Bookworm', unlocked: true, color: '#83D6FF' },
+              { icon: <Zap size={20} />, label: 'Speed Learner', unlocked: false, color: '#F0F0F5' },
+              { icon: <Star size={20} />, label: 'Top Learner', unlocked: false, color: '#F0F0F5' },
+              { icon: <GraduationCap size={20} />, label: 'Graduate', unlocked: false, color: '#F0F0F5' },
             ].map((a) => (
               <div
                 key={a.label}
                 className="flex flex-col items-center gap-1.5 p-3 rounded-2xl text-center"
                 style={{ background: a.unlocked ? a.color + '20' : '#F6F6F8', opacity: a.unlocked ? 1 : 0.5 }}
               >
-                <span className="text-2xl">{a.icon}</span>
+                <div className="text-text">{a.icon}</div>
                 <span className="text-[10px] font-semibold text-text leading-tight">{a.label}</span>
               </div>
             ))}
@@ -158,7 +158,7 @@ export default function Profile() {
         <div className="space-y-3">
           {ACTIVITY.map((a, i) => (
             <div key={i} className="flex items-center gap-4 p-4 rounded-3xl hover:bg-bg transition-colors">
-              <div className="w-10 h-10 rounded-2xl flex items-center justify-center text-xl flex-shrink-0" style={{ background: '#F6F6F8' }}>
+              <div className="w-10 h-10 rounded-2xl flex items-center justify-center flex-shrink-0 text-text" style={{ background: '#F6F6F8' }}>
                 {a.icon}
               </div>
               <div className="flex-1">

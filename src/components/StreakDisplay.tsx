@@ -99,7 +99,9 @@ export default function StreakDisplay({ compact = false }: StreakDisplayProps) {
           className="p-4 rounded-2xl mb-4"
           style={{ background: 'linear-gradient(135deg, #FFF7ED 0%, #FEF3C7 100%)' }}
         >
-          <p className="text-sm font-bold text-text mb-1">🔥 You're on fire!</p>
+          <p className="text-sm font-bold text-text mb-1 flex items-center gap-1">
+            <Flame size={16} /> You're on fire!
+          </p>
           <p className="text-xs text-muted">
             {currentStreak === longestStreak
               ? "This is your longest streak ever! Don't break it now!"

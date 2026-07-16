@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Bell, Award, TrendingUp, MessageCircle, Users, Calendar, Star, CheckCheck, Trash2, Settings, Filter } from 'lucide-react';
+import { Bell, Award, TrendingUp, MessageCircle, Users, Calendar, Star, CheckCheck, Trash2, Settings, Filter, Trophy, Library, Flame } from 'lucide-react';
 
 type NotificationType = 'achievement' | 'course' | 'social' | 'reminder' | 'system';
 
@@ -107,7 +107,7 @@ const NOTIFICATIONS: Notification[] = [
   {
     id: '11',
     type: 'achievement',
-    title: 'Certificate earned! 🏆',
+    title: 'Certificate earned!',
     message: 'You\'ve completed "Python for Everybody" and earned your certificate.',
     timestamp: '1 week ago',
     read: true,

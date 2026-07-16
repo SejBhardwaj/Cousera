@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import confetti from 'canvas-confetti';
-import { Award, Share2, ArrowRight, X, Trophy, Clock, CheckCircle, Target } from 'lucide-react';
+import { Award, Share2, ArrowRight, X, Trophy, Clock, CheckCircle, Target, GraduationCap } from 'lucide-react';
 
 interface CompletionCelebrationProps {
   courseName: string;
@@ -40,7 +40,7 @@ export default function CompletionCelebration({
       startVelocity: 25, // Reduced from 30 for smoother fall
       spread: 360, 
       ticks: 80, // Increased from 60 for slower, smoother fall
-      zIndex: 10000,
+      zIndex: 100000, // ABOVE the modal background
       gravity: 0.8, // Slightly reduced gravity for gentler fall
       decay: 0.92, // Slower decay for longer visibility
       scalar: 1.2, // Slightly larger particles
@@ -58,7 +58,7 @@ export default function CompletionCelebration({
       origin: { y: 0.6 },
       startVelocity: 35,
       colors: ['#D7FF54', '#A98BFF', '#FF6D70', '#83D6FF', '#7DEBA3'],
-      zIndex: 10000,
+      zIndex: 100000, // ABOVE the modal
       gravity: 0.8,
       ticks: 80,
     });
@@ -119,8 +119,18 @@ export default function CompletionCelebration({
 
   return (
     <div 
-      className="fixed inset-0 z-[9999] flex items-center justify-center p-4 animate-in"
-      style={{ background: 'rgba(0,0,0,0.75)', backdropFilter: 'blur(8px)' }}
+      className="fixed inset-0 flex items-center justify-center p-4 animate-in"
+      style={{ 
+        background: 'rgba(0,0,0,0.3)', 
+        backdropFilter: 'blur(4px)',
+        zIndex: 99999,
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        pointerEvents: 'auto'
+      }}
       onClick={onClose}
     >
       <div 
@@ -233,22 +243,22 @@ export default function CompletionCelebration({
             {/* Achievement badges */}
             <div className="flex justify-center gap-2 mb-6 flex-wrap">
               <div 
-                className="px-3 py-1.5 rounded-full text-xs font-bold"
+                className="px-3 py-1.5 rounded-full text-xs font-bold flex items-center gap-1"
                 style={{ background: 'rgba(215,255,84,0.15)', color: '#D7FF54' }}
               >
-                🏆 Certificate Earned
+                <Trophy size={14} /> Certificate Earned
               </div>
               <div 
-                className="px-3 py-1.5 rounded-full text-xs font-bold"
+                className="px-3 py-1.5 rounded-full text-xs font-bold flex items-center gap-1"
                 style={{ background: 'rgba(131,214,255,0.15)', color: '#83D6FF' }}
               >
-                💼 Resume Ready
+                <Award size={14} /> Resume Ready
               </div>
               <div 
-                className="px-3 py-1.5 rounded-full text-xs font-bold"
+                className="px-3 py-1.5 rounded-full text-xs font-bold flex items-center gap-1"
                 style={{ background: 'rgba(255,109,112,0.15)', color: '#FF6D70' }}
               >
-                🎓 Knowledge Gained
+                <GraduationCap size={14} /> Knowledge Gained
               </div>
             </div>
 
