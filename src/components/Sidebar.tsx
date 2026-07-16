@@ -81,7 +81,7 @@ export default function Sidebar({ activePage, onNavigate }: SidebarProps) {
       {/* Logo */}
       <div className="mb-4 flex items-center justify-center">
         <div
-          className="w-10 h-10 flex items-center justify-center rounded-2xl overflow-hidden"
+          className="w-14 h-14 flex items-center justify-center rounded-2xl overflow-hidden"
           style={{ background: 'white' }}
         >
           <img 
