@@ -28,6 +28,7 @@ type Page =
   | 'community'
   | 'messages'
   | 'calendar'
+  | 'notifications'
   | 'settings'
   | 'profile'
   | 'search'
@@ -59,7 +60,7 @@ const bottomItems: NavItem[] = [
   { icon: <Users size={18} />, label: 'Community', page: 'community' },
   { icon: <MessageCircle size={18} />, label: 'Messages', page: 'messages' },
   { icon: <Calendar size={18} />, label: 'Calendar', page: 'calendar' },
-  { icon: <Bell size={18} />, label: 'Notifications', page: 'home' },
+  { icon: <Bell size={18} />, label: 'Notifications', page: 'notifications' },
   { icon: <Settings size={18} />, label: 'Settings', page: 'settings' },
 ];
 

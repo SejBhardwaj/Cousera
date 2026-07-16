@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Calendar, MessageCircle, GraduationCap, Settings } from 'lucide-react';
+import { Calendar, MessageCircle, GraduationCap, Settings as SettingsIcon } from 'lucide-react';
 import Sidebar, { Page } from './components/Sidebar';
 import RightPanel from './components/RightPanel';
 import Home from './pages/Home';
@@ -12,12 +12,17 @@ import CareerPaths from './pages/CareerPaths';
 import Categories from './pages/Categories';
 import Profile from './pages/Profile';
 import Community from './pages/Community';
+import Degrees from './pages/Degrees';
+import Messages from './pages/Messages';
+import Notifications from './pages/Notifications';
+import CalendarPage from './pages/Calendar';
+import Settings from './pages/Settings';
 import Placeholder from './pages/Placeholder';
 import { OfflineProvider } from './contexts/OfflineContext';
 import { StreakProvider } from './contexts/StreakContext';
 import { ReminderProvider } from './contexts/ReminderContext';
 
-const PAGES_WITHOUT_RIGHT_PANEL: Page[] = ['course-detail'];
+const PAGES_WITHOUT_RIGHT_PANEL: Page[] = ['course-detail', 'messages', 'settings'];
 
 export default function App() {
   const [activePage, setActivePage] = useState<Page>('home');
@@ -69,41 +74,15 @@ export default function App() {
       case 'community':
         return <Community />;
       case 'messages':
-        return (
-          <Placeholder
-            title="Messages"
-            description="Chat with instructors, peers, and study groups. Real-time learning conversations."
-            icon={<MessageCircle size={32} color="#111" />}
-            accent="#D7FF54"
-          />
-        );
+        return <Messages />;
+      case 'notifications':
+        return <Notifications />;
       case 'calendar':
-        return (
-          <Placeholder
-            title="Learning Calendar"
-            description="Schedule study sessions, track deadlines, and sync with your calendar apps."
-            icon={<Calendar size={32} color="white" />}
-            accent="#83D6FF"
-          />
-        );
+        return <CalendarPage />;
       case 'degrees':
-        return (
-          <Placeholder
-            title="Online Degrees"
-            description="Earn accredited bachelor's and master's degrees from top universities, 100% online."
-            icon={<GraduationCap size={32} color="#111" />}
-            accent="#A98BFF"
-          />
-        );
+        return <Degrees onNavigate={handleNavigate} />;
       case 'settings':
-        return (
-          <Placeholder
-            title="Settings"
-            description="Manage your account, preferences, notifications, and privacy settings."
-            icon={<Settings size={32} color="white" />}
-            accent="#111"
-          />
-        );
+        return <Settings />;
       default:
         return <Home onNavigate={handleNavigate} onCourseClick={handleCourseClick} />;
     }
