@@ -1,4 +1,4 @@
-import { Users, MessageCircle, TrendingUp, Heart, Share2, Bookmark, Plus, Flame } from 'lucide-react';
+import { Users, MessageCircle, TrendingUp, Heart, Share2, Bookmark, Plus, Flame, Brain, Code, BarChart3, Briefcase } from 'lucide-react';
 
 const POSTS = [
   {
@@ -37,10 +37,10 @@ const POSTS = [
 ];
 
 const GROUPS = [
-  { name: 'ML Study Group', members: '12.4K', color: '#A98BFF', active: 234 },
-  { name: 'Python Beginners', members: '45K', color: '#D7FF54', active: 891 },
-  { name: 'Data Visualization', members: '8.2K', color: '#83D6FF', active: 167 },
-  { name: 'Career Changers', members: '29K', color: '#FF6D70', active: 445 },
+  { name: 'ML Study Group', members: '12.4K', color: '#A98BFF', active: 234, icon: Brain },
+  { name: 'Python Beginners', members: '45K', color: '#D7FF54', active: 891, icon: Code },
+  { name: 'Data Visualization', members: '8.2K', color: '#83D6FF', active: 167, icon: BarChart3 },
+  { name: 'Career Changers', members: '29K', color: '#FF6D70', active: 445, icon: Briefcase },
 ];
 
 export default function Community() {
@@ -105,21 +105,26 @@ export default function Community() {
           </div>
         </div>
         <div className="grid grid-cols-4 gap-3">
-          {GROUPS.map((g) => (
-            <div
-              key={g.name}
-              className="p-4 rounded-3xl cursor-pointer hover:-translate-y-1 transition-transform duration-200"
-              style={{ background: g.color + '18', border: `1.5px solid ${g.color}40` }}
-            >
-              <div className="w-8 h-8 rounded-2xl mb-3" style={{ background: g.color }} />
-              <p className="font-bold text-sm text-text mb-1">{g.name}</p>
-              <p className="text-xs text-muted">{g.members} members</p>
-              <div className="flex items-center gap-1 mt-1">
-                <div className="w-1.5 h-1.5 rounded-full bg-green animate-pulse" />
-                <span className="text-[10px] text-muted">{g.active} online</span>
+          {GROUPS.map((g) => {
+            const IconComponent = g.icon;
+            return (
+              <div
+                key={g.name}
+                className="p-4 rounded-3xl cursor-pointer hover:-translate-y-1 transition-transform duration-200"
+                style={{ background: g.color + '18', border: `1.5px solid ${g.color}40` }}
+              >
+                <div className="w-8 h-8 rounded-2xl mb-3 flex items-center justify-center" style={{ background: g.color }}>
+                  <IconComponent size={16} color="#fff" strokeWidth={2.5} />
+                </div>
+                <p className="font-bold text-sm text-text mb-1">{g.name}</p>
+                <p className="text-xs text-muted">{g.members} members</p>
+                <div className="flex items-center gap-1 mt-1">
+                  <div className="w-1.5 h-1.5 rounded-full bg-green animate-pulse" />
+                  <span className="text-[10px] text-muted">{g.active} online</span>
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
 
