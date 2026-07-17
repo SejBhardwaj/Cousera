@@ -9,6 +9,7 @@ import {
   formatVideoTime,
   VideoProgress,
 } from '../utils/videoProgressStorage';
+import { getVideoForCourse, getVideoStyle } from '../utils/videoMapping';
 
 interface VideoPlayerProps {
   videoId: string;
@@ -42,6 +43,18 @@ export default function VideoPlayer({
   const [showResumePrompt, setShowResumePrompt] = useState(false);
   const [savedProgress, setSavedProgress] = useState<VideoProgress | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+
+  // ALWAYS use mapped video based on courseId AND videoId (for per-lesson randomization)
+  const mappedVideoUrl = getVideoForCourse(courseId, videoId);
+  const videoStyle = getVideoStyle();
+
+  // Debug logging
+  useEffect(() => {
+    console.log('🎬 VideoPlayer mounted');
+    console.log('   courseId:', courseId);
+    console.log('   videoId:', videoId);
+    console.log('   mapped video URL:', mappedVideoUrl);
+  }, [courseId, videoId, mappedVideoUrl]);
 
   // Load saved progress on mount
   useEffect(() => {
@@ -136,6 +149,13 @@ export default function VideoPlayer({
     }
   };
 
+  // Handle video error
+  const handleError = (e: React.SyntheticEvent<HTMLVideoElement, Event>) => {
+    console.error('❌ Video error:', e);
+    console.error('   Video URL:', mappedVideoUrl);
+    setIsLoading(false);
+  };
+
   // Handle metadata loaded
   const handleLoadedMetadata = () => {
     if (videoRef.current) {
@@ -223,15 +243,16 @@ export default function VideoPlayer({
       {/* Video element */}
       <video
         ref={videoRef}
-        src={videoUrl}
+        src={mappedVideoUrl}
         onPlay={handlePlay}
         onPause={handlePause}
         onTimeUpdate={handleTimeUpdate}
         onEnded={handleEnded}
         onLoadedMetadata={handleLoadedMetadata}
-        className="w-full h-full object-cover"
+        onError={handleError}
+        className="w-full h-full"
+        style={{...videoStyle, maxHeight: '100%', minHeight: '100%'}}
         poster={thumbnailUrl}
-        style={{ maxHeight: '100%', minHeight: '100%' }}
       />
 
       {/* Resume prompt overlay */}

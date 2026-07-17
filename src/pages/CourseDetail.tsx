@@ -2182,7 +2182,7 @@ Outputs:
     setCurrentVideo({
       id: videoId,
       title: videoTitle,
-      url: `https://www.w3schools.com/html/mov_bbb.mp4`, // Demo video URL
+      url: '', // Leave empty - VideoPlayer will map based on courseId
       lesson: lessonTitle,
     });
     setShowVideoModal(true);
