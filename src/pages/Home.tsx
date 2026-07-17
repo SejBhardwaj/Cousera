@@ -151,12 +151,13 @@ export default function Home({ onNavigate, onCourseClick }: HomeProps) {
         <div className="absolute bottom-0 left-1/3 w-60 h-60 rounded-full opacity-15" style={{ background: 'radial-gradient(circle, #D7FF54, transparent 70%)', transform: 'translateY(40%)' }} />
 
         <div className="relative z-10 max-w-2xl">
-          <div
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-5 text-xs font-bold"
-            style={{ background: 'rgba(215,255,84,0.15)', color: '#D7FF54', border: '1px solid rgba(215,255,84,0.3)' }}
-          >
-            <Sparkles size={12} />
-            Powered by AI · Over 7,000 courses
+          <div className="inline-flex items-center gap-3 mb-5">
+            <img 
+              src="/download (1).jpg" 
+              alt="Coursera Logo" 
+              className="w-12 h-12 rounded-lg object-cover"
+            />
+            <span className="text-2xl font-bold text-white">Coursera</span>
           </div>
 
           <h1 className="text-hero text-white mb-3">
