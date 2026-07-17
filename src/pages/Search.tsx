@@ -1,4 +1,4 @@
-﻿import { useState, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import { Search as SearchIcon, Sparkles, X, Tag, Filter } from 'lucide-react';
 import CourseCard, { Course } from '../components/CourseCard';
 import { useOffline } from '../contexts/OfflineContext';
@@ -12,7 +12,7 @@ const SUGGESTIONS = [
 
 const FILTERS = {
   level: ['All Levels', 'Beginner', 'Intermediate', 'Advanced'],
-  duration: ['Any Duration', '< 1 month', '1â€“3 months', '3â€“6 months'],
+  duration: ['Any Duration', '< 1 month', '1–3 months', '3–6 months'],
   type: ['All', 'Course', 'Specialization', 'Certificate', 'Degree'],
   language: ['English', 'Spanish', 'French', 'Chinese'],
 };
@@ -373,7 +373,7 @@ const RESULTS: Course[] = [
     title: 'Product Management & Strategy',
     description: 'Become a product manager. Learn roadmapping, user stories, agile, and ship products people love.',
     provider: 'Product School',
-    instructor: 'Carlos GonzÃ¡lez',
+    instructor: 'Carlos González',
     instructorImg: 'https://i.pravatar.cc/150?img=56',
     thumbnail: 'https://images.unsplash.com/photo-1557804506-669a67965ba0?w=600&q=80',
     category: 'Business',
