@@ -105,62 +105,6 @@ npm run preview
 
 ---
 
-## Project Structure
-
-```
-Cousera/
-├── public/                  # Static assets (logo, images)
-├── src/
-│   ├── components/          # React components
-│   │   ├── BadgeCollection.tsx
-│   │   ├── CourseCard.tsx
-│   │   ├── NotificationPermissionBanner.tsx
-│   │   ├── ReminderModal.tsx
-│   │   ├── ResumeWatchingButton.tsx
-│   │   ├── RightPanel.tsx
-│   │   ├── Sidebar.tsx
-│   │   ├── StreakCelebration.tsx
-│   │   ├── StreakDisplay.tsx
-│   │   ├── VideoModal.tsx
-│   │   └── VideoPlayer.tsx
-│   ├── contexts/            # React Context providers
-│   │   ├── OfflineContext.tsx
-│   │   ├── ReminderContext.tsx
-│   │   └── StreakContext.tsx
-│   ├── pages/               # Page components
-│   │   ├── Calendar.tsx
-│   │   ├── CareerPaths.tsx
-│   │   ├── Categories.tsx
-│   │   ├── Certificates.tsx
-│   │   ├── Community.tsx
-│   │   ├── CourseDetail.tsx
-│   │   ├── Degrees.tsx
-│   │   ├── Explore.tsx
-│   │   ├── Home.tsx
-│   │   ├── Messages.tsx
-│   │   ├── MyLearning.tsx
-│   │   ├── Notifications.tsx
-│   │   ├── Profile.tsx
-│   │   ├── Search.tsx
-│   │   └── Settings.tsx
-│   ├── utils/               # Utility functions
-│   │   ├── notificationService.ts
-│   │   ├── offlineStorage.ts
-│   │   ├── reminderStorage.ts
-│   │   ├── streakTracking.ts
-│   │   └── videoProgressStorage.ts
-│   ├── App.tsx              # Main App component
-│   ├── main.tsx             # Entry point
-│   └── index.css            # Global styles
-├── index.html
-├── package.json
-├── tailwind.config.js
-├── tsconfig.json
-└── vite.config.ts
-```
-
----
-
 ## Features in Detail
 
 ### Dashboard
@@ -261,40 +205,6 @@ Cousera/
 
 ---
 
-## Browser Support
-
-| Browser | Version | Status |
-|---------|---------|--------|
-| Chrome | Latest | ✅ Full Support |
-| Firefox | Latest | ✅ Full Support |
-| Safari | Latest | ✅ Full Support |
-| Edge | Latest | ✅ Full Support |
-| Safari iOS | Latest | ⚠️ Limited (Notifications) |
-
-**Note**: Notifications work when browser is open. iOS Safari has limited notification support.
-
----
-
-## Color Palette
-
-```css
-/* Primary Colors */
---purple: #A98BFF;        /* Primary accent */
---lime: #D7FF54;          /* Secondary accent */
---blue: #83D6FF;          /* Info */
---orange: #FFB259;        /* Warnings */
---red: #FF6D70;           /* Errors */
---green: #7DEBA3;         /* Success */
-
-/* Neutral Colors */
---text: #0F0F0F;          /* Primary text */
---muted: #6B6B7B;         /* Secondary text */
---background: #F6F6F8;    /* Page background */
---border: #EBEBF0;        /* Borders */
-```
-
----
-
 ## Development
 
 ### Available Scripts
@@ -350,12 +260,6 @@ npm run lint
 ## License
 
 Distributed under the MIT License. See `LICENSE` for more information.
-
----
-
-## Contact
-
-**Project Link**: [https://github.com/yourusername/cousera](https://github.com/yourusername/cousera)
 
 ---
 
