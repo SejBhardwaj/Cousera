@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="./public/logo.png" alt="Coursera Logo" width="120" height="120" />
+  <img src="./public/download (1).jpg" alt="Coursera Logo" width="200" />
   <h1>Coursera</h1>
   <p><strong>Modern Online Learning Platform</strong></p>
 </div>
