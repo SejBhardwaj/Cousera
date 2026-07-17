@@ -29,15 +29,36 @@ Coursera is a comprehensive online learning platform designed to provide seamles
 
 ## Built With
 
-### Frontend
-- **React** - UI library
-- **TypeScript** - Type-safe JavaScript
-- **Vite** - Fast build tool
-- **Tailwind CSS** - Utility-first CSS framework
-- **React Router** - Client-side routing
-- **Lucide React** - Icon library
-- **IndexedDB** - Offline storage
-- **localStorage** - Data persistence
+### Frontend Architecture
+- **React 18** - Modern UI library with concurrent rendering
+- **TypeScript 5** - Strongly typed JavaScript for enhanced code quality
+- **Vite 5** - Next-generation frontend tooling with HMR
+- **Tailwind CSS 3** - Utility-first CSS framework for rapid UI development
+
+### State Management & Routing
+- **React Context API** - Global state management for reminders, offline mode, and streaks
+- **React Router v6** - Declarative client-side routing
+- **Custom Hooks** - Reusable logic for video progress, notifications, and storage
+
+### UI Components & Icons
+- **Lucide React** - Modern, customizable icon library (1000+ icons)
+- **Custom Components** - Modular, reusable UI components with TypeScript
+
+### Data Storage & Persistence
+- **IndexedDB** - High-performance offline storage for course content
+- **localStorage** - Persistent user preferences and settings
+- **Session Storage** - Temporary data handling
+
+### Browser APIs & Features
+- **Notification API** - Native browser notifications for reminders
+- **Web Storage API** - Data persistence across sessions
+- **Media API** - Video playback with progress tracking
+- **Canvas Confetti** - Celebration animations
+
+### Build & Development Tools
+- **ESLint** - Code linting for TypeScript/React
+- **PostCSS** - CSS transformation and optimization
+- **Autoprefixer** - Automatic vendor prefix addition
 
 ---
 
