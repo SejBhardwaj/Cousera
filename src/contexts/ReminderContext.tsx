@@ -24,6 +24,8 @@ interface ReminderContextType {
   cancelReminder: (courseId: string) => boolean;
   getReminderByCourse: (courseId: string) => CourseReminder | null;
   refreshReminders: () => void;
+  dueReminderNotification: { courseName: string; courseId: string } | null;
+  clearDueReminder: () => void;
 }
 
 const ReminderContext = createContext<ReminderContextType | undefined>(undefined);
@@ -43,6 +45,7 @@ interface ReminderProviderProps {
 export const ReminderProvider = ({ children }: ReminderProviderProps) => {
   const [reminders, setReminders] = useState<CourseReminder[]>([]);
   const [notificationPermission, setNotificationPermission] = useState<NotificationPermissionStatus>('default');
+  const [dueReminderNotification, setDueReminderNotification] = useState<{ courseName: string; courseId: string } | null>(null);
 
   // Load reminders on mount
   useEffect(() => {
@@ -93,6 +96,11 @@ export const ReminderProvider = ({ children }: ReminderProviderProps) => {
     return getReminderForCourse(courseId);
   }, []);
 
+  // Clear due reminder notification
+  const clearDueReminder = useCallback(() => {
+    setDueReminderNotification(null);
+  }, []);
+
   // Check for due reminders periodically
   useEffect(() => {
     const checkInterval = setInterval(() => {
@@ -111,25 +119,27 @@ export const ReminderProvider = ({ children }: ReminderProviderProps) => {
           console.log('⏰ Reminder time:', new Date(reminder.reminderTime).toLocaleString());
           console.log('⏰ Current time:', new Date(now).toLocaleString());
           
-          // Show notification
-          const notification = showCourseReminderNotification(
-            reminder.courseName,
-            reminder.courseId,
-            () => {
-              // When notification is clicked, navigate to course
-              console.log('🖱️ User clicked reminder for:', reminder.courseName);
-              window.focus();
-            }
-          );
+          // Show IN-APP notification (no browser permission needed!)
+          setDueReminderNotification({
+            courseName: reminder.courseName,
+            courseId: reminder.courseId,
+          });
 
-          if (notification) {
-            console.log('✅ Notification sent successfully!');
-            // Mark as notified
-            markAsNotified(reminder.id);
-            refreshReminders();
-          } else {
-            console.error('❌ Failed to send notification');
+          // Also try browser notification if permission granted
+          if (notificationPermission === 'granted') {
+            showCourseReminderNotification(
+              reminder.courseName,
+              reminder.courseId,
+              () => {
+                window.focus();
+              }
+            );
           }
+
+          console.log('✅ In-app notification shown!');
+          // Mark as notified
+          markAsNotified(reminder.id);
+          refreshReminders();
         });
       }
     }, 10000); // Check every 10 seconds for testing
@@ -181,6 +191,8 @@ export const ReminderProvider = ({ children }: ReminderProviderProps) => {
     cancelReminder: cancelReminderFunc,
     getReminderByCourse,
     refreshReminders,
+    dueReminderNotification,
+    clearDueReminder,
   };
 
   return <ReminderContext.Provider value={value}>{children}</ReminderContext.Provider>;

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Calendar, MessageCircle, GraduationCap, Settings as SettingsIcon } from 'lucide-react';
 import Sidebar, { Page } from './components/Sidebar';
 import RightPanel from './components/RightPanel';
+import InAppNotification from './components/InAppNotification';
 import Home from './pages/Home';
 import Explore from './pages/Explore';
 import MyLearning from './pages/MyLearning';
@@ -20,14 +21,15 @@ import Settings from './pages/Settings';
 import Placeholder from './pages/Placeholder';
 import { OfflineProvider } from './contexts/OfflineContext';
 import { StreakProvider } from './contexts/StreakContext';
-import { ReminderProvider } from './contexts/ReminderContext';
+import { ReminderProvider, useReminder } from './contexts/ReminderContext';
 
 const PAGES_WITHOUT_RIGHT_PANEL: Page[] = ['course-detail', 'messages', 'settings'];
 
-export default function App() {
+function AppContent() {
   const [activePage, setActivePage] = useState<Page>('home');
   const [selectedCourseId, setSelectedCourseId] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState<string>('');
+  const { dueReminderNotification, clearDueReminder } = useReminder();
 
   const handleNavigate = (page: Page, query?: string) => {
     setActivePage(page);
@@ -95,24 +97,42 @@ export default function App() {
   };
 
   return (
+    <div
+      className="min-h-screen flex overflow-visible"
+      style={{ background: '#F6F6F8' }}
+    >
+      {/* Sidebar */}
+      <Sidebar activePage={activePage} onNavigate={handleNavigate} />
+
+      {/* Main Workspace */}
+      <main className="flex-1 flex min-h-screen">
+        {renderPage()}
+
+        {/* Right Panel */}
+        {showRightPanel && <RightPanel />}
+      </main>
+
+      {/* In-App Reminder Notification */}
+      {dueReminderNotification && (
+        <InAppNotification
+          courseName={dueReminderNotification.courseName}
+          onViewCourse={() => {
+            handleCourseClick(dueReminderNotification.courseId);
+            clearDueReminder();
+          }}
+          onClose={clearDueReminder}
+        />
+      )}
+    </div>
+  );
+}
+
+export default function App() {
+  return (
     <OfflineProvider>
       <StreakProvider>
         <ReminderProvider>
-          <div
-            className="min-h-screen flex overflow-visible"
-            style={{ background: '#F6F6F8' }}
-          >
-            {/* Sidebar */}
-            <Sidebar activePage={activePage} onNavigate={handleNavigate} />
-
-            {/* Main Workspace */}
-            <main className="flex-1 flex min-h-screen">
-              {renderPage()}
-
-              {/* Right Panel */}
-              {showRightPanel && <RightPanel />}
-            </main>
-          </div>
+          <AppContent />
         </ReminderProvider>
       </StreakProvider>
     </OfflineProvider>
