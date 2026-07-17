@@ -169,7 +169,7 @@ export default function CompletionCelebration({
 
   return (
     <div 
-      className="fixed inset-0 flex items-center justify-center p-4 animate-in"
+      className="fixed inset-0 flex items-center justify-center p-4 animate-in overflow-y-auto"
       style={{ 
         background: 'rgba(0,0,0,0.3)', 
         backdropFilter: 'blur(4px)',
@@ -184,7 +184,7 @@ export default function CompletionCelebration({
       onClick={onClose}
     >
       <div 
-        className="relative max-w-lg w-full animate-in"
+        className="relative max-w-md w-full my-8 animate-in"
         style={{ 
           animation: 'slideIn 0.4s cubic-bezier(0.16, 1, 0.3, 1)' 
         }}
@@ -193,40 +193,40 @@ export default function CompletionCelebration({
         {/* Close button */}
         <button
           onClick={onClose}
-          className="absolute -top-2 -right-2 w-10 h-10 rounded-full bg-white border-2 border-gray-200 flex items-center justify-center hover:bg-gray-50 transition-all duration-200 hover:scale-110 z-10"
+          className="absolute -top-2 -right-2 w-8 h-8 rounded-full bg-white border-2 border-gray-200 flex items-center justify-center hover:bg-gray-50 transition-all duration-200 hover:scale-110 z-10"
           style={{ boxShadow: '0 4px 12px rgba(0,0,0,0.15)' }}
         >
-          <X size={18} color="#6B6B7B" />
+          <X size={16} color="#6B6B7B" />
         </button>
 
         {/* Main celebration card */}
         <div 
-          className="rounded-4xl overflow-hidden"
+          className="rounded-3xl overflow-hidden"
           style={{ 
             background: 'linear-gradient(135deg, #0F0F0F 0%, #1a1a2e 50%, #16213e 100%)',
             boxShadow: '0 20px 60px rgba(0,0,0,0.4)'
           }}
         >
           {/* Decorative orbs */}
-          <div className="absolute top-0 right-0 w-64 h-64 rounded-full opacity-15" style={{ background: 'radial-gradient(circle, #D7FF54, transparent 70%)', transform: 'translate(30%, -30%)' }} />
-          <div className="absolute bottom-0 left-1/3 w-48 h-48 rounded-full opacity-10" style={{ background: 'radial-gradient(circle, #A98BFF, transparent 70%)', transform: 'translateY(40%)' }} />
+          <div className="absolute top-0 right-0 w-48 h-48 rounded-full opacity-15" style={{ background: 'radial-gradient(circle, #D7FF54, transparent 70%)', transform: 'translate(30%, -30%)' }} />
+          <div className="absolute bottom-0 left-1/3 w-32 h-32 rounded-full opacity-10" style={{ background: 'radial-gradient(circle, #A98BFF, transparent 70%)', transform: 'translateY(40%)' }} />
 
-          <div className="relative z-10 p-8 text-center">
+          <div className="relative z-10 p-6 text-center">
             {/* Animated trophy icon */}
             <div 
-              className="w-20 h-20 rounded-full mx-auto mb-5 flex items-center justify-center"
+              className="w-16 h-16 rounded-full mx-auto mb-4 flex items-center justify-center"
               style={{ 
                 background: 'linear-gradient(135deg, #D7FF54 0%, #A98BFF 100%)',
                 animation: 'pulse 2s ease-in-out infinite',
                 boxShadow: '0 8px 32px rgba(215,255,84,0.4)'
               }}
             >
-              <Trophy size={36} color="#111" strokeWidth={2.5} />
+              <Trophy size={28} color="#111" strokeWidth={2.5} />
             </div>
 
             {/* Main message */}
             <h1 
-              className="text-3xl font-black text-white mb-2"
+              className="text-2xl font-black text-white mb-1"
               style={{ 
                 textShadow: '0 2px 20px rgba(215,255,84,0.3)',
                 lineHeight: '1.2'
@@ -234,103 +234,94 @@ export default function CompletionCelebration({
             >
               Great Job!
             </h1>
-            <p className="text-xl font-bold text-white/90 mb-1">
+            <p className="text-lg font-bold text-white/90 mb-1">
               You've completed this course!
             </p>
             
             {/* Course name */}
             <div 
-              className="inline-block px-4 py-2 rounded-2xl mt-4 mb-6"
+              className="inline-block px-3 py-1.5 rounded-2xl mt-3 mb-4"
               style={{ background: 'rgba(215,255,84,0.15)', border: '1px solid rgba(215,255,84,0.3)' }}
             >
-              <p className="text-sm font-bold" style={{ color: '#D7FF54' }}>
+              <p className="text-xs font-bold" style={{ color: '#D7FF54' }}>
                 {courseName}
               </p>
             </div>
 
             {/* Completion date */}
-            <p className="text-white/50 text-sm mb-6">
+            <p className="text-white/50 text-xs mb-4">
               Completed: {currentDate}
             </p>
 
-            {/* Divider */}
-            <div 
-              className="h-px mx-auto mb-6"
-              style={{ 
-                width: '80%',
-                background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent)' 
-              }}
-            />
-
             {/* Statistics */}
-            <div className="grid grid-cols-3 gap-3 mb-6">
+            <div className="grid grid-cols-3 gap-2 mb-4">
               <div 
-                className="p-4 rounded-2xl"
+                className="p-3 rounded-xl"
                 style={{ background: 'rgba(131,214,255,0.1)', border: '1px solid rgba(131,214,255,0.2)' }}
               >
-                <Clock size={20} color="#83D6FF" className="mx-auto mb-2" />
-                <p className="text-lg font-black text-white">{duration}</p>
+                <Clock size={16} color="#83D6FF" className="mx-auto mb-1" />
+                <p className="text-base font-black text-white">{duration}</p>
                 <p className="text-xs text-white/50">learned</p>
               </div>
               <div 
-                className="p-4 rounded-2xl"
+                className="p-3 rounded-xl"
                 style={{ background: 'rgba(125,235,163,0.1)', border: '1px solid rgba(125,235,163,0.2)' }}
               >
-                <CheckCircle size={20} color="#7DEBA3" className="mx-auto mb-2" />
-                <p className="text-lg font-black text-white">{lessonsCompleted}</p>
+                <CheckCircle size={16} color="#7DEBA3" className="mx-auto mb-1" />
+                <p className="text-base font-black text-white">{lessonsCompleted}</p>
                 <p className="text-xs text-white/50">lessons</p>
               </div>
               <div 
-                className="p-4 rounded-2xl"
+                className="p-3 rounded-xl"
                 style={{ background: 'rgba(169,139,255,0.1)', border: '1px solid rgba(169,139,255,0.2)' }}
               >
-                <Target size={20} color="#A98BFF" className="mx-auto mb-2" />
-                <p className="text-lg font-black text-white">{projectsCompleted}</p>
+                <Target size={16} color="#A98BFF" className="mx-auto mb-1" />
+                <p className="text-base font-black text-white">{projectsCompleted}</p>
                 <p className="text-xs text-white/50">projects</p>
               </div>
             </div>
 
             {/* Achievement badges */}
-            <div className="flex justify-center gap-2 mb-6 flex-wrap">
+            <div className="flex justify-center gap-1.5 mb-4 flex-wrap">
               <div 
-                className="px-3 py-1.5 rounded-full text-xs font-bold flex items-center gap-1"
+                className="px-2.5 py-1 rounded-full text-xs font-bold flex items-center gap-1"
                 style={{ background: 'rgba(215,255,84,0.15)', color: '#D7FF54' }}
               >
-                <Trophy size={14} /> Certificate Earned
+                <Trophy size={12} /> Certificate Earned
               </div>
               <div 
-                className="px-3 py-1.5 rounded-full text-xs font-bold flex items-center gap-1"
+                className="px-2.5 py-1 rounded-full text-xs font-bold flex items-center gap-1"
                 style={{ background: 'rgba(131,214,255,0.15)', color: '#83D6FF' }}
               >
-                <Award size={14} /> Resume Ready
+                <Award size={12} /> Resume Ready
               </div>
               <div 
-                className="px-3 py-1.5 rounded-full text-xs font-bold flex items-center gap-1"
+                className="px-2.5 py-1 rounded-full text-xs font-bold flex items-center gap-1"
                 style={{ background: 'rgba(255,109,112,0.15)', color: '#FF6D70' }}
               >
-                <GraduationCap size={14} /> Knowledge Gained
+                <GraduationCap size={12} /> Knowledge Gained
               </div>
             </div>
 
             {/* Action buttons */}
-            <div className="space-y-3">
+            <div className="space-y-2">
               <button
                 onClick={() => onViewCertificate(certificateTemplate)}
-                className="w-full flex items-center justify-center gap-2 px-6 py-4 rounded-2xl font-bold text-sm transition-all duration-200 hover:opacity-90 active:scale-95"
+                className="w-full flex items-center justify-center gap-2 px-5 py-3 rounded-xl font-bold text-sm transition-all duration-200 hover:opacity-90 active:scale-95"
                 style={{ 
                   background: 'linear-gradient(135deg, #D7FF54 0%, #A98BFF 100%)',
                   color: '#111',
                   boxShadow: '0 8px 24px rgba(215,255,84,0.3)'
                 }}
               >
-                <Award size={18} />
+                <Award size={16} />
                 View Certificate
-                <ArrowRight size={18} />
+                <ArrowRight size={16} />
               </button>
 
               <button
                 onClick={handleDownloadCertificate}
-                className="w-full flex items-center justify-center gap-2 px-6 py-4 rounded-2xl font-bold text-sm transition-all duration-200 hover:bg-white/10 active:scale-95"
+                className="w-full flex items-center justify-center gap-2 px-5 py-3 rounded-xl font-bold text-sm transition-all duration-200 hover:bg-white/10 active:scale-95"
                 style={{ 
                   background: 'rgba(255,255,255,0.1)',
                   color: 'white',
@@ -338,27 +329,27 @@ export default function CompletionCelebration({
                   boxShadow: '0 4px 16px rgba(215,255,84,0.2)'
                 }}
               >
-                <Download size={18} />
+                <Download size={16} />
                 Download Certificate
               </button>
 
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-2 gap-2">
                 <button
                   onClick={handleShare}
-                  className="flex items-center justify-center gap-2 px-4 py-3 rounded-2xl font-semibold text-sm transition-all duration-200 hover:bg-white/20"
+                  className="flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl font-semibold text-sm transition-all duration-200 hover:bg-white/20"
                   style={{ 
                     background: 'rgba(255,255,255,0.1)',
                     color: 'white',
                     border: '1px solid rgba(255,255,255,0.2)'
                   }}
                 >
-                  <Share2 size={16} />
+                  <Share2 size={14} />
                   Share
                 </button>
 
                 <button
                   onClick={onContinueLearning}
-                  className="flex items-center justify-center gap-2 px-4 py-3 rounded-2xl font-semibold text-sm transition-all duration-200 hover:bg-white/20"
+                  className="flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl font-semibold text-sm transition-all duration-200 hover:bg-white/20"
                   style={{ 
                     background: 'rgba(255,255,255,0.1)',
                     color: 'white',
@@ -366,13 +357,13 @@ export default function CompletionCelebration({
                   }}
                 >
                   Continue Learning
-                  <ArrowRight size={16} />
+                  <ArrowRight size={14} />
                 </button>
               </div>
             </div>
 
             {/* Motivational footer */}
-            <p className="text-white/40 text-xs mt-6 italic">
+            <p className="text-white/40 text-xs mt-4 italic">
               "Every accomplishment starts with the decision to try."
             </p>
           </div>

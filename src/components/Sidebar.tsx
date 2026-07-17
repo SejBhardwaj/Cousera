@@ -45,21 +45,21 @@ interface SidebarProps {
 }
 
 const navItems: NavItem[] = [
-  { icon: <Home size={22} strokeWidth={2} />, label: 'Home', page: 'home' },
-  { icon: <Search size={22} strokeWidth={2} />, label: 'Explore', page: 'explore' },
-  { icon: <Grid3x3 size={22} strokeWidth={2} />, label: 'Categories', page: 'categories' },
-  { icon: <BookOpen size={22} strokeWidth={2} />, label: 'My Learning', page: 'my-learning' },
-  { icon: <Award size={22} strokeWidth={2} />, label: 'Certificates', page: 'certificates' },
-  { icon: <TrendingUp size={22} strokeWidth={2} />, label: 'Career Paths', page: 'career-paths' },
-  { icon: <GraduationCap size={22} strokeWidth={2} />, label: 'Degrees', page: 'degrees' },
-  { icon: <Users size={22} strokeWidth={2} />, label: 'Community', page: 'community' },
-  { icon: <MessageSquare size={22} strokeWidth={2} />, label: 'Messages', page: 'messages' },
-  { icon: <Calendar size={22} strokeWidth={2} />, label: 'Calendar', page: 'calendar' },
+  { icon: <Home size={18} strokeWidth={2} />, label: 'Home', page: 'home' },
+  { icon: <Search size={18} strokeWidth={2} />, label: 'Explore', page: 'explore' },
+  { icon: <Grid3x3 size={18} strokeWidth={2} />, label: 'Categories', page: 'categories' },
+  { icon: <BookOpen size={18} strokeWidth={2} />, label: 'My Learning', page: 'my-learning' },
+  { icon: <Award size={18} strokeWidth={2} />, label: 'Certificates', page: 'certificates' },
+  { icon: <TrendingUp size={18} strokeWidth={2} />, label: 'Career Paths', page: 'career-paths' },
+  { icon: <GraduationCap size={18} strokeWidth={2} />, label: 'Degrees', page: 'degrees' },
+  { icon: <Users size={18} strokeWidth={2} />, label: 'Community', page: 'community' },
+  { icon: <MessageSquare size={18} strokeWidth={2} />, label: 'Messages', page: 'messages' },
+  { icon: <Calendar size={18} strokeWidth={2} />, label: 'Calendar', page: 'calendar' },
 ];
 
 const bottomItems: NavItem[] = [
-  { icon: <Bell size={22} strokeWidth={2} />, label: 'Notifications', page: 'notifications' },
-  { icon: <Settings size={22} strokeWidth={2} />, label: 'Settings', page: 'settings' },
+  { icon: <Bell size={18} strokeWidth={2} />, label: 'Notifications', page: 'notifications' },
+  { icon: <Settings size={18} strokeWidth={2} />, label: 'Settings', page: 'settings' },
 ];
 
 export default function Sidebar({ activePage, onNavigate, mobile = false }: SidebarProps) {
@@ -115,20 +115,19 @@ export default function Sidebar({ activePage, onNavigate, mobile = false }: Side
   // Desktop version - icon sidebar
   return (
     <aside
-      className="flex flex-col items-center gap-1 py-5 px-3 m-3 sticky top-3 overflow-visible"
+      className="flex flex-col items-center gap-0 py-3 px-2 m-3 sticky top-3"
       style={{
         background: '#111111',
         borderRadius: '28px',
-        width: '68px',
-        minWidth: '68px',
+        width: '60px',
+        minWidth: '60px',
         boxShadow: '0 8px 40px rgba(0,0,0,0.25)',
         zIndex: 10000,
         maxHeight: 'calc(100vh - 24px)',
-        paddingTop: '16px',
       }}
     >
       {/* Main Nav */}
-      <nav className="flex flex-col gap-1.5 flex-1 w-full overflow-visible">
+      <nav className="flex flex-col gap-0 flex-1 w-full overflow-visible">
         {navItems.map((item) => {
           const isActive = activePage === item.page;
           return (
@@ -173,10 +172,10 @@ export default function Sidebar({ activePage, onNavigate, mobile = false }: Side
       </nav>
 
       {/* Divider */}
-      <div className="w-8 h-px bg-white/10 my-2" />
+      <div className="w-7 h-px bg-white/10 my-1" />
 
       {/* Bottom Nav */}
-      <nav className="flex flex-col gap-1.5 w-full overflow-visible">
+      <nav className="flex flex-col gap-0 w-full overflow-visible">
         {bottomItems.map((item) => {
           const isActive = activePage === item.page && item.page !== 'home';
           return (
@@ -218,7 +217,7 @@ export default function Sidebar({ activePage, onNavigate, mobile = false }: Side
       </nav>
 
       {/* Streak Indicator */}
-      <div className="my-2 relative group">
+      <div className="my-1 relative group">
         <div
           className="w-11 h-11 rounded-full flex items-center justify-center"
           style={{ background: 'rgba(255,109,112,0.15)' }}
@@ -234,7 +233,7 @@ export default function Sidebar({ activePage, onNavigate, mobile = false }: Side
       <button
         onClick={() => onNavigate('profile')}
         title="Profile"
-        className="mt-2 group relative"
+        className="mt-1 group relative"
       >
         <img
           src="https://i.pravatar.cc/150?img=45"
