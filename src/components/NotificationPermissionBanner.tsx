@@ -2,7 +2,11 @@ import { useState } from 'react';
 import { Bell, X } from 'lucide-react';
 import { useReminder } from '../contexts/ReminderContext';
 
-export default function NotificationPermissionBanner() {
+interface NotificationPermissionBannerProps {
+  onEnableClick?: () => void; // Callback when Enable is clicked
+}
+
+export default function NotificationPermissionBanner({ onEnableClick }: NotificationPermissionBannerProps) {
   const { notificationPermission, requestPermission } = useReminder();
   const [isDismissed, setIsDismissed] = useState(false);
 
@@ -18,7 +22,12 @@ export default function NotificationPermissionBanner() {
 
   const handleEnable = async () => {
     const permission = await requestPermission();
-    if (permission === 'denied') {
+    if (permission === 'granted') {
+      // Permission granted, now open reminder modal if callback provided
+      if (onEnableClick) {
+        onEnableClick();
+      }
+    } else if (permission === 'denied') {
       alert('⚠️ Notifications blocked. Please enable them in your browser settings.');
     }
   };

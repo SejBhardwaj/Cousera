@@ -36,8 +36,16 @@ const difficultyColors = {
 export default function CourseCard({ course, onClick, compact = false, isOfflineAvailable = false }: CourseCardProps) {
   const [bookmarked, setBookmarked] = useState(false);
   const [hovered, setHovered] = useState(false);
+  const [imageError, setImageError] = useState(false);
 
   const diff = difficultyColors[course.difficulty];
+
+  // Fallback image based on category color
+  const getFallbackImage = () => {
+    return `data:image/svg+xml,%3Csvg width='1200' height='800' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='1200' height='800' fill='${encodeURIComponent(course.categoryColor)}'/%3E%3Ctext x='50%25' y='50%25' font-family='Arial' font-size='48' font-weight='bold' fill='white' text-anchor='middle' dy='.3em'%3E${encodeURIComponent(course.title.slice(0, 30))}%3C/text%3E%3C/svg%3E`;
+  };
+
+  const thumbnailSrc = imageError ? getFallbackImage() : course.thumbnail;
 
   if (compact) {
     return (
@@ -54,10 +62,11 @@ export default function CourseCard({ course, onClick, compact = false, isOffline
       >
         <div className="relative h-36 overflow-hidden">
           <img
-            src={course.thumbnail}
+            src={thumbnailSrc}
             alt={course.title}
             className="w-full h-full object-cover transition-transform duration-500"
             style={{ transform: hovered ? 'scale(1.06)' : 'scale(1)' }}
+            onError={() => setImageError(true)}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
           <span
@@ -130,10 +139,11 @@ export default function CourseCard({ course, onClick, compact = false, isOffline
       {/* Thumbnail */}
       <div className="relative h-48 overflow-hidden">
         <img
-          src={course.thumbnail}
+          src={thumbnailSrc}
           alt={course.title}
           className="w-full h-full object-cover transition-transform duration-500"
           style={{ transform: hovered ? 'scale(1.07)' : 'scale(1)' }}
+          onError={() => setImageError(true)}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
 

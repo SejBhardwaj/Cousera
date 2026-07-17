@@ -2238,7 +2238,7 @@ example();`,
     <div className="flex-1 py-4 px-4 md:pr-4 md:pl-2 overflow-y-auto no-scrollbar space-y-5 animate-in">
 
       {/* Notification Permission Banner */}
-      <NotificationPermissionBanner />
+      <NotificationPermissionBanner onEnableClick={() => setShowReminderModal(true)} />
 
       {/* Offline Warning */}
       {!isOnline && !courseOffline && (
