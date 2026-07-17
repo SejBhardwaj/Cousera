@@ -131,34 +131,50 @@ export default function MyLearning({ onCourseClick }: { onCourseClick: (id: stri
             <h2 className="text-card-title text-text">Weekly Activity</h2>
             <span className="text-xs text-muted">14.3h this week</span>
           </div>
-          <div className="flex items-end gap-3 h-40">
-            {WEEKLY_DATA.map((d, i) => (
-              <div key={d.day} className="flex-1 flex flex-col items-center gap-2">
-                <div className="text-xs font-bold text-text opacity-0 group-hover:opacity-100" style={{ height: '16px' }}>
-                  {d.hours}h
+          <div className="space-y-6 py-4">
+            {WEEKLY_DATA.map((d, i) => {
+              const widthPercent = (d.hours / maxHours) * 100;
+              return (
+                <div key={d.day} className="flex items-center gap-4">
+                  {/* Day label */}
+                  <span className="text-sm text-muted font-medium w-12">{d.day}</span>
+                  
+                  {/* Horizontal capsule bar */}
+                  <div className="flex-1 h-12 relative bg-gray-100 rounded-full overflow-hidden">
+                    <div 
+                      className="absolute left-0 top-0 h-full rounded-full transition-all duration-700 ease-out"
+                      style={{ 
+                        width: `${widthPercent}%`,
+                        minWidth: '48px',
+                        background: i === 2 || i === 6 
+                          ? 'linear-gradient(to right, #D7FF54 0%, #A98BFF 100%)' 
+                          : 'linear-gradient(to right, #E8E8F0 0%, #D0D0E0 100%)',
+                      }}
+                    >
+                      {/* Glossy effect */}
+                      <div 
+                        className="absolute inset-0 opacity-30"
+                        style={{
+                          background: 'linear-gradient(to bottom, rgba(255,255,255,0.9) 0%, transparent 50%, rgba(0,0,0,0.1) 100%)'
+                        }}
+                      />
+                    </div>
+                  </div>
+                  
+                  {/* Hours value */}
+                  <span className="text-sm font-bold text-text w-12 text-right">{d.hours}h</span>
                 </div>
-                <div className="w-full flex flex-col items-center">
-                  <div
-                    className="w-full rounded-2xl transition-all duration-700"
-                    style={{
-                      height: `${(d.hours / maxHours) * 120}px`,
-                      background: i === 2 ? '#D7FF54' : i === 6 ? '#A98BFF' : '#F0F0F5',
-                      minHeight: '8px',
-                    }}
-                  />
-                </div>
-                <span className="text-xs text-muted font-medium">{d.day}</span>
-              </div>
-            ))}
+              );
+            })}
           </div>
           <div className="flex items-center gap-4 mt-4 pt-4 border-t border-border">
             <div className="flex items-center gap-2">
-              <div className="w-3 h-3 rounded-full" style={{ background: '#D7FF54' }} />
-              <span className="text-xs text-muted">Best day</span>
+              <div className="w-3 h-3 rounded-full" style={{ background: 'linear-gradient(to right, #D7FF54 0%, #A98BFF 100%)' }} />
+              <span className="text-xs text-muted">Best days</span>
             </div>
             <div className="flex items-center gap-2">
-              <div className="w-3 h-3 rounded-full" style={{ background: '#A98BFF' }} />
-              <span className="text-xs text-muted">This week avg</span>
+              <div className="w-3 h-3 rounded-full bg-gray-200" />
+              <span className="text-xs text-muted">Average</span>
             </div>
           </div>
         </div>
