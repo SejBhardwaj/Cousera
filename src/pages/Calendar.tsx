@@ -1,5 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Calendar as CalendarIcon, ChevronLeft, ChevronRight, Clock, Bell, TrendingUp, Award, BookOpen, Plus, X, Check } from 'lucide-react';
+import { useReminder } from '../contexts/ReminderContext';
+import { CourseReminder } from '../utils/reminderStorage';
 
 type CalendarEvent = {
   id: string;
@@ -77,6 +79,7 @@ const EVENTS: CalendarEvent[] = [
 ];
 
 export default function Calendar() {
+  const { reminders, setReminder } = useReminder();
   const [currentDate, setCurrentDate] = useState(new Date(2026, 6, 16)); // July 16, 2026
   const [selectedDate, setSelectedDate] = useState<Date | null>(new Date(2026, 6, 16));
   const [events, setEvents] = useState<CalendarEvent[]>(EVENTS);
@@ -88,6 +91,25 @@ export default function Calendar() {
     course: '',
     type: 'reminder',
   });
+
+  // Convert course reminders to calendar events
+  useEffect(() => {
+    // Only include reminders that haven't been notified yet and are in the future
+    const courseReminderEvents: CalendarEvent[] = reminders
+      .filter((reminder) => !reminder.notified && new Date(reminder.reminderTime) > today)
+      .map((reminder) => ({
+        id: reminder.id,
+        title: `Study: ${reminder.courseName}`,
+        date: new Date(reminder.reminderTime),
+        time: new Date(reminder.reminderTime).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true }),
+        type: 'reminder' as const,
+        course: reminder.courseName,
+        color: '#A98BFF',
+      }));
+
+    // Merge static events with active course reminders only
+    setEvents([...EVENTS, ...courseReminderEvents]);
+  }, [reminders]);
 
   const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
   const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
@@ -147,12 +169,12 @@ export default function Calendar() {
   // Learning activity for the week (sample data)
   const weeklyActivity = [
     { day: 'Mon', hours: 2.5 },
-    { day: 'Tue', hours: 3.2 },
-    { day: 'Wed', hours: 1.8 },
-    { day: 'Thu', hours: 4.1 },
-    { day: 'Fri', hours: 2.9 },
-    { day: 'Sat', hours: 3.5 },
-    { day: 'Sun', hours: 2.0 },
+    { day: 'Tue', hours: 4.2 },
+    { day: 'Wed', hours: 1.3 },
+    { day: 'Thu', hours: 5.1 },
+    { day: 'Fri', hours: 3.0 },
+    { day: 'Sat', hours: 4.8 },
+    { day: 'Sun', hours: 1.8 },
   ];
 
   const maxHours = Math.max(...weeklyActivity.map((d) => d.hours));
@@ -164,25 +186,52 @@ export default function Calendar() {
     }
 
     const [year, month, day] = reminderForm.date.split('-').map(Number);
-    const newEvent: CalendarEvent = {
-      id: Date.now().toString(),
-      title: reminderForm.title,
-      date: new Date(year, month - 1, day),
-      time: reminderForm.time,
-      type: reminderForm.type,
-      course: reminderForm.course || 'Personal',
-      color: reminderForm.type === 'reminder' ? '#83D6FF' : '#D7FF54',
+    const [hours, minutes] = reminderForm.time.split(':').map(Number);
+    
+    // Create Date object with the exact date and time
+    const reminderDateTime = new Date(year, month - 1, day, hours, minutes, 0);
+    
+    // Create a CourseReminder object for the reminder system
+    const courseReminder: CourseReminder = {
+      id: `reminder-${Date.now()}`,
+      courseId: reminderForm.course || 'general',
+      courseName: reminderForm.course || reminderForm.title,
+      reminderTime: reminderDateTime.getTime(),
+      createdAt: Date.now(),
+      notified: false,
     };
 
-    setEvents([...events, newEvent]);
-    setShowReminderModal(false);
-    setReminderForm({
-      title: '',
-      date: '',
-      time: '',
-      course: '',
-      type: 'reminder',
-    });
+    // Save to the reminder system (will trigger notifications)
+    const success = setReminder(courseReminder);
+    
+    if (success) {
+      console.log('✅ Reminder created successfully:', courseReminder);
+      
+      // Also add to local calendar events for immediate display
+      const newEvent: CalendarEvent = {
+        id: courseReminder.id,
+        title: reminderForm.title,
+        date: reminderDateTime,
+        time: reminderDateTime.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true }),
+        type: reminderForm.type,
+        course: reminderForm.course || 'Personal',
+        color: reminderForm.type === 'reminder' ? '#A98BFF' : '#D7FF54',
+      };
+
+      setEvents([...events, newEvent]);
+      setShowReminderModal(false);
+      setReminderForm({
+        title: '',
+        date: '',
+        time: '',
+        course: '',
+        type: 'reminder',
+      });
+      
+      alert(`✅ Reminder set for ${reminderDateTime.toLocaleString()}. You'll be notified at that time!`);
+    } else {
+      alert('❌ Failed to create reminder. Please try again.');
+    }
   };
 
   return (
@@ -272,26 +321,29 @@ export default function Calendar() {
               +15.6%
             </span>
           </div>
-          <div className="flex items-end justify-between gap-3 h-48">
-            {weeklyActivity.map((day) => (
-              <div key={day.day} className="flex-1 flex flex-col items-center gap-2">
-                <div className="w-full flex flex-col justify-end flex-1">
-                  <div
-                    className="w-full rounded-t-xl transition-all hover:opacity-80 cursor-pointer relative group"
-                    style={{
-                      height: `${(day.hours / maxHours) * 100}%`,
-                      background: 'linear-gradient(180deg, #A98BFF 0%, #D7FF54 100%)',
-                      minHeight: '20px',
-                    }}
-                  >
-                    <div className="absolute -top-8 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity bg-text text-white px-2 py-1 rounded-lg text-xs font-bold whitespace-nowrap">
-                      {day.hours}h
+          <div className="flex items-end justify-between gap-3" style={{ height: '192px' }}>
+            {weeklyActivity.map((day) => {
+              const heightPercentage = (day.hours / maxHours) * 100;
+              
+              return (
+                <div key={day.day} className="flex-1 flex flex-col items-center gap-2">
+                  <div className="w-full flex items-end" style={{ height: '160px' }}>
+                    <div
+                      className="w-full rounded-t-xl transition-all hover:opacity-80 cursor-pointer relative group"
+                      style={{
+                        height: `${heightPercentage}%`,
+                        background: 'linear-gradient(180deg, #A98BFF 0%, #D7FF54 100%)',
+                      }}
+                    >
+                      <div className="absolute -top-8 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity bg-text text-white px-2 py-1 rounded-lg text-xs font-bold whitespace-nowrap z-10">
+                        {day.hours}h
+                      </div>
                     </div>
                   </div>
+                  <span className="text-xs font-semibold text-muted">{day.day}</span>
                 </div>
-                <span className="text-xs font-semibold text-muted">{day.day}</span>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
 
@@ -485,12 +537,103 @@ export default function Calendar() {
         </div>
       </div>
 
+      {/* Course Reminders Section */}
+      {reminders.length > 0 && (
+        <div className="card-static p-6 rounded-4xl">
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center gap-2">
+              <div className="w-10 h-10 rounded-2xl flex items-center justify-center" style={{ background: '#EDE9FF' }}>
+                <Bell size={18} color="#A98BFF" />
+              </div>
+              <div>
+                <h2 className="font-bold text-lg text-text">Course Reminders</h2>
+                <p className="text-xs text-muted">
+                  {reminders.filter(r => !r.notified && new Date(r.reminderTime) > today).length} active · {' '}
+                  {reminders.filter(r => r.notified || new Date(r.reminderTime) <= today).length} completed
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+            {reminders
+              .sort((a, b) => {
+                // Active reminders first, then sort by date
+                const aActive = !a.notified && new Date(a.reminderTime) > today;
+                const bActive = !b.notified && new Date(b.reminderTime) > today;
+                if (aActive && !bActive) return -1;
+                if (!aActive && bActive) return 1;
+                return new Date(b.reminderTime).getTime() - new Date(a.reminderTime).getTime();
+              })
+              .map((reminder) => {
+              const reminderDate = new Date(reminder.reminderTime);
+              const isPast = reminderDate <= today;
+              const isNotified = reminder.notified;
+              const isActive = !isNotified && !isPast;
+              
+              return (
+                <div
+                  key={reminder.id}
+                  className="p-4 rounded-3xl border-2 transition-all hover:shadow-md relative"
+                  style={{ 
+                    background: isActive ? '#EDE9FF' : '#F6F6F8',
+                    borderColor: isActive ? '#A98BFF' : '#E0E0E0',
+                    opacity: isActive ? 1 : 0.5
+                  }}
+                >
+                  <div className="flex items-start justify-between mb-3">
+                    <div className="flex-1">
+                      <h4 className="font-bold text-sm text-text mb-1">{reminder.courseName}</h4>
+                      <p className="text-xs text-muted">Course ID: {reminder.courseId}</p>
+                    </div>
+                    <div 
+                      className="w-8 h-8 rounded-xl flex items-center justify-center flex-shrink-0"
+                      style={{ background: isActive ? '#A98BFF' : '#E0E0E0' }}
+                    >
+                      {isNotified ? (
+                        <Check size={14} color="white" />
+                      ) : (
+                        <Bell size={14} color="white" />
+                      )}
+                    </div>
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-2 text-xs font-semibold text-text">
+                      <CalendarIcon size={12} color="#6B6B7B" />
+                      <span>{reminderDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-xs font-semibold text-text">
+                      <Clock size={12} color="#6B6B7B" />
+                      <span>{reminderDate.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true })}</span>
+                    </div>
+                  </div>
+
+                  <div className="mt-3 pt-3 border-t border-border">
+                    {isNotified && (
+                      <span className="text-xs font-bold text-green-600">✓ Reminder Sent</span>
+                    )}
+                    {isPast && !isNotified && (
+                      <span className="text-xs font-bold text-muted">⏰ Expired</span>
+                    )}
+                    {isActive && (
+                      <span className="text-xs font-bold" style={{ color: '#A98BFF' }}>
+                        📚 Active
+                      </span>
+                    )}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      )}
+
       {/* Reminder Modal */}
       {showReminderModal && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-4xl p-6 max-w-md w-full animate-in">
+          <div className="bg-white rounded-3xl p-6 max-w-lg w-full animate-in">
             <div className="flex items-center justify-between mb-5">
-              <h2 className="font-bold text-lg text-text">Create Reminder</h2>
+              <h2 className="font-black text-xl text-text">Create Reminder</h2>
               <button
                 onClick={() => setShowReminderModal(false)}
                 className="w-8 h-8 rounded-xl flex items-center justify-center hover:bg-bg transition-colors"
@@ -501,51 +644,51 @@ export default function Calendar() {
 
             <div className="space-y-4">
               <div>
-                <label className="block text-xs font-bold text-text mb-2">Title *</label>
+                <label className="block text-sm font-bold text-text mb-2">Title *</label>
                 <input
                   type="text"
                   value={reminderForm.title}
                   onChange={(e) => setReminderForm({ ...reminderForm, title: e.target.value })}
                   placeholder="e.g., Study Session"
-                  className="w-full px-4 py-2.5 rounded-2xl text-sm bg-bg border border-transparent focus:border-purple focus:bg-white outline-none"
+                  className="w-full px-4 py-3 rounded-2xl text-sm bg-bg border-2 border-transparent focus:border-purple focus:bg-white outline-none transition-all"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-text mb-2">Course</label>
+                <label className="block text-sm font-bold text-text mb-2">Course</label>
                 <input
                   type="text"
                   value={reminderForm.course}
                   onChange={(e) => setReminderForm({ ...reminderForm, course: e.target.value })}
                   placeholder="e.g., Machine Learning"
-                  className="w-full px-4 py-2.5 rounded-2xl text-sm bg-bg border border-transparent focus:border-purple focus:bg-white outline-none"
+                  className="w-full px-4 py-3 rounded-2xl text-sm bg-bg border-2 border-transparent focus:border-purple focus:bg-white outline-none transition-all"
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-xs font-bold text-text mb-2">Date *</label>
+                  <label className="block text-sm font-bold text-text mb-2">Date *</label>
                   <input
                     type="date"
                     value={reminderForm.date}
                     onChange={(e) => setReminderForm({ ...reminderForm, date: e.target.value })}
-                    className="w-full px-4 py-2.5 rounded-2xl text-sm bg-bg border border-transparent focus:border-purple focus:bg-white outline-none"
+                    className="w-full px-4 py-3 rounded-2xl text-sm bg-bg border-2 border-transparent focus:border-purple focus:bg-white outline-none transition-all"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-bold text-text mb-2">Time *</label>
+                  <label className="block text-sm font-bold text-text mb-2">Time *</label>
                   <input
                     type="time"
                     value={reminderForm.time}
                     onChange={(e) => setReminderForm({ ...reminderForm, time: e.target.value })}
-                    className="w-full px-4 py-2.5 rounded-2xl text-sm bg-bg border border-transparent focus:border-purple focus:bg-white outline-none"
+                    className="w-full px-4 py-3 rounded-2xl text-sm bg-bg border-2 border-transparent focus:border-purple focus:bg-white outline-none transition-all"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-text mb-2">Type</label>
-                <div className="grid grid-cols-2 gap-2">
+                <label className="block text-sm font-bold text-text mb-2">Type</label>
+                <div className="grid grid-cols-2 gap-3">
                   {[
                     { value: 'reminder', label: 'Reminder' },
                     { value: 'lesson', label: 'Lesson' },
@@ -553,7 +696,7 @@ export default function Calendar() {
                     <button
                       key={type.value}
                       onClick={() => setReminderForm({ ...reminderForm, type: type.value as CalendarEvent['type'] })}
-                      className={`px-4 py-2.5 rounded-2xl text-sm font-bold transition-all ${
+                      className={`px-4 py-3 rounded-2xl text-sm font-bold transition-all ${
                         reminderForm.type === type.value
                           ? 'bg-text text-white'
                           : 'bg-bg text-muted hover:bg-border'
@@ -569,7 +712,7 @@ export default function Calendar() {
             <div className="flex gap-3 mt-6">
               <button
                 onClick={handleCreateReminder}
-                className="flex-1 px-6 py-3 rounded-2xl text-sm font-bold transition-all hover:opacity-90 flex items-center justify-center gap-2"
+                className="flex-1 px-5 py-3 rounded-2xl text-sm font-bold transition-all hover:opacity-90 flex items-center justify-center gap-2"
                 style={{ background: '#D7FF54', color: '#111' }}
               >
                 <Check size={16} />
@@ -577,7 +720,7 @@ export default function Calendar() {
               </button>
               <button
                 onClick={() => setShowReminderModal(false)}
-                className="px-6 py-3 rounded-2xl text-sm font-bold bg-bg text-text hover:bg-border transition-all"
+                className="px-5 py-3 rounded-2xl text-sm font-bold bg-bg text-text hover:bg-border transition-all"
               >
                 Cancel
               </button>

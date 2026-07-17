@@ -36,7 +36,7 @@ export default function InAppNotification({ courseName, onViewCourse, onClose }:
 
   return (
     <div
-      className="fixed top-20 left-1/2 z-[100000] transition-all duration-300"
+      className="fixed top-4 left-1/2 z-[100000] transition-all duration-300"
       style={{
         transform: show 
           ? 'translate(-50%, 0) scale(1)' 
@@ -47,11 +47,11 @@ export default function InAppNotification({ courseName, onViewCourse, onClose }:
       <div
         className="rounded-full px-6 py-4 shadow-2xl flex items-center gap-4"
         style={{
-          background: 'rgba(255, 255, 255, 0.1)',
-          backdropFilter: 'blur(20px)',
-          WebkitBackdropFilter: 'blur(20px)',
-          border: '1px solid rgba(255, 255, 255, 0.2)',
-          boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3)',
+          background: 'rgba(0, 0, 0, 0.7)',
+          backdropFilter: 'blur(30px) saturate(180%)',
+          WebkitBackdropFilter: 'blur(30px) saturate(180%)',
+          border: '1px solid rgba(255, 255, 255, 0.15)',
+          boxShadow: '0 12px 48px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1)',
           minWidth: '500px',
           maxWidth: '600px',
           animation: 'slideDown 0.4s ease-out',

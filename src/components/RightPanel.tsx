@@ -92,7 +92,16 @@ export default function RightPanel() {
       style={{ paddingTop: '16px' }}
     >
       {/* Today's Goal */}
-      <div className="card-static p-5 rounded-3xl">
+      <div 
+        className="p-5 rounded-3xl"
+        style={{
+          background: 'rgba(255, 255, 255, 0.6)',
+          backdropFilter: 'blur(20px) saturate(180%)',
+          WebkitBackdropFilter: 'blur(20px) saturate(180%)',
+          border: '1px solid rgba(255, 255, 255, 0.8)',
+          boxShadow: '0 8px 32px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.8)',
+        }}
+      >
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 rounded-2xl flex items-center justify-center" style={{ background: '#EDE9FF' }}>
@@ -125,7 +134,16 @@ export default function RightPanel() {
       </div>
 
       {/* Weekly Progress */}
-      <div className="card-static p-5 rounded-3xl">
+      <div 
+        className="p-5 rounded-3xl"
+        style={{
+          background: 'rgba(255, 255, 255, 0.6)',
+          backdropFilter: 'blur(20px) saturate(180%)',
+          WebkitBackdropFilter: 'blur(20px) saturate(180%)',
+          border: '1px solid rgba(255, 255, 255, 0.8)',
+          boxShadow: '0 8px 32px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.8)',
+        }}
+      >
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 rounded-2xl flex items-center justify-center" style={{ background: '#ECFDF5' }}>
@@ -199,7 +217,16 @@ export default function RightPanel() {
       </div>
 
       {/* Upcoming Deadlines */}
-      <div className="card-static p-5 rounded-3xl">
+      <div 
+        className="p-5 rounded-3xl"
+        style={{
+          background: 'rgba(255, 255, 255, 0.6)',
+          backdropFilter: 'blur(20px) saturate(180%)',
+          WebkitBackdropFilter: 'blur(20px) saturate(180%)',
+          border: '1px solid rgba(255, 255, 255, 0.8)',
+          boxShadow: '0 8px 32px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.8)',
+        }}
+      >
         <div className="flex items-center gap-2 mb-4">
           <div className="w-8 h-8 rounded-2xl flex items-center justify-center" style={{ background: '#FFF0F0' }}>
             <Calendar size={15} color="#FF6D70" />
@@ -229,7 +256,16 @@ export default function RightPanel() {
       <StudyTimer />
 
       {/* Certificates */}
-      <div className="card-static p-5 rounded-3xl">
+      <div 
+        className="p-5 rounded-3xl"
+        style={{
+          background: 'rgba(255, 255, 255, 0.6)',
+          backdropFilter: 'blur(20px) saturate(180%)',
+          WebkitBackdropFilter: 'blur(20px) saturate(180%)',
+          border: '1px solid rgba(255, 255, 255, 0.8)',
+          boxShadow: '0 8px 32px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.8)',
+        }}
+      >
         <div className="flex items-center gap-2 mb-4">
           <div className="w-8 h-8 rounded-2xl flex items-center justify-center" style={{ background: '#FFF7ED' }}>
             <Trophy size={15} color="#F59E0B" />
@@ -252,7 +288,16 @@ export default function RightPanel() {
       </div>
 
       {/* Bookmarks */}
-      <div className="card-static p-5 rounded-3xl">
+      <div 
+        className="p-5 rounded-3xl"
+        style={{
+          background: 'rgba(255, 255, 255, 0.6)',
+          backdropFilter: 'blur(20px) saturate(180%)',
+          WebkitBackdropFilter: 'blur(20px) saturate(180%)',
+          border: '1px solid rgba(255, 255, 255, 0.8)',
+          boxShadow: '0 8px 32px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.8)',
+        }}
+      >
         <div className="flex items-center gap-2 mb-3">
           <div className="w-8 h-8 rounded-2xl flex items-center justify-center" style={{ background: '#EFF6FF' }}>
             <BookMarked size={15} color="#3B82F6" />
