@@ -67,6 +67,7 @@ function AppContent() {
       case 'course-detail':
         return (
           <CourseDetail
+            courseId={selectedCourseId}
             onBack={() => setActivePage('explore')}
             onNavigate={handleNavigate}
           />

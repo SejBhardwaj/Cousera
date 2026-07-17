@@ -14,7 +14,7 @@ const CATEGORIES = [
 
 const FEATURED_COURSES: Course[] = [
   {
-    id: 's1',
+    id: 'ml-specialization',
     title: 'Machine Learning Specialization',
     description: 'Master fundamental AI concepts and build intelligent systems. Learn supervised learning, neural networks, and best practices from industry leader Andrew Ng.',
     provider: 'Stanford Online',

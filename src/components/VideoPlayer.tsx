@@ -219,7 +219,7 @@ export default function VideoPlayer({
   const progressPercent = duration > 0 ? (currentTime / duration) * 100 : 0;
 
   return (
-    <div className="relative w-full bg-black rounded-3xl overflow-hidden group">
+    <div className="relative w-full h-full bg-black rounded-3xl overflow-hidden group flex items-center justify-center">
       {/* Video element */}
       <video
         ref={videoRef}
@@ -229,8 +229,9 @@ export default function VideoPlayer({
         onTimeUpdate={handleTimeUpdate}
         onEnded={handleEnded}
         onLoadedMetadata={handleLoadedMetadata}
-        className="w-full aspect-video"
+        className="w-full h-full object-cover"
         poster={thumbnailUrl}
+        style={{ maxHeight: '100%', minHeight: '100%' }}
       />
 
       {/* Resume prompt overlay */}
