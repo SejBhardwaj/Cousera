@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Calendar, MessageCircle, GraduationCap, Settings as SettingsIcon } from 'lucide-react';
+import { Calendar, MessageCircle, GraduationCap, Settings as SettingsIcon, Menu, X, Home as HomeIcon, Search, BookOpen, Grid3x3, User } from 'lucide-react';
 import Sidebar, { Page } from './components/Sidebar';
 import RightPanel from './components/RightPanel';
 import InAppNotification from './components/InAppNotification';
@@ -29,6 +29,7 @@ function AppContent() {
   const [activePage, setActivePage] = useState<Page>('home');
   const [selectedCourseId, setSelectedCourseId] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState<string>('');
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { dueReminderNotification, clearDueReminder } = useReminder();
 
   const handleNavigate = (page: Page, query?: string) => {
@@ -39,6 +40,9 @@ function AppContent() {
     } else if (page !== 'search') {
       setSearchQuery('');
     }
+    
+    // Close mobile menu when navigating
+    setMobileMenuOpen(false);
     
     // Scroll to top whenever navigating to a new page
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -102,16 +106,115 @@ function AppContent() {
       className="min-h-screen flex overflow-visible"
       style={{ background: '#F6F6F8' }}
     >
-      {/* Sidebar */}
-      <Sidebar activePage={activePage} onNavigate={handleNavigate} />
+      {/* Desktop Sidebar */}
+      <div className="hidden lg:block">
+        <Sidebar activePage={activePage} onNavigate={handleNavigate} />
+      </div>
+
+      {/* Mobile Header */}
+      <div className="lg:hidden fixed top-0 left-0 right-0 z-50 bg-white shadow-sm border-b border-border">
+        <div className="flex items-center justify-between px-4 py-3">
+          <img src="/logo.png" alt="Coursera" className="h-7" />
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors"
+          >
+            {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </div>
+      </div>
+
+      {/* Mobile Menu Overlay */}
+      {mobileMenuOpen && (
+        <div 
+          className="lg:hidden fixed inset-0 bg-black/50 z-40"
+          onClick={() => setMobileMenuOpen(false)}
+        >
+          <div 
+            className="absolute top-[57px] left-0 right-0 bg-white shadow-lg max-h-[calc(100vh-57px)] overflow-y-auto"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <Sidebar activePage={activePage} onNavigate={handleNavigate} mobile />
+          </div>
+        </div>
+      )}
 
       {/* Main Workspace */}
-      <main className="flex-1 flex min-h-screen">
+      <main className="flex-1 flex min-h-screen lg:pt-0 pt-[57px] pb-[65px] lg:pb-0">
         {renderPage()}
 
-        {/* Right Panel */}
-        {showRightPanel && <RightPanel />}
+        {/* Desktop Right Panel */}
+        {showRightPanel && (
+          <div className="hidden xl:block">
+            <RightPanel />
+          </div>
+        )}
       </main>
+
+      {/* Mobile Bottom Navigation */}
+      <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-border safe-area-bottom">
+        <div className="flex items-center justify-around px-2 py-2">
+          <button
+            onClick={() => handleNavigate('home')}
+            className="flex flex-col items-center justify-center gap-1 p-2 rounded-lg transition-colors min-w-[60px]"
+            style={{
+              color: activePage === 'home' ? '#111' : '#888',
+              background: activePage === 'home' ? '#D7FF54' : 'transparent',
+            }}
+          >
+            <HomeIcon size={20} strokeWidth={2.5} />
+            <span className="text-[10px] font-semibold">Home</span>
+          </button>
+          
+          <button
+            onClick={() => handleNavigate('explore')}
+            className="flex flex-col items-center justify-center gap-1 p-2 rounded-lg transition-colors min-w-[60px]"
+            style={{
+              color: activePage === 'explore' ? '#111' : '#888',
+              background: activePage === 'explore' ? '#D7FF54' : 'transparent',
+            }}
+          >
+            <Search size={20} strokeWidth={2.5} />
+            <span className="text-[10px] font-semibold">Explore</span>
+          </button>
+          
+          <button
+            onClick={() => handleNavigate('my-learning')}
+            className="flex flex-col items-center justify-center gap-1 p-2 rounded-lg transition-colors min-w-[60px]"
+            style={{
+              color: activePage === 'my-learning' ? '#111' : '#888',
+              background: activePage === 'my-learning' ? '#D7FF54' : 'transparent',
+            }}
+          >
+            <BookOpen size={20} strokeWidth={2.5} />
+            <span className="text-[10px] font-semibold">Learning</span>
+          </button>
+          
+          <button
+            onClick={() => handleNavigate('categories')}
+            className="flex flex-col items-center justify-center gap-1 p-2 rounded-lg transition-colors min-w-[60px]"
+            style={{
+              color: activePage === 'categories' ? '#111' : '#888',
+              background: activePage === 'categories' ? '#D7FF54' : 'transparent',
+            }}
+          >
+            <Grid3x3 size={20} strokeWidth={2.5} />
+            <span className="text-[10px] font-semibold">More</span>
+          </button>
+          
+          <button
+            onClick={() => handleNavigate('profile')}
+            className="flex flex-col items-center justify-center gap-1 p-2 rounded-lg transition-colors min-w-[60px]"
+            style={{
+              color: activePage === 'profile' ? '#111' : '#888',
+              background: activePage === 'profile' ? '#D7FF54' : 'transparent',
+            }}
+          >
+            <User size={20} strokeWidth={2.5} />
+            <span className="text-[10px] font-semibold">Profile</span>
+          </button>
+        </div>
+      </div>
 
       {/* In-App Reminder Notification */}
       {dueReminderNotification && (

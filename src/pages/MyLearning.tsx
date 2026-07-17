@@ -83,10 +83,10 @@ export default function MyLearning({ onCourseClick }: { onCourseClick: (id: stri
   const maxHours = Math.max(...WEEKLY_DATA.map((d) => d.hours));
 
   return (
-    <div className="flex-1 py-4 pr-4 pl-2 overflow-y-auto no-scrollbar space-y-5 animate-in">
+    <div className="flex-1 py-4 px-4 md:pr-4 md:pl-2 overflow-y-auto no-scrollbar space-y-5 animate-in">
 
       {/* Header Stats */}
-      <div className="grid grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
         {[
           { label: 'Courses Enrolled', value: '8', icon: <BookOpen size={18} color="#A98BFF" />, bg: '#EDE9FF', accent: '#A98BFF' },
           { label: 'Hours Learned', value: '142h', icon: <Clock size={18} color="#83D6FF" />, bg: '#E0F5FF', accent: '#83D6FF' },
@@ -109,7 +109,7 @@ export default function MyLearning({ onCourseClick }: { onCourseClick: (id: stri
           <h2 className="text-card-title text-text">In Progress</h2>
           <span className="tag text-xs" style={{ background: '#EDE9FF', color: '#A98BFF' }}>3 active</span>
         </div>
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {IN_PROGRESS.map((c) => (
             <CourseCard 
               key={c.id} 
@@ -290,3 +290,5 @@ export default function MyLearning({ onCourseClick }: { onCourseClick: (id: stri
     </div>
   );
 }
+
+

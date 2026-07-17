@@ -89,7 +89,7 @@ const DEMAND_COLORS: Record<string, { bg: string; text: string }> = {
 
 export default function CareerPaths() {
   return (
-    <div className="flex-1 py-4 pr-4 pl-2 overflow-y-auto no-scrollbar space-y-5 animate-in">
+    <div className="flex-1 py-4 px-4 md:pr-4 md:pl-2 overflow-y-auto no-scrollbar space-y-5 animate-in">
 
       {/* Hero */}
       <div
@@ -223,3 +223,5 @@ export default function CareerPaths() {
     </div>
   );
 }
+
+

@@ -1117,7 +1117,7 @@ export default function Explore({ onCourseClick }: { onCourseClick: (id: string)
   }, [activeCategory, search, level]);
 
   return (
-    <div className="flex-1 py-4 pr-4 pl-2 overflow-y-auto no-scrollbar space-y-5 animate-in">
+    <div className="flex-1 py-4 px-4 md:pr-4 md:pl-2 overflow-y-auto no-scrollbar space-y-5 animate-in">
 
       {/* Header */}
       <div className="card-static p-6 rounded-4xl">
@@ -1148,7 +1148,7 @@ export default function Explore({ onCourseClick }: { onCourseClick: (id: string)
 
         {/* Filters */}
         {filtersOpen && (
-          <div className="grid grid-cols-3 gap-3 mb-5 p-4 rounded-3xl" style={{ background: '#F6F6F8' }}>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-5 p-4 rounded-3xl" style={{ background: '#F6F6F8' }}>
             {[
               { label: 'Level', options: ['All Levels', 'Beginner', 'Intermediate', 'Advanced'], value: level, set: setLevel },
               { label: 'Duration', options: ['Any Duration', '< 1 month', '1-3 months', '3-6 months', '6+ months'], value: duration, set: setDuration },
@@ -1245,7 +1245,7 @@ export default function Explore({ onCourseClick }: { onCourseClick: (id: string)
           </div>
         ) : (
           <>
-            <div className="grid grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {filteredCourses.map((c) => (
                 <CourseCard 
                   key={c.id} 
@@ -1266,6 +1266,8 @@ export default function Explore({ onCourseClick }: { onCourseClick: (id: string)
     </div>
   );
 }
+
+
 
 
 

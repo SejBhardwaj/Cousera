@@ -83,7 +83,7 @@ const PROFESSIONAL_CERTS = [
 
 export default function Certificates() {
   return (
-    <div className="flex-1 py-4 pr-4 pl-2 overflow-y-auto no-scrollbar space-y-5 animate-in">
+    <div className="flex-1 py-4 px-4 md:pr-4 md:pl-2 overflow-y-auto no-scrollbar space-y-5 animate-in">
 
       {/* Header */}
       <div
@@ -174,7 +174,7 @@ export default function Certificates() {
       {/* In Progress */}
       <div>
         <h2 className="text-card-title text-text mb-4">In Progress</h2>
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {UPCOMING.map((c) => (
             <div key={c.title} className="card-static p-5 rounded-3xl">
               <div className="w-16 h-16 rounded-2xl mb-3 flex items-center justify-center bg-white border border-border p-2">
@@ -202,7 +202,7 @@ export default function Certificates() {
             View All <ChevronRight size={14} />
           </button>
         </div>
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {PROFESSIONAL_CERTS.map((c) => (
             <div
               key={c.title}
@@ -240,3 +240,5 @@ export default function Certificates() {
     </div>
   );
 }
+
+

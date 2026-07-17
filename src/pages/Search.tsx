@@ -1153,7 +1153,7 @@ export default function SearchPage({ onCourseClick, initialQuery = '' }: { onCou
   const hasActiveFilters = query.trim() !== '' || selectedTags.length > 0 || activeFilters.level !== 'All Levels';
 
   return (
-    <div className="flex-1 py-4 pr-4 pl-2 overflow-y-auto no-scrollbar space-y-5 animate-in">
+    <div className="flex-1 py-4 pr-4 pl-2 px-4 md:px-0 md:pr-4 md:pl-2 overflow-y-auto no-scrollbar space-y-5 animate-in">
 
       {/* Search Input */}
       <div className="card-static p-6 rounded-4xl">

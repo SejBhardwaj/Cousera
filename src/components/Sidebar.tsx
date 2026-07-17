@@ -41,6 +41,7 @@ interface NavItem {
 interface SidebarProps {
   activePage: Page;
   onNavigate: (page: Page) => void;
+  mobile?: boolean;
 }
 
 const navItems: NavItem[] = [
@@ -61,7 +62,57 @@ const bottomItems: NavItem[] = [
   { icon: <Settings size={22} strokeWidth={2} />, label: 'Settings', page: 'settings' },
 ];
 
-export default function Sidebar({ activePage, onNavigate }: SidebarProps) {
+export default function Sidebar({ activePage, onNavigate, mobile = false }: SidebarProps) {
+  // Mobile version - full menu
+  if (mobile) {
+    return (
+      <nav className="bg-white py-4">
+        <div className="px-4 space-y-1">
+          {navItems.map((item) => {
+            const isActive = activePage === item.page;
+            return (
+              <button
+                key={item.label}
+                onClick={() => onNavigate(item.page)}
+                className="w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all"
+                style={{
+                  background: isActive ? '#D7FF54' : 'transparent',
+                  color: isActive ? '#111111' : '#666666',
+                }}
+              >
+                {item.icon}
+                <span className="text-sm font-semibold">{item.label}</span>
+              </button>
+            );
+          })}
+        </div>
+        
+        <div className="h-px bg-gray-200 my-3 mx-4" />
+        
+        <div className="px-4 space-y-1">
+          {bottomItems.map((item) => {
+            const isActive = activePage === item.page;
+            return (
+              <button
+                key={item.label}
+                onClick={() => onNavigate(item.page)}
+                className="w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all"
+                style={{
+                  background: isActive ? '#D7FF54' : 'transparent',
+                  color: isActive ? '#111111' : '#666666',
+                }}
+              >
+                {item.icon}
+                <span className="text-sm font-semibold">{item.label}</span>
+              </button>
+            );
+          })}
+        </div>
+      </nav>
+    );
+  }
+
+  // Desktop version - icon sidebar
   return (
     <aside
       className="flex flex-col items-center gap-1 py-5 px-3 m-3 sticky top-3 overflow-visible"

@@ -36,7 +36,7 @@ export default function Profile() {
   };
 
   return (
-    <div className="flex-1 py-4 pr-4 pl-2 overflow-y-auto no-scrollbar space-y-5 animate-in">
+    <div className="flex-1 py-4 px-4 md:pr-4 md:pl-2 overflow-y-auto no-scrollbar space-y-5 animate-in">
 
       {/* Profile Header */}
       <div className="card-static p-7 rounded-4xl">
@@ -85,7 +85,7 @@ export default function Profile() {
       </div>
 
       {/* Stats row */}
-      <div className="grid grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
         {[
           { label: 'Courses', value: '8', icon: <BookOpen size={16} color="#A98BFF" />, bg: '#EDE9FF' },
           { label: 'Hours', value: '142h', icon: <Clock size={16} color="#83D6FF" />, bg: '#E0F5FF' },
@@ -130,7 +130,7 @@ export default function Profile() {
         {/* Achievements */}
         <div className="col-span-2 card-static p-6 rounded-4xl">
           <h2 className="text-card-title text-text mb-5">Achievements</h2>
-          <div className="grid grid-cols-3 gap-3">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
             {[
               { icon: <Trophy size={20} />, label: 'Streak Master', unlocked: true, color: '#D7FF54' },
               { icon: <Target size={20} />, label: 'Goal Crusher', unlocked: true, color: '#A98BFF' },
@@ -186,3 +186,5 @@ export default function Profile() {
     </div>
   );
 }
+
+

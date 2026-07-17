@@ -188,7 +188,7 @@ export default function Notifications() {
   ];
 
   return (
-    <div className="flex-1 py-4 pr-4 pl-2 overflow-y-auto no-scrollbar space-y-5 animate-in">
+    <div className="flex-1 py-4 px-4 md:pr-4 md:pl-2 overflow-y-auto no-scrollbar space-y-5 animate-in">
       {/* Header */}
       <div
         className="p-7 rounded-4xl relative overflow-hidden"
@@ -231,7 +231,7 @@ export default function Notifications() {
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
         {[
           { label: 'Unread', value: unreadCount, icon: <Bell size={18} color="#FF6D70" />, bg: '#FFF0F0' },
           { label: 'Today', value: notifications.filter((n) => n.timestamp.includes('hour') || n.timestamp.includes('min')).length, icon: <Calendar size={18} color="#A98BFF" />, bg: '#EDE9FF' },
@@ -386,3 +386,5 @@ export default function Notifications() {
     </div>
   );
 }
+
+

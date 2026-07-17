@@ -186,7 +186,7 @@ export default function Calendar() {
   };
 
   return (
-    <div className="flex-1 py-4 pr-4 pl-2 overflow-y-auto no-scrollbar space-y-5 animate-in">
+    <div className="flex-1 py-4 px-4 md:pr-4 md:pl-2 overflow-y-auto no-scrollbar space-y-5 animate-in">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
@@ -204,7 +204,7 @@ export default function Calendar() {
       </div>
 
       {/* Stats Cards */}
-      <div className="grid grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
         {[
           {
             label: 'Study Hours (This Week)',
@@ -259,7 +259,7 @@ export default function Calendar() {
       </div>
 
       {/* Charts Row */}
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         {/* Weekly Activity Chart */}
         <div className="card-static p-6 rounded-4xl">
           <div className="flex items-center justify-between mb-5">
@@ -331,7 +331,7 @@ export default function Calendar() {
       </div>
 
       {/* Calendar and Events */}
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
         {/* Calendar */}
         <div className="col-span-2 card-static p-6 rounded-4xl">
           <div className="flex items-center justify-between mb-6">
@@ -590,3 +590,5 @@ export default function Calendar() {
     </div>
   );
 }
+
+

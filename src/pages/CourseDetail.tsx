@@ -472,6 +472,244 @@ export default function CourseDetail({ courseId: propCourseId, onBack, onNavigat
         { role: 'UX Researcher', salary: '$105K', growth: '+18%' },
       ],
     },
+    // ========== ADDITIONAL DATA SCIENCE COURSES ==========
+    's1': {
+      title: 'Machine Learning Specialization',
+      provider: 'Stanford University, DeepLearning.AI',
+      instructor: 'Andrew Ng',
+      instructorImg: 'https://i.pravatar.cc/150?img=12',
+      description: 'Master the fundamentals of machine learning and build practical ML models using the latest techniques from Stanford University and DeepLearning.AI.',
+      category: 'Data Science',
+      categoryColor: '#A98BFF',
+      rating: 4.9,
+      reviews: 128400,
+      thumbnail: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1200&q=80',
+      duration: '11 weeks',
+      difficulty: 'Intermediate',
+      learners: '2.1M learners',
+      language: 'English · 20 languages subtitled',
+      curriculum: [
+        { section: 'Week 1–2: Foundations', lessons: ['Introduction to ML', 'Supervised Learning Overview', 'Linear Regression', 'Gradient Descent', 'Quiz: Week 1'], duration: '4h 20m', open: true },
+        { section: 'Week 3–4: Classification', lessons: ['Logistic Regression', 'Decision Trees', 'Random Forests', 'SVMs', 'Lab: Build a Classifier'], duration: '5h 45m', open: false },
+        { section: 'Week 5–6: Neural Networks', lessons: ['Perceptrons', 'Backpropagation', 'Activation Functions', 'Deep Networks', 'Project: Neural Net'], duration: '6h 15m', open: false },
+        { section: 'Week 7–8: Advanced Topics', lessons: ['Unsupervised Learning', 'Clustering', 'Dimensionality Reduction', 'Recommender Systems'], duration: '4h 50m', open: false },
+      ],
+      whatYouLearn: [
+        'Build ML models with NumPy & scikit-learn',
+        'Train neural networks with TensorFlow',
+        'Apply best practices for ML development',
+        'Implement decision trees, random forests, SVMs',
+        'Use unsupervised learning algorithms',
+        'Build recommender systems from scratch',
+      ],
+      careerOutcomes: [
+        { role: 'ML Engineer', salary: '$148K', growth: '+23%' },
+        { role: 'Data Scientist', salary: '$136K', growth: '+18%' },
+        { role: 'AI Researcher', salary: '$162K', growth: '+31%' },
+      ],
+    },
+    's3': {
+      title: 'Machine Learning with TensorFlow on Google Cloud',
+      provider: 'Google Cloud',
+      instructor: 'Google Instructors',
+      instructorImg: 'https://i.pravatar.cc/150?img=23',
+      description: 'Deploy scalable ML models on Google Cloud Platform. Learn TensorFlow, Vertex AI, and production ML engineering best practices.',
+      category: 'Data Science',
+      categoryColor: '#A98BFF',
+      rating: 4.6,
+      reviews: 38000,
+      thumbnail: 'https://images.unsplash.com/photo-1667372335962-5fd503a8ae5b?w=1200&q=80',
+      duration: '10 weeks',
+      difficulty: 'Advanced',
+      learners: '520K learners',
+      language: 'English · 16 languages subtitled',
+      curriculum: [
+        { section: 'Week 1–2: TensorFlow Basics', lessons: ['TensorFlow Core', 'Tensors & Operations', 'Training Pipelines', 'Model Optimization', 'Quiz: TensorFlow'], duration: '5h 00m', open: true },
+        { section: 'Week 3–5: Google Cloud ML', lessons: ['Vertex AI Platform', 'BigQuery ML', 'AutoML', 'Model Deployment', 'Lab: Deploy Model'], duration: '7h 30m', open: false },
+        { section: 'Week 6–8: Production ML', lessons: ['ML Pipelines', 'Model Monitoring', 'A/B Testing', 'Feature Store', 'Project: End-to-End ML'], duration: '9h 15m', open: false },
+        { section: 'Week 9–10: Advanced Topics', lessons: ['Distributed Training', 'TPUs', 'ML Ops', 'Cost Optimization', 'Final Project'], duration: '6h 45m', open: false },
+      ],
+      whatYouLearn: [
+        'Build production ML models with TensorFlow',
+        'Deploy models on Google Cloud Platform',
+        'Use Vertex AI for ML operations',
+        'Implement distributed training at scale',
+        'Monitor and maintain ML systems',
+        'Optimize cloud ML costs',
+      ],
+      careerOutcomes: [
+        { role: 'ML Engineer', salary: '$155K', growth: '+26%' },
+        { role: 'Cloud ML Specialist', salary: '$162K', growth: '+29%' },
+        { role: 'ML Ops Engineer', salary: '$148K', growth: '+24%' },
+      ],
+    },
+    's4': {
+      title: 'Intro to Machine Learning',
+      provider: 'DataCamp',
+      instructor: 'Rachel Thompson',
+      instructorImg: 'https://i.pravatar.cc/150?img=44',
+      description: 'Perfect for beginners! Learn ML fundamentals, algorithms, and data preprocessing. Build your first predictive models with hands-on projects.',
+      category: 'Data Science',
+      categoryColor: '#A98BFF',
+      rating: 4.7,
+      reviews: 72000,
+      thumbnail: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&q=80',
+      duration: '6 weeks',
+      difficulty: 'Beginner',
+      learners: '980K learners',
+      language: 'English · 22 languages subtitled',
+      curriculum: [
+        { section: 'Week 1: ML Basics', lessons: ['What is ML?', 'Types of Learning', 'Data Preprocessing', 'Python for ML', 'Quiz: Fundamentals'], duration: '3h 30m', open: true },
+        { section: 'Week 2–3: Supervised Learning', lessons: ['Linear Regression', 'Logistic Regression', 'KNN Algorithm', 'Model Evaluation', 'Lab: First Model'], duration: '6h 00m', open: false },
+        { section: 'Week 4–5: Trees & Ensembles', lessons: ['Decision Trees', 'Random Forests', 'Gradient Boosting', 'Feature Importance', 'Project: Prediction Task'], duration: '5h 45m', open: false },
+        { section: 'Week 6: Next Steps', lessons: ['Unsupervised Learning Intro', 'Neural Networks Preview', 'Career Paths', 'Final Quiz', 'Capstone Project'], duration: '4h 15m', open: false },
+      ],
+      whatYouLearn: [
+        'Understand machine learning fundamentals',
+        'Build classification and regression models',
+        'Preprocess and clean data effectively',
+        'Evaluate model performance',
+        'Use scikit-learn for ML tasks',
+        'Create your first ML project portfolio',
+      ],
+      careerOutcomes: [
+        { role: 'Junior Data Analyst', salary: '$72K', growth: '+16%' },
+        { role: 'Data Scientist', salary: '$115K', growth: '+21%' },
+        { role: 'ML Engineer', salary: '$128K', growth: '+23%' },
+      ],
+    },
+    's5': {
+      title: 'ML Engineering for Production (MLOps)',
+      provider: 'DeepLearning.AI',
+      instructor: 'Andrew Ng, Robert Crowe',
+      instructorImg: 'https://i.pravatar.cc/150?img=15',
+      description: 'Take ML models to production at scale. Master MLOps, CI/CD for ML, model monitoring, and deployment infrastructure.',
+      category: 'Data Science',
+      categoryColor: '#A98BFF',
+      rating: 4.8,
+      reviews: 45000,
+      thumbnail: 'https://images.unsplash.com/photo-1518432031352-d6fc5c10da5a?w=1200&q=80',
+      duration: '14 weeks',
+      difficulty: 'Advanced',
+      learners: '380K learners',
+      language: 'English · 14 languages subtitled',
+      curriculum: [
+        { section: 'Week 1–3: Production ML Systems', lessons: ['ML Project Lifecycle', 'Data Pipelines', 'Model Serving', 'Monitoring', 'Quiz: MLOps Basics'], duration: '7h 20m', open: true },
+        { section: 'Week 4–7: Model Deployment', lessons: ['Containerization', 'Kubernetes for ML', 'API Development', 'Load Balancing', 'Lab: Deploy Model API'], duration: '10h 30m', open: false },
+        { section: 'Week 8–11: ML Pipelines', lessons: ['TFX Pipelines', 'Airflow for ML', 'Feature Stores', 'Model Versioning', 'Project: Full Pipeline'], duration: '12h 00m', open: false },
+        { section: 'Week 12–14: Advanced MLOps', lessons: ['A/B Testing', 'Model Drift Detection', 'Automated Retraining', 'Cost Optimization', 'Final Capstone'], duration: '9h 45m', open: false },
+      ],
+      whatYouLearn: [
+        'Deploy ML models to production',
+        'Build automated ML pipelines',
+        'Monitor models in production',
+        'Implement CI/CD for ML',
+        'Handle model drift and retraining',
+        'Scale ML systems efficiently',
+      ],
+      careerOutcomes: [
+        { role: 'MLOps Engineer', salary: '$152K', growth: '+28%' },
+        { role: 'ML Platform Engineer', salary: '$165K', growth: '+32%' },
+        { role: 'Senior ML Engineer', salary: '$172K', growth: '+25%' },
+      ],
+    },
+    's6': {
+      title: 'Practical Deep Learning',
+      provider: 'fast.ai',
+      instructor: 'Jeremy Howard',
+      instructorImg: 'https://i.pravatar.cc/150?img=67',
+      description: 'Build real-world deep learning applications. Learn CNNs, RNNs, and transformers through hands-on projects and practical implementations.',
+      category: 'Data Science',
+      categoryColor: '#A98BFF',
+      rating: 4.9,
+      reviews: 95000,
+      thumbnail: 'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=1200&q=80',
+      duration: '12 weeks',
+      difficulty: 'Intermediate',
+      learners: '750K learners',
+      language: 'English · 18 languages subtitled',
+      curriculum: [
+        { section: 'Week 1–3: Deep Learning Foundations', lessons: ['Neural Networks Deep Dive', 'Backpropagation', 'Optimization Techniques', 'PyTorch Basics', 'Quiz: DL Fundamentals'], duration: '8h 00m', open: true },
+        { section: 'Week 4–6: Computer Vision', lessons: ['CNNs', 'Image Classification', 'Object Detection', 'Transfer Learning', 'Lab: Build Image Classifier'], duration: '10h 30m', open: false },
+        { section: 'Week 7–9: NLP & Sequences', lessons: ['RNNs & LSTMs', 'Attention Mechanisms', 'Transformers', 'BERT & GPT', 'Project: Text Generation'], duration: '12h 15m', open: false },
+        { section: 'Week 10–12: Advanced Topics', lessons: ['GANs', 'Reinforcement Learning', 'Model Deployment', 'Ethics in AI', 'Final Project'], duration: '10h 45m', open: false },
+      ],
+      whatYouLearn: [
+        'Master deep learning with PyTorch',
+        'Build CNNs for computer vision',
+        'Create NLP models with transformers',
+        'Implement state-of-the-art architectures',
+        'Deploy deep learning models',
+        'Apply transfer learning techniques',
+      ],
+      careerOutcomes: [
+        { role: 'Deep Learning Engineer', salary: '$158K', growth: '+29%' },
+        { role: 'Computer Vision Engineer', salary: '$162K', growth: '+27%' },
+        { role: 'NLP Engineer', salary: '$155K', growth: '+31%' },
+      ],
+    },
+    // ========== GENERATIVE AI & MODERN ML (s13+) ==========
+    's13': { title: 'Generative AI with Large Language Models', provider: 'DeepLearning.AI', instructor: 'Andrew Ng', instructorImg: 'https://i.pravatar.cc/150?img=19', description: 'Master LLMs and Gen AI', category: 'Data Science', categoryColor: '#A98BFF', rating: 4.9, reviews: 28000, thumbnail: 'https://images.unsplash.com/photo-1676277791608-ac52caa57133?w=1200&q=80', duration: '10 weeks', difficulty: 'Advanced', learners: '420K learners', language: 'English · 12 languages subtitled', curriculum: [{ section: 'Week 1–2: LLMs', lessons: ['Transformers', 'GPT', 'Attention', 'Tokenization', 'Quiz'], duration: '6h 30m', open: true }, { section: 'Week 3–5: Fine-Tuning', lessons: ['PEFT', 'LoRA', 'RLHF', 'Instruction Tuning', 'Lab'], duration: '9h', open: false }], whatYouLearn: ['Fine-tune LLMs', 'Build RAG apps', 'Prompt engineering', 'Deploy Gen AI'], careerOutcomes: [{ role: 'LLM Engineer', salary: '$175K', growth: '+45%' }] },
+    's14': { title: 'Product Design & User Research', provider: 'IDEO U', instructor: 'Jessica Park', instructorImg: 'https://i.pravatar.cc/150?img=48', description: 'Design thinking and user research', category: 'Design', categoryColor: '#FF6D70', rating: 4.7, reviews: 31000, thumbnail: 'https://images.unsplash.com/photo-1561070791-36c11767b26a?w=1200&q=80', duration: '9 weeks', difficulty: 'Intermediate', learners: '485K learners', language: 'English · 16 languages subtitled', curriculum: [{ section: 'Week 1–2: Design Thinking', lessons: ['Empathize', 'Define', 'Ideate', 'Sprint', 'Quiz'], duration: '5h', open: true }], whatYouLearn: ['Design thinking', 'User research', 'Prototyping'], careerOutcomes: [{ role: 'Product Designer', salary: '$118K', growth: '+24%' }] },
+    's15': { title: 'Motion Graphics & Animation', provider: 'School of Motion', instructor: 'Joey Korenman', instructorImg: 'https://i.pravatar.cc/150?img=52', description: 'After Effects and motion design', category: 'Design', categoryColor: '#FF6D70', rating: 4.8, reviews: 22000, thumbnail: 'https://images.unsplash.com/photo-1572044162444-ad60f128bdea?w=1200&q=80', duration: '12 weeks', difficulty: 'Intermediate', learners: '310K learners', language: 'English', curriculum: [{ section: 'Week 1–3: After Effects', lessons: ['Interface', 'Keyframing', 'Animation', 'Text', 'Quiz'], duration: '6h 30m', open: true }], whatYouLearn: ['After Effects', 'Animation principles', 'Motion graphics'], careerOutcomes: [{ role: 'Motion Designer', salary: '$78K', growth: '+22%' }] },
+    's16': { title: '3D Design & Modeling with Blender', provider: 'CG Cookie', instructor: 'Jonathan Lampel', instructorImg: 'https://i.pravatar.cc/150?img=61', description: '3D modeling and rendering', category: 'Design', categoryColor: '#FF6D70', rating: 4.6, reviews: 18000, thumbnail: 'https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=1200&q=80', duration: '14 weeks', difficulty: 'Beginner', learners: '425K learners', language: 'English', curriculum: [{ section: 'Week 1–3: Blender Basics', lessons: ['Navigation', 'Modeling', 'Modifiers', 'Shapes', 'Quiz'], duration: '7h', open: true }], whatYouLearn: ['Blender mastery', '3D modeling', 'Texturing'], careerOutcomes: [{ role: '3D Artist', salary: '$72K', growth: '+24%' }] },
+    's17': { title: 'Brand Identity & Logo Design', provider: 'The Futur', instructor: 'Chris Do', instructorImg: 'https://i.pravatar.cc/150?img=70', description: 'Branding and logo design', category: 'Design', categoryColor: '#FF6D70', rating: 4.9, reviews: 35000, thumbnail: 'https://images.unsplash.com/photo-1626785774573-4b799315345d?w=1200&q=80', duration: '8 weeks', difficulty: 'Beginner', learners: '580K learners', language: 'English', curriculum: [{ section: 'Week 1–2: Brand Strategy', lessons: ['Positioning', 'Audience', 'Personality', 'Analysis', 'Quiz'], duration: '4h 30m', open: true }], whatYouLearn: ['Logo design', 'Brand systems', 'Typography'], careerOutcomes: [{ role: 'Brand Designer', salary: '$75K', growth: '+17%' }] },
+    's18': { title: 'Design Systems & Component Libraries', provider: 'InVision', instructor: 'Brad Frost', instructorImg: 'https://i.pravatar.cc/150?img=55', description: 'Scalable design systems', category: 'Design', categoryColor: '#FF6D70', rating: 4.7, reviews: 19000, thumbnail: 'https://images.unsplash.com/photo-1558655146-d09347e92766?w=1200&q=80', duration: '7 weeks', difficulty: 'Advanced', learners: '240K learners', language: 'English', curriculum: [{ section: 'Week 1–2: Design Systems', lessons: ['Atomic Design', 'Tokens', 'Components', 'Docs', 'Quiz'], duration: '5h', open: true }], whatYouLearn: ['Design systems', 'Component libraries', 'Accessibility'], careerOutcomes: [{ role: 'Design Systems Designer', salary: '$128K', growth: '+26%' }] },
+    's19': { title: 'Growth Marketing & Growth Hacking', provider: 'Growth Tribe', instructor: 'Sean Ellis', instructorImg: 'https://i.pravatar.cc/150?img=24', description: 'Growth strategies and tactics', category: 'Marketing', categoryColor: '#FFB259', rating: 4.8, reviews: 41000, thumbnail: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&q=80', duration: '10 weeks', difficulty: 'Intermediate', learners: '720K learners', language: 'English', curriculum: [{ section: 'Week 1–2: Growth Fundamentals', lessons: ['Growth Mindset', 'AARRR', 'North Star', 'Loops', 'Quiz'], duration: '5h', open: true }], whatYouLearn: ['Growth experiments', 'Viral loops', 'A/B testing'], careerOutcomes: [{ role: 'Growth Marketer', salary: '$95K', growth: '+32%' }] },
+    's20': { title: 'Social Media Marketing & Content Creation', provider: 'Hootsuite', instructor: 'Gary Vaynerchuk', instructorImg: 'https://i.pravatar.cc/150?img=31', description: 'Social media mastery', category: 'Marketing', categoryColor: '#FFB259', rating: 4.6, reviews: 38000, thumbnail: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=1200&q=80', duration: '8 weeks', difficulty: 'Beginner', learners: '890K learners', language: 'English', curriculum: [{ section: 'Week 1–2: Platform Strategy', lessons: ['Platform Selection', 'Algorithms', 'Planning', 'Schedule', 'Quiz'], duration: '4h 30m', open: true }], whatYouLearn: ['Content creation', 'Social strategy', 'Community growth'], careerOutcomes: [{ role: 'Social Media Manager', salary: '$58K', growth: '+20%' }] },
+    's21': { title: 'E-Commerce & Shopify Mastery', provider: 'Shopify Academy', instructor: 'Ezra Firestone', instructorImg: 'https://i.pravatar.cc/150?img=39', description: 'Launch e-commerce stores', category: 'Marketing', categoryColor: '#FFB259', rating: 4.7, reviews: 52000, thumbnail: 'https://images.unsplash.com/photo-1472851294608-062f824d29cc?w=1200&q=80', duration: '9 weeks', difficulty: 'Beginner', learners: '1.1M learners', language: 'English', curriculum: [{ section: 'Week 1–2: Store Setup', lessons: ['Shopify Basics', 'Products', 'Design', 'Payments', 'Quiz'], duration: '5h', open: true }], whatYouLearn: ['Shopify stores', 'Product sourcing', 'Conversion optimization'], careerOutcomes: [{ role: 'E-commerce Manager', salary: '$72K', growth: '+24%' }] },
+    's22': { title: 'Product Management & Strategy', provider: 'Product School', instructor: 'Marty Cagan', instructorImg: 'https://i.pravatar.cc/150?img=43', description: 'Become a product manager', category: 'Business', categoryColor: '#A98BFF', rating: 4.8, reviews: 28000, thumbnail: 'https://images.unsplash.com/photo-1542626991-cbc4e32524cc?w=1200&q=80', duration: '11 weeks', difficulty: 'Intermediate', learners: '520K learners', language: 'English', curriculum: [{ section: 'Week 1–3: PM Fundamentals', lessons: ['PM Role', 'Vision', 'Discovery', 'Prioritization', 'Quiz'], duration: '6h 30m', open: true }], whatYouLearn: ['Product strategy', 'Roadmapping', 'Agile'], careerOutcomes: [{ role: 'Product Manager', salary: '$125K', growth: '+28%' }] },
+    's23': { title: 'Data-Driven Marketing Analytics', provider: 'Google & CXL', instructor: 'Avinash Kaushik', instructorImg: 'https://i.pravatar.cc/150?img=58', description: 'Marketing analytics mastery', category: 'Marketing', categoryColor: '#FFB259', rating: 4.6, reviews: 33000, thumbnail: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&q=80', duration: '10 weeks', difficulty: 'Intermediate', learners: '610K learners', language: 'English', curriculum: [{ section: 'Week 1–2: Analytics', lessons: ['GA4', 'Tracking', 'Reports', 'Dashboards', 'Quiz'], duration: '5h 30m', open: true }], whatYouLearn: ['Google Analytics', 'Attribution', 'ROI analysis'], careerOutcomes: [{ role: 'Marketing Analyst', salary: '$75K', growth: '+22%' }] },
+    // ========== TECHNOLOGY (WEB & MOBILE) s24-s32 ==========
+    's24': { title: 'React & Next.js - The Complete Guide', provider: 'Maximilian Schwarzmüller', instructor: 'Maximilian', instructorImg: 'https://i.pravatar.cc/150?img=14', description: 'Modern React and Next.js 14', category: 'Technology', categoryColor: '#83D6FF', rating: 4.8, reviews: 78000, thumbnail: 'https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=1200&q=80', duration: '16 weeks', difficulty: 'Intermediate', learners: '1.2M learners', language: 'English', curriculum: [{ section: 'Week 1–4: React', lessons: ['Components', 'Hooks', 'State', 'Router', 'Quiz'], duration: '12h', open: true }], whatYouLearn: ['React mastery', 'Next.js 14', 'Server components'], careerOutcomes: [{ role: 'React Developer', salary: '$115K', growth: '+24%' }] },
+    's25': { title: 'Web3 & Blockchain Development', provider: 'Alchemy University', instructor: 'Vitalik Buterin', instructorImg: 'https://i.pravatar.cc/150?img=27', description: 'Build dApps and smart contracts', category: 'Technology', categoryColor: '#83D6FF', rating: 4.7, reviews: 42000, thumbnail: 'https://images.unsplash.com/photo-1639762681485-074b7f938ba0?w=1200&q=80', duration: '14 weeks', difficulty: 'Advanced', learners: '380K learners', language: 'English', curriculum: [{ section: 'Week 1–3: Blockchain', lessons: ['Blockchain Basics', 'Ethereum', 'Solidity', 'Smart Contracts', 'Quiz'], duration: '8h', open: true }], whatYouLearn: ['Solidity', 'Smart contracts', 'dApp development'], careerOutcomes: [{ role: 'Blockchain Developer', salary: '$145K', growth: '+42%' }] },
+    's26': { title: 'Frontend Performance Optimization', provider: 'Google Chrome Team', instructor: 'Addy Osmani', instructorImg: 'https://i.pravatar.cc/150?img=36', description: 'Make blazing-fast websites', category: 'Technology', categoryColor: '#83D6FF', rating: 4.6, reviews: 25000, thumbnail: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&q=80', duration: '6 weeks', difficulty: 'Advanced', learners: '290K learners', language: 'English', curriculum: [{ section: 'Week 1–2: Performance', lessons: ['Core Web Vitals', 'Lazy Loading', 'Code Splitting', 'Caching', 'Quiz'], duration: '5h', open: true }], whatYouLearn: ['Performance optimization', 'Core Web Vitals', 'Caching strategies'], careerOutcomes: [{ role: 'Performance Engineer', salary: '$132K', growth: '+18%' }] },
+    's27': { title: 'API Design & Backend Development', provider: 'Postman', instructor: 'Kin Lane', instructorImg: 'https://i.pravatar.cc/150?img=41', description: 'Build scalable REST and GraphQL APIs', category: 'Technology', categoryColor: '#83D6FF', rating: 4.7, reviews: 31000, thumbnail: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1200&q=80', duration: '10 weeks', difficulty: 'Intermediate', learners: '420K learners', language: 'English', curriculum: [{ section: 'Week 1–3: API Design', lessons: ['REST principles', 'GraphQL', 'Authentication', 'Documentation', 'Quiz'], duration: '7h', open: true }], whatYouLearn: ['REST APIs', 'GraphQL', 'API security'], careerOutcomes: [{ role: 'Backend Developer', salary: '$122K', growth: '+21%' }] },
+    's28': { title: 'Accessibility & Inclusive Design', provider: 'Deque University', instructor: 'Marcy Sutton', instructorImg: 'https://i.pravatar.cc/150?img=50', description: 'Build for everyone with WCAG', category: 'Technology', categoryColor: '#83D6FF', rating: 4.8, reviews: 18000, thumbnail: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=1200&q=80', duration: '5 weeks', difficulty: 'Intermediate', learners: '210K learners', language: 'English', curriculum: [{ section: 'Week 1–2: Accessibility', lessons: ['WCAG Standards', 'Screen Readers', 'ARIA', 'Testing', 'Quiz'], duration: '4h', open: true }], whatYouLearn: ['WCAG compliance', 'Screen reader testing', 'Accessible components'], careerOutcomes: [{ role: 'Accessibility Engineer', salary: '$118K', growth: '+26%' }] },
+    's29': { title: 'Android App Development with Kotlin', provider: 'Google Developers', instructor: 'Chet Haase', instructorImg: 'https://i.pravatar.cc/150?img=59', description: 'Build modern Android apps', category: 'Technology', categoryColor: '#FFB3C6', rating: 4.7, reviews: 52000, thumbnail: 'https://images.unsplash.com/photo-1607252650355-f7fd0460ccdb?w=1200&q=80', duration: '13 weeks', difficulty: 'Intermediate', learners: '780K learners', language: 'English', curriculum: [{ section: 'Week 1–3: Kotlin', lessons: ['Kotlin Basics', 'OOP', 'Coroutines', 'Collections', 'Quiz'], duration: '8h', open: true }], whatYouLearn: ['Kotlin programming', 'Jetpack Compose', 'Material Design'], careerOutcomes: [{ role: 'Android Developer', salary: '$118K', growth: '+19%' }] },
+    's30': { title: 'React Native - Cross-Platform Apps', provider: 'Expo', instructor: 'William Candillon', instructorImg: 'https://i.pravatar.cc/150?img=64', description: 'Build iOS and Android with one codebase', category: 'Technology', categoryColor: '#FFB3C6', rating: 4.6, reviews: 38000, thumbnail: 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=1200&q=80', duration: '12 weeks', difficulty: 'Intermediate', learners: '620K learners', language: 'English', curriculum: [{ section: 'Week 1–3: React Native', lessons: ['Setup', 'Components', 'Navigation', 'State', 'Quiz'], duration: '9h', open: true }], whatYouLearn: ['React Native', 'Cross-platform apps', 'Native modules'], careerOutcomes: [{ role: 'Mobile Developer', salary: '$125K', growth: '+22%' }] },
+    's31': { title: 'Flutter & Dart - Mobile UI Development', provider: 'Google Flutter Team', instructor: 'Emily Fortuna', instructorImg: 'https://i.pravatar.cc/150?img=49', description: 'Beautiful native apps with Flutter', category: 'Technology', categoryColor: '#FFB3C6', rating: 4.8, reviews: 45000, thumbnail: 'https://images.unsplash.com/photo-1551650975-87deedd944c3?w=1200&q=80', duration: '11 weeks', difficulty: 'Beginner', learners: '890K learners', language: 'English', curriculum: [{ section: 'Week 1–3: Dart & Flutter', lessons: ['Dart Basics', 'Widgets', 'State Management', 'Animations', 'Quiz'], duration: '9h', open: true }], whatYouLearn: ['Flutter development', 'Dart language', 'UI animations'], careerOutcomes: [{ role: 'Flutter Developer', salary: '$112K', growth: '+28%' }] },
+    's32': { title: 'Mobile DevOps & CI/CD', provider: 'Bitrise', instructor: 'Daniel Biegler', instructorImg: 'https://i.pravatar.cc/150?img=73', description: 'Automate mobile deployment', category: 'Technology', categoryColor: '#FFB3C6', rating: 4.5, reviews: 15000, thumbnail: 'https://images.unsplash.com/photo-1618401471353-b98afee0b2eb?w=1200&q=80', duration: '6 weeks', difficulty: 'Advanced', learners: '180K learners', language: 'English', curriculum: [{ section: 'Week 1–2: CI/CD', lessons: ['Fastlane', 'GitHub Actions', 'Testing', 'Deployment', 'Quiz'], duration: '5h', open: true }], whatYouLearn: ['Mobile CI/CD', 'Fastlane', 'Automated testing'], careerOutcomes: [{ role: 'Mobile DevOps', salary: '$135K', growth: '+24%' }] },
+    // ========== CLOUD & DEVOPS s33-s36 ==========
+    's33': { title: 'DevOps Engineering & Kubernetes', provider: 'Linux Foundation', instructor: 'Kelsey Hightower', instructorImg: 'https://i.pravatar.cc/150?img=18', description: 'Master DevOps and K8s', category: 'Technology', categoryColor: '#83D6FF', rating: 4.8, reviews: 62000, thumbnail: 'https://images.unsplash.com/photo-1667372393119-3d4c48d07fc9?w=1200&q=80', duration: '14 weeks', difficulty: 'Advanced', learners: '580K learners', language: 'English', curriculum: [{ section: 'Week 1–4: DevOps', lessons: ['CI/CD', 'Docker', 'Jenkins', 'Terraform', 'Quiz'], duration: '12h', open: true }], whatYouLearn: ['Kubernetes', 'Docker', 'Terraform'], careerOutcomes: [{ role: 'DevOps Engineer', salary: '$132K', growth: '+27%' }] },
+    's34': { title: 'Microsoft Azure Cloud Solutions', provider: 'Microsoft', instructor: 'Scott Hanselman', instructorImg: 'https://i.pravatar.cc/150?img=29', description: 'Build on Azure', category: 'Technology', categoryColor: '#83D6FF', rating: 4.6, reviews: 48000, thumbnail: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1200&q=80', duration: '11 weeks', difficulty: 'Intermediate', learners: '640K learners', language: 'English', curriculum: [{ section: 'Week 1–3: Azure Basics', lessons: ['Azure Portal', 'VMs', 'App Service', 'Storage', 'Quiz'], duration: '8h', open: true }], whatYouLearn: ['Azure services', 'Cloud architecture', 'Azure certifications'], careerOutcomes: [{ role: 'Azure Engineer', salary: '$138K', growth: '+25%' }] },
+    's35': { title: 'Serverless Architecture & Lambda', provider: 'AWS', instructor: 'Ben Kehoe', instructorImg: 'https://i.pravatar.cc/150?img=35', description: 'Go serverless', category: 'Technology', categoryColor: '#83D6FF', rating: 4.7, reviews: 33000, thumbnail: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1200&q=80', duration: '8 weeks', difficulty: 'Advanced', learners: '320K learners', language: 'English', curriculum: [{ section: 'Week 1–2: Serverless', lessons: ['Lambda', 'API Gateway', 'DynamoDB', 'Event-driven', 'Quiz'], duration: '6h', open: true }], whatYouLearn: ['AWS Lambda', 'Serverless patterns', 'Event-driven architecture'], careerOutcomes: [{ role: 'Cloud Architect', salary: '$152K', growth: '+29%' }] },
+    's36': { title: 'Cloud Security & Infrastructure Protection', provider: 'Cloud Security Alliance', instructor: 'Jim Manico', instructorImg: 'https://i.pravatar.cc/150?img=42', description: 'Secure cloud environments', category: 'Technology', categoryColor: '#83D6FF', rating: 4.8, reviews: 27000, thumbnail: 'https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=1200&q=80', duration: '9 weeks', difficulty: 'Advanced', learners: '270K learners', language: 'English', curriculum: [{ section: 'Week 1–3: Cloud Security', lessons: ['IAM', 'Encryption', 'Network Security', 'Compliance', 'Quiz'], duration: '7h', open: true }], whatYouLearn: ['Cloud security', 'IAM', 'Compliance'], careerOutcomes: [{ role: 'Cloud Security Engineer', salary: '$158K', growth: '+32%' }] },
+    // ========== MORE DATA SCIENCE s37-s42 ==========
+    's37': { title: 'Data Analysis with Pandas & NumPy', provider: 'DataCamp', instructor: 'Wes McKinney', instructorImg: 'https://i.pravatar.cc/150?img=21', description: 'Master data manipulation', category: 'Data Science', categoryColor: '#A98BFF', rating: 4.7, reviews: 55000, thumbnail: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&q=80', duration: '7 weeks', difficulty: 'Beginner', learners: '920K learners', language: 'English', curriculum: [{ section: 'Week 1–3: Pandas', lessons: ['DataFrames', 'Indexing', 'Grouping', 'Merging', 'Quiz'], duration: '6h', open: true }], whatYouLearn: ['Pandas mastery', 'NumPy arrays', 'Data cleaning'], careerOutcomes: [{ role: 'Data Analyst', salary: '$78K', growth: '+18%' }] },
+    's38': { title: 'SQL for Data Science', provider: 'Mode Analytics', instructor: 'Benn Stancil', instructorImg: 'https://i.pravatar.cc/150?img=32', description: 'Master SQL queries', category: 'Data Science', categoryColor: '#A98BFF', rating: 4.8, reviews: 72000, thumbnail: 'https://images.unsplash.com/photo-1544383835-bda2bc66a55d?w=1200&q=80', duration: '6 weeks', difficulty: 'Beginner', learners: '1.3M learners', language: 'English', curriculum: [{ section: 'Week 1–2: SQL Basics', lessons: ['SELECT', 'WHERE', 'JOINs', 'GROUP BY', 'Quiz'], duration: '5h', open: true }], whatYouLearn: ['SQL queries', 'Database design', 'Data extraction'], careerOutcomes: [{ role: 'Data Analyst', salary: '$75K', growth: '+19%' }] },
+    's39': { title: 'Data Visualization with Tableau', provider: 'Tableau', instructor: 'Andy Kriebel', instructorImg: 'https://i.pravatar.cc/150?img=46', description: 'Create stunning dashboards', category: 'Data Science', categoryColor: '#A98BFF', rating: 4.6, reviews: 48000, thumbnail: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&q=80', duration: '8 weeks', difficulty: 'Intermediate', learners: '680K learners', language: 'English', curriculum: [{ section: 'Week 1–2: Tableau Basics', lessons: ['Interface', 'Charts', 'Filters', 'Dashboards', 'Quiz'], duration: '5h 30m', open: true }], whatYouLearn: ['Tableau dashboards', 'Data visualization', 'Business intelligence'], careerOutcomes: [{ role: 'BI Analyst', salary: '$85K', growth: '+21%' }] },
+    's40': { title: 'Big Data & Spark Fundamentals', provider: 'Databricks', instructor: 'Matei Zaharia', instructorImg: 'https://i.pravatar.cc/150?img=54', description: 'Process massive datasets', category: 'Data Science', categoryColor: '#A98BFF', rating: 4.7, reviews: 32000, thumbnail: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1200&q=80', duration: '10 weeks', difficulty: 'Advanced', learners: '380K learners', language: 'English', curriculum: [{ section: 'Week 1–3: Spark', lessons: ['RDDs', 'DataFrames', 'Spark SQL', 'MLlib', 'Quiz'], duration: '8h', open: true }], whatYouLearn: ['Apache Spark', 'Big Data processing', 'Distributed computing'], careerOutcomes: [{ role: 'Big Data Engineer', salary: '$142K', growth: '+26%' }] },
+    's41': { title: 'Statistics & Probability for Data Science', provider: 'MIT', instructor: 'Gilbert Strang', instructorImg: 'https://i.pravatar.cc/150?img=63', description: 'Statistical foundation', category: 'Data Science', categoryColor: '#A98BFF', rating: 4.9, reviews: 68000, thumbnail: 'https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=1200&q=80', duration: '9 weeks', difficulty: 'Intermediate', learners: '750K learners', language: 'English', curriculum: [{ section: 'Week 1–3: Statistics', lessons: ['Descriptive Stats', 'Probability', 'Distributions', 'Hypothesis Testing', 'Quiz'], duration: '7h', open: true }], whatYouLearn: ['Statistics', 'Probability theory', 'Hypothesis testing'], careerOutcomes: [{ role: 'Data Scientist', salary: '$125K', growth: '+22%' }] },
+    's42': { title: 'Time Series Analysis & Forecasting', provider: 'Duke University', instructor: 'Rob Hyndman', instructorImg: 'https://i.pravatar.cc/150?img=72', description: 'Predict future trends', category: 'Data Science', categoryColor: '#A98BFF', rating: 4.6, reviews: 28000, thumbnail: 'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=1200&q=80', duration: '8 weeks', difficulty: 'Advanced', learners: '320K learners', language: 'English', curriculum: [{ section: 'Week 1–2: Time Series', lessons: ['ARIMA', 'Prophet', 'Seasonality', 'Forecasting', 'Quiz'], duration: '6h', open: true }], whatYouLearn: ['Time series modeling', 'Forecasting', 'ARIMA models'], careerOutcomes: [{ role: 'Forecasting Analyst', salary: '$95K', growth: '+17%' }] },
+    // ========== MORE DESIGN s43-s48 ==========
+    's43': { title: 'Mobile App Design with Figma', provider: 'Figma', instructor: 'Thomas Moeller', instructorImg: 'https://i.pravatar.cc/150?img=25', description: 'Design mobile interfaces', category: 'Design', categoryColor: '#FF6D70', rating: 4.8, reviews: 42000, thumbnail: 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=1200&q=80', duration: '6 weeks', difficulty: 'Intermediate', learners: '580K learners', language: 'English', curriculum: [{ section: 'Week 1–2: Mobile Design', lessons: ['iOS Guidelines', 'Android Material', 'Responsive', 'Prototyping', 'Quiz'], duration: '5h', open: true }], whatYouLearn: ['Mobile UI design', 'iOS & Android patterns', 'Figma prototyping'], careerOutcomes: [{ role: 'Mobile Designer', salary: '$98K', growth: '+21%' }] },
+    's44': { title: 'Graphic Design Fundamentals', provider: 'CalArts', instructor: 'Michael Worthington', instructorImg: 'https://i.pravatar.cc/150?img=37', description: 'Design principles', category: 'Design', categoryColor: '#FF6D70', rating: 4.7, reviews: 55000, thumbnail: 'https://images.unsplash.com/photo-1626785774573-4b799315345d?w=1200&q=80', duration: '8 weeks', difficulty: 'Beginner', learners: '820K learners', language: 'English', curriculum: [{ section: 'Week 1–2: Design Basics', lessons: ['Composition', 'Color', 'Typography', 'Hierarchy', 'Quiz'], duration: '5h', open: true }], whatYouLearn: ['Design principles', 'Typography', 'Color theory'], careerOutcomes: [{ role: 'Graphic Designer', salary: '$52K', growth: '+14%' }] },
+    's45': { title: 'Interaction Design & Microinteractions', provider: 'Copenhagen Institute', instructor: 'Dan Saffer', instructorImg: 'https://i.pravatar.cc/150?img=51', description: 'Delightful interactions', category: 'Design', categoryColor: '#FF6D70', rating: 4.9, reviews: 24000, thumbnail: 'https://images.unsplash.com/photo-1561070791-2526d30994b5?w=1200&q=80', duration: '7 weeks', difficulty: 'Advanced', learners: '280K learners', language: 'English', curriculum: [{ section: 'Week 1–2: Interactions', lessons: ['Microinteractions', 'Animations', 'Transitions', 'Feedback', 'Quiz'], duration: '5h 30m', open: true }], whatYouLearn: ['Interaction design', 'Animations', 'Microinteractions'], careerOutcomes: [{ role: 'Interaction Designer', salary: '$108K', growth: '+23%' }] },
+    's46': { title: 'Illustration for Digital Products', provider: 'Skillshare', instructor: 'Alice Lee', instructorImg: 'https://i.pravatar.cc/150?img=47', description: 'Create custom illustrations', category: 'Design', categoryColor: '#FF6D70', rating: 4.6, reviews: 19000, thumbnail: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=1200&q=80', duration: '6 weeks', difficulty: 'Beginner', learners: '420K learners', language: 'English', curriculum: [{ section: 'Week 1–2: Illustration', lessons: ['Drawing Basics', 'Digital Tools', 'Style Development', 'Portfolio', 'Quiz'], duration: '5h', open: true }], whatYouLearn: ['Digital illustration', 'Drawing techniques', 'Style development'], careerOutcomes: [{ role: 'Illustrator', salary: '$58K', growth: '+16%' }] },
+    // ========== CYBERSECURITY s47-s52 ==========
+    's47': { title: 'Ethical Hacking & Penetration Testing', provider: 'EC-Council', instructor: 'Kevin Mitnick', instructorImg: 'https://i.pravatar.cc/150?img=22', description: 'Learn ethical hacking and pen testing', category: 'Technology', categoryColor: '#FF6D70', rating: 4.8, reviews: 52000, thumbnail: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=1200&q=80', duration: '12 weeks', difficulty: 'Advanced', learners: '420K learners', language: 'English', curriculum: [{ section: 'Week 1–3: Hacking Basics', lessons: ['Reconnaissance', 'Scanning', 'Enumeration', 'Vulnerability Analysis', 'Quiz'], duration: '9h', open: true }, { section: 'Week 4–7: Exploitation', lessons: ['System Hacking', 'Web App Hacking', 'SQL Injection', 'XSS Attacks', 'Lab'], duration: '12h', open: false }], whatYouLearn: ['Ethical hacking', 'Penetration testing', 'Vulnerability assessment', 'Security tools'], careerOutcomes: [{ role: 'Penetration Tester', salary: '$105K', growth: '+31%' }, { role: 'Security Analyst', salary: '$95K', growth: '+28%' }] },
+    's48': { title: 'Cybersecurity Fundamentals', provider: 'CompTIA', instructor: 'Troy Hunt', instructorImg: 'https://i.pravatar.cc/150?img=34', description: 'Master cybersecurity basics', category: 'Technology', categoryColor: '#FF6D70', rating: 4.7, reviews: 68000, thumbnail: 'https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=1200&q=80', duration: '10 weeks', difficulty: 'Beginner', learners: '890K learners', language: 'English', curriculum: [{ section: 'Week 1–3: Security Basics', lessons: ['CIA Triad', 'Threats', 'Cryptography', 'Network Security', 'Quiz'], duration: '7h', open: true }, { section: 'Week 4–6: Defense', lessons: ['Firewalls', 'IDS/IPS', 'Security Policies', 'Incident Response', 'Lab'], duration: '8h 30m', open: false }], whatYouLearn: ['Security fundamentals', 'Network security', 'Cryptography basics', 'Risk management'], careerOutcomes: [{ role: 'Security Analyst', salary: '$88K', growth: '+27%' }] },
+    's49': { title: 'Network Security & Firewall Management', provider: 'Cisco', instructor: 'Omar Santos', instructorImg: 'https://i.pravatar.cc/150?img=45', description: 'Secure networks and firewalls', category: 'Technology', categoryColor: '#FF6D70', rating: 4.6, reviews: 42000, thumbnail: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1200&q=80', duration: '9 weeks', difficulty: 'Intermediate', learners: '520K learners', language: 'English', curriculum: [{ section: 'Week 1–3: Network Security', lessons: ['Network Protocols', 'VPN', 'Firewall Basics', 'DMZ Setup', 'Quiz'], duration: '7h 30m', open: true }], whatYouLearn: ['Network security', 'Firewall configuration', 'VPN setup'], careerOutcomes: [{ role: 'Network Security Engineer', salary: '$98K', growth: '+24%' }] },
+    's50': { title: 'Application Security (AppSec)', provider: 'OWASP', instructor: 'Jim Manico', instructorImg: 'https://i.pravatar.cc/150?img=56', description: 'Secure web applications', category: 'Technology', categoryColor: '#FF6D70', rating: 4.8, reviews: 35000, thumbnail: 'https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=1200&q=80', duration: '11 weeks', difficulty: 'Advanced', learners: '380K learners', language: 'English', curriculum: [{ section: 'Week 1–3: OWASP Top 10', lessons: ['Injection', 'Broken Auth', 'XSS', 'CSRF', 'Quiz'], duration: '8h', open: true }], whatYouLearn: ['Application security', 'OWASP Top 10', 'Secure coding'], careerOutcomes: [{ role: 'AppSec Engineer', salary: '$125K', growth: '+29%' }] },
+    's51': { title: 'Security Operations Center (SOC) Analyst', provider: 'SANS Institute', instructor: 'John Strand', instructorImg: 'https://i.pravatar.cc/150?img=65', description: 'SOC operations and monitoring', category: 'Technology', categoryColor: '#FF6D70', rating: 4.7, reviews: 38000, thumbnail: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&q=80', duration: '10 weeks', difficulty: 'Intermediate', learners: '450K learners', language: 'English', curriculum: [{ section: 'Week 1–3: SOC Basics', lessons: ['SIEM', 'Log Analysis', 'Threat Hunting', 'Incident Response', 'Quiz'], duration: '8h 30m', open: true }], whatYouLearn: ['SOC operations', 'SIEM tools', 'Threat detection'], careerOutcomes: [{ role: 'SOC Analyst', salary: '$82K', growth: '+26%' }] },
+    's52': { title: 'Incident Response & Digital Forensics', provider: 'DFIR', instructor: 'Brett Shavers', instructorImg: 'https://i.pravatar.cc/150?img=74', description: 'Investigate security incidents', category: 'Technology', categoryColor: '#FF6D70', rating: 4.9, reviews: 28000, thumbnail: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=1200&q=80', duration: '13 weeks', difficulty: 'Advanced', learners: '290K learners', language: 'English', curriculum: [{ section: 'Week 1–4: Digital Forensics', lessons: ['Evidence Collection', 'Disk Forensics', 'Memory Forensics', 'Network Forensics', 'Quiz'], duration: '10h', open: true }], whatYouLearn: ['Digital forensics', 'Incident response', 'Evidence analysis'], careerOutcomes: [{ role: 'Forensics Analyst', salary: '$115K', growth: '+27%' }] },
+    // ========== GAME DEVELOPMENT s53-s58 ==========
+    's53': { title: 'Unity Game Development', provider: 'Unity Learn', instructor: 'Rick Davidson', instructorImg: 'https://i.pravatar.cc/150?img=28', description: 'Create games with Unity', category: 'Technology', categoryColor: '#FFB3C6', rating: 4.8, reviews: 95000, thumbnail: 'https://images.unsplash.com/photo-1511512578047-dfb367046420?w=1200&q=80', duration: '15 weeks', difficulty: 'Intermediate', learners: '1.2M learners', language: 'English', curriculum: [{ section: 'Week 1–4: Unity Basics', lessons: ['Unity Interface', 'C# Scripting', 'Game Objects', 'Physics', 'Quiz'], duration: '10h', open: true }, { section: 'Week 5–10: Game Dev', lessons: ['2D Games', '3D Games', 'Animations', 'AI', 'Project'], duration: '16h', open: false }], whatYouLearn: ['Unity engine', 'C# programming', 'Game mechanics', '2D/3D development'], careerOutcomes: [{ role: 'Unity Developer', salary: '$92K', growth: '+23%' }] },
+    's54': { title: 'Unreal Engine 5 for Games', provider: 'Epic Games', instructor: 'Tim Sweeney', instructorImg: 'https://i.pravatar.cc/150?img=40', description: 'AAA game development', category: 'Technology', categoryColor: '#FFB3C6', rating: 4.9, reviews: 72000, thumbnail: 'https://images.unsplash.com/photo-1552820728-8b83bb6b773f?w=1200&q=80', duration: '16 weeks', difficulty: 'Advanced', learners: '620K learners', language: 'English', curriculum: [{ section: 'Week 1–4: Unreal Basics', lessons: ['Blueprints', 'C++', 'Materials', 'Lighting', 'Quiz'], duration: '12h', open: true }], whatYouLearn: ['Unreal Engine 5', 'Blueprint scripting', 'C++ for games'], careerOutcomes: [{ role: 'Unreal Developer', salary: '$108K', growth: '+26%' }] },
+    's55': { title: 'Game Design Theory & Mechanics', provider: 'Game Design Workshop', instructor: 'Jesse Schell', instructorImg: 'https://i.pravatar.cc/150?img=53', description: 'Design engaging games', category: 'Design', categoryColor: '#FFB3C6', rating: 4.7, reviews: 48000, thumbnail: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=1200&q=80', duration: '10 weeks', difficulty: 'Beginner', learners: '580K learners', language: 'English', curriculum: [{ section: 'Week 1–3: Game Design', lessons: ['Core Loops', 'Player Psychology', 'Balance', 'Progression', 'Quiz'], duration: '7h', open: true }], whatYouLearn: ['Game design principles', 'Game mechanics', 'Player engagement'], careerOutcomes: [{ role: 'Game Designer', salary: '$78K', growth: '+21%' }] },
+    's56': { title: 'Mobile Game Development', provider: 'GameDev.tv', instructor: 'Ben Tristem', instructorImg: 'https://i.pravatar.cc/150?img=62', description: 'Build mobile games', category: 'Technology', categoryColor: '#FFB3C6', rating: 4.6, reviews: 58000, thumbnail: 'https://images.unsplash.com/photo-1556656793-08538906a9f8?w=1200&q=80', duration: '12 weeks', difficulty: 'Intermediate', learners: '720K learners', language: 'English', curriculum: [{ section: 'Week 1–3: Mobile Basics', lessons: ['Touch Controls', 'Mobile Optimization', 'Monetization', 'Publishing', 'Quiz'], duration: '8h', open: true }], whatYouLearn: ['Mobile game dev', 'Touch controls', 'Game monetization'], careerOutcomes: [{ role: 'Mobile Game Developer', salary: '$88K', growth: '+24%' }] },
+    's57': { title: 'VR/AR Game Development', provider: 'Meta', instructor: 'John Carmack', instructorImg: 'https://i.pravatar.cc/150?img=69', description: 'Create immersive VR/AR games', category: 'Technology', categoryColor: '#FFB3C6', rating: 4.8, reviews: 35000, thumbnail: 'https://images.unsplash.com/photo-1617802690992-15d93263d3a9?w=1200&q=80', duration: '14 weeks', difficulty: 'Advanced', learners: '320K learners', language: 'English', curriculum: [{ section: 'Week 1–4: VR Basics', lessons: ['VR Setup', 'Spatial Audio', 'Locomotion', 'Hand Tracking', 'Quiz'], duration: '10h', open: true }], whatYouLearn: ['VR development', 'AR development', 'Spatial computing'], careerOutcomes: [{ role: 'VR Developer', salary: '$115K', growth: '+38%' }] },
+    's58': { title: 'Multiplayer & Networking for Games', provider: 'Photon Engine', instructor: 'Christof Wegmann', instructorImg: 'https://i.pravatar.cc/150?img=75', description: 'Build multiplayer games', category: 'Technology', categoryColor: '#FFB3C6', rating: 4.7, reviews: 28000, thumbnail: 'https://images.unsplash.com/photo-1538481199705-c710c4e965fc?w=1200&q=80', duration: '11 weeks', difficulty: 'Advanced', learners: '280K learners', language: 'English', curriculum: [{ section: 'Week 1–3: Networking', lessons: ['Client-Server', 'Peer-to-Peer', 'State Sync', 'Lag Compensation', 'Quiz'], duration: '9h', open: true }], whatYouLearn: ['Game networking', 'Multiplayer systems', 'Server architecture'], careerOutcomes: [{ role: 'Network Programmer', salary: '$125K', growth: '+23%' }] },
+    // ========== SPECIALIZED TECH s59-s66 ==========
+    's59': { title: 'Artificial Intelligence & Robotics', provider: 'MIT', instructor: 'Rodney Brooks', instructorImg: 'https://i.pravatar.cc/150?img=20', description: 'AI and robotics systems', category: 'Technology', categoryColor: '#A98BFF', rating: 4.9, reviews: 42000, thumbnail: 'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=1200&q=80', duration: '16 weeks', difficulty: 'Advanced', learners: '380K learners', language: 'English', curriculum: [{ section: 'Week 1–4: AI Basics', lessons: ['Search Algorithms', 'Planning', 'Machine Learning', 'Vision', 'Quiz'], duration: '12h', open: true }], whatYouLearn: ['AI algorithms', 'Robotics', 'Computer vision'], careerOutcomes: [{ role: 'Robotics Engineer', salary: '$112K', growth: '+29%' }] },
+    's60': { title: 'Internet of Things (IoT)', provider: 'IBM', instructor: 'Shawn Wallace', instructorImg: 'https://i.pravatar.cc/150?img=30', description: 'Build IoT systems', category: 'Technology', categoryColor: '#83D6FF', rating: 4.6, reviews: 38000, thumbnail: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=1200&q=80', duration: '10 weeks', difficulty: 'Intermediate', learners: '520K learners', language: 'English', curriculum: [{ section: 'Week 1–3: IoT Basics', lessons: ['Sensors', 'MQTT', 'Cloud Integration', 'Security', 'Quiz'], duration: '7h', open: true }], whatYouLearn: ['IoT systems', 'Sensor networks', 'Edge computing'], careerOutcomes: [{ role: 'IoT Engineer', salary: '$105K', growth: '+31%' }] },
+    's61': { title: 'Quantum Computing Fundamentals', provider: 'IBM Quantum', instructor: 'Scott Aaronson', instructorImg: 'https://i.pravatar.cc/150?img=38', description: 'Introduction to quantum computing', category: 'Technology', categoryColor: '#A98BFF', rating: 4.8, reviews: 18000, thumbnail: 'https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=1200&q=80', duration: '8 weeks', difficulty: 'Advanced', learners: '180K learners', language: 'English', curriculum: [{ section: 'Week 1–3: Quantum Basics', lessons: ['Qubits', 'Superposition', 'Entanglement', 'Quantum Gates', 'Quiz'], duration: '6h', open: true }], whatYouLearn: ['Quantum computing', 'Quantum algorithms', 'Qiskit'], careerOutcomes: [{ role: 'Quantum Scientist', salary: '$145K', growth: '+42%' }] },
+    's62': { title: 'Computer Vision & Image Processing', provider: 'OpenCV', instructor: 'Adrian Rosebrock', instructorImg: 'https://i.pravatar.cc/150?img=44', description: 'Master computer vision', category: 'Data Science', categoryColor: '#A98BFF', rating: 4.7, reviews: 48000, thumbnail: 'https://images.unsplash.com/photo-1555255707-c07966088b7b?w=1200&q=80', duration: '12 weeks', difficulty: 'Intermediate', learners: '620K learners', language: 'English', curriculum: [{ section: 'Week 1–3: Image Processing', lessons: ['Filtering', 'Edge Detection', 'Feature Extraction', 'Object Detection', 'Quiz'], duration: '8h', open: true }], whatYouLearn: ['Computer vision', 'OpenCV', 'Image processing'], careerOutcomes: [{ role: 'Computer Vision Engineer', salary: '$135K', growth: '+33%' }] },
+    's63': { title: 'Natural Language Processing (NLP)', provider: 'fast.ai', instructor: 'Rachel Thomas', instructorImg: 'https://i.pravatar.cc/150?img=57', description: 'NLP and text analytics', category: 'Data Science', categoryColor: '#A98BFF', rating: 4.8, reviews: 52000, thumbnail: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1200&q=80', duration: '11 weeks', difficulty: 'Advanced', learners: '480K learners', language: 'English', curriculum: [{ section: 'Week 1–3: NLP Basics', lessons: ['Tokenization', 'Word Embeddings', 'Text Classification', 'Sentiment Analysis', 'Quiz'], duration: '8h 30m', open: true }], whatYouLearn: ['NLP techniques', 'Transformers', 'Language models'], careerOutcomes: [{ role: 'NLP Engineer', salary: '$142K', growth: '+36%' }] },
+    's64': { title: 'Reinforcement Learning', provider: 'DeepMind', instructor: 'David Silver', instructorImg: 'https://i.pravatar.cc/150?img=66', description: 'Master RL algorithms', category: 'Data Science', categoryColor: '#A98BFF', rating: 4.9, reviews: 32000, thumbnail: 'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=1200&q=80', duration: '13 weeks', difficulty: 'Advanced', learners: '280K learners', language: 'English', curriculum: [{ section: 'Week 1–4: RL Basics', lessons: ['Markov Decision Process', 'Q-Learning', 'Policy Gradients', 'Actor-Critic', 'Quiz'], duration: '10h', open: true }], whatYouLearn: ['Reinforcement learning', 'Deep RL', 'Game AI'], careerOutcomes: [{ role: 'RL Researcher', salary: '$168K', growth: '+41%' }] },
+    's65': { title: 'MLOps & Model Deployment', provider: 'Google Cloud', instructor: 'Lak Lakshmanan', instructorImg: 'https://i.pravatar.cc/150?img=71', description: 'Deploy ML at scale', category: 'Data Science', categoryColor: '#A98BFF', rating: 4.7, reviews: 38000, thumbnail: 'https://images.unsplash.com/photo-1667372393119-3d4c48d07fc9?w=1200&q=80', duration: '10 weeks', difficulty: 'Advanced', learners: '420K learners', language: 'English', curriculum: [{ section: 'Week 1–3: MLOps', lessons: ['CI/CD for ML', 'Model Monitoring', 'Feature Stores', 'A/B Testing', 'Quiz'], duration: '8h', open: true }], whatYouLearn: ['MLOps practices', 'Model deployment', 'Production ML'], careerOutcomes: [{ role: 'MLOps Engineer', salary: '$148K', growth: '+34%' }] },
+    's66': { title: 'Edge AI & TinyML', provider: 'Edge Impulse', instructor: 'Jan Jongboom', instructorImg: 'https://i.pravatar.cc/150?img=76', description: 'AI on edge devices', category: 'Technology', categoryColor: '#A98BFF', rating: 4.6, reviews: 22000, thumbnail: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=1200&q=80', duration: '9 weeks', difficulty: 'Advanced', learners: '240K learners', language: 'English', curriculum: [{ section: 'Week 1–3: TinyML', lessons: ['Model Optimization', 'Quantization', 'Edge Deployment', 'Low-Power AI', 'Quiz'], duration: '7h', open: true }], whatYouLearn: ['Edge AI', 'TinyML', 'Model optimization'], careerOutcomes: [{ role: 'Edge AI Engineer', salary: '$128K', growth: '+38%' }] },
   };
 
   const courseData = COURSE_DATABASE[courseId] || COURSE_DATABASE['ml-specialization'];
@@ -1965,7 +2203,7 @@ Outputs:
   const tabs = ['About', 'Curriculum', 'Projects', 'Reviews', 'Certificate'];
 
   return (
-    <div className="flex-1 py-4 pr-4 pl-2 overflow-y-auto no-scrollbar space-y-5 animate-in">
+    <div className="flex-1 py-4 px-4 md:pr-4 md:pl-2 overflow-y-auto no-scrollbar space-y-5 animate-in">
 
       {/* Notification Permission Banner */}
       <NotificationPermissionBanner />
@@ -2241,7 +2479,7 @@ Outputs:
           {/* What you'll learn */}
           <div className="card-static p-6 rounded-4xl">
             <h2 className="text-card-title text-text mb-5">What you'll learn</h2>
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
               {(courseData.whatYouLearn || [
                 'Build ML models with NumPy & scikit-learn',
                 'Train neural networks with TensorFlow',
@@ -2261,7 +2499,7 @@ Outputs:
           </div>
 
           {/* Stats */}
-          <div className="grid grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
             {[
               { label: 'Total Lessons', value: '86', icon: <BookOpen size={16} color="#A98BFF" />, bg: '#EDE9FF' },
               { label: 'Projects', value: '12', icon: <Briefcase size={16} color="#83D6FF" />, bg: '#E0F5FF' },
@@ -2284,7 +2522,7 @@ Outputs:
             style={{ background: 'linear-gradient(135deg, #EDE9FF 0%, #E0F5FF 100%)' }}
           >
             <h2 className="text-card-title text-text mb-4">Career Outcomes</h2>
-            <div className="grid grid-cols-3 gap-3">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
               {(courseData.careerOutcomes || [
                 { role: 'ML Engineer', salary: '$148K', growth: '+23%' },
                 { role: 'Data Scientist', salary: '$136K', growth: '+18%' },
@@ -2541,7 +2779,7 @@ Outputs:
       )}
 
       {(activeTab === 'Projects') && (
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           {[
             { title: 'House Price Predictor', desc: 'Build a regression model to predict housing prices using real data.', difficulty: 'Medium', accent: '#D7FF54' },
             { title: 'Email Spam Classifier', desc: 'Train a classification algorithm to detect spam emails.', difficulty: 'Easy', accent: '#7DEBA3' },
@@ -2622,3 +2860,5 @@ Outputs:
     </div>
   );
 }
+
+

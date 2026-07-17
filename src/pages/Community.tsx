@@ -45,7 +45,7 @@ const GROUPS = [
 
 export default function Community() {
   return (
-    <div className="flex-1 py-4 pr-4 pl-2 overflow-y-auto no-scrollbar space-y-5 animate-in">
+    <div className="flex-1 py-4 px-4 md:pr-4 md:pl-2 overflow-y-auto no-scrollbar space-y-5 animate-in">
 
       {/* Header */}
       <div className="grid grid-cols-3 gap-4">
@@ -168,3 +168,5 @@ export default function Community() {
     </div>
   );
 }
+
+

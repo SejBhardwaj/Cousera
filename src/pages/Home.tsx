@@ -136,14 +136,14 @@ export default function Home({ onNavigate, onCourseClick }: HomeProps) {
   const recentSearches = ['Python', 'Machine Learning', 'React', 'Data Science'];
 
   return (
-    <div className="flex-1 py-4 pr-4 pl-2 overflow-y-auto no-scrollbar space-y-5 animate-in">
+    <div className="flex-1 py-4 pr-4 pl-2 px-4 md:pr-4 md:pl-2 overflow-y-auto no-scrollbar space-y-5 animate-in">
 
       {/* Hero Card */}
       <div
-        className="relative rounded-4xl overflow-hidden p-8"
+        className="relative rounded-4xl overflow-hidden p-6 md:p-8"
         style={{
           background: 'linear-gradient(135deg, #0F0F0F 0%, #1a1a2e 50%, #16213e 100%)',
-          minHeight: '340px',
+          minHeight: '280px',
         }}
       >
         {/* Decorative orbs */}
@@ -265,7 +265,7 @@ export default function Home({ onNavigate, onCourseClick }: HomeProps) {
       </div>
 
       {/* Stats row */}
-      <div className="grid grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
         {STATS.map((s) => (
           <div key={s.label} className="card-static p-5 rounded-3xl flex items-center gap-3">
             <div className="w-10 h-10 rounded-2xl flex items-center justify-center flex-shrink-0" style={{ background: s.bg }}>
@@ -290,7 +290,7 @@ export default function Home({ onNavigate, onCourseClick }: HomeProps) {
             View all <ArrowRight size={14} />
           </button>
         </div>
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {CONTINUE_COURSES.map((c) => (
             <CourseCard 
               key={c.id} 
@@ -341,7 +341,7 @@ export default function Home({ onNavigate, onCourseClick }: HomeProps) {
             Browse all <ArrowRight size={14} />
           </button>
         </div>
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {RECOMMENDED.map((c) => (
             <CourseCard 
               key={c.id} 
@@ -378,7 +378,7 @@ export default function Home({ onNavigate, onCourseClick }: HomeProps) {
             Explore Paths <ChevronRight size={14} />
           </button>
         </div>
-        <div className="grid grid-cols-4 gap-3 mt-6">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mt-6">
           {[
             { title: 'Data Analyst', courses: 8, color: '#A98BFF' },
             { title: 'UX Designer', courses: 7, color: '#FF6D70' },
@@ -403,7 +403,7 @@ export default function Home({ onNavigate, onCourseClick }: HomeProps) {
       {/* Testimonials */}
       <div className="card-static p-6 rounded-4xl">
         <h2 className="text-card-title text-text mb-5">What learners say</h2>
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {[
             {
               name: 'Priya Sharma',
@@ -452,7 +452,7 @@ export default function Home({ onNavigate, onCourseClick }: HomeProps) {
           <h2 className="text-section text-text mb-2">Choose your learning path</h2>
           <p className="text-muted text-sm">Flexible plans for every learner. Start free, upgrade anytime.</p>
         </div>
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
           {[
             { 
               name: 'Free Explorer', 

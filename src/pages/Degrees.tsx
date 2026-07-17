@@ -253,7 +253,7 @@ const WHY_ONLINE_DEGREE = [
 
 export default function Degrees({ onNavigate }: { onNavigate: (page: Page) => void }) {
   return (
-    <div className="flex-1 py-4 pr-4 pl-2 overflow-y-auto no-scrollbar space-y-5 animate-in">
+    <div className="flex-1 py-4 px-4 md:pr-4 md:pl-2 overflow-y-auto no-scrollbar space-y-5 animate-in">
 
       {/* Hero Section */}
       <div
@@ -304,7 +304,7 @@ export default function Degrees({ onNavigate }: { onNavigate: (page: Page) => vo
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
         {STATS.map((s) => (
           <div key={s.label} className="card-static p-5 rounded-3xl flex items-center gap-3">
             <div className="w-10 h-10 rounded-2xl flex items-center justify-center flex-shrink-0" style={{ background: s.bg }}>
@@ -342,7 +342,7 @@ export default function Degrees({ onNavigate }: { onNavigate: (page: Page) => vo
             <span className="text-xs text-muted">{DEGREE_PROGRAMS.length} programs available</span>
           </div>
         </div>
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           {DEGREE_PROGRAMS.map((degree) => (
             <div
               key={degree.id}
@@ -459,7 +459,7 @@ export default function Degrees({ onNavigate }: { onNavigate: (page: Page) => vo
       {/* Why Choose Online Degree */}
       <div className="card-static p-7 rounded-4xl">
         <h2 className="text-card-title text-text mb-6 text-center">Why Choose an Online Degree?</h2>
-        <div className="grid grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {WHY_ONLINE_DEGREE.map((item) => (
             <div key={item.title} className="text-center">
               <div
@@ -481,7 +481,7 @@ export default function Degrees({ onNavigate }: { onNavigate: (page: Page) => vo
         style={{ background: 'linear-gradient(135deg, #EDE9FF 0%, #E0F5FF 100%)' }}
       >
         <h2 className="text-card-title text-text mb-5 text-center">Graduate Success Stories</h2>
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {[
             {
               name: 'Rajesh Kumar',
@@ -521,7 +521,7 @@ export default function Degrees({ onNavigate }: { onNavigate: (page: Page) => vo
       </div>
 
       {/* Financial Aid */}
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         <div className="card-static p-6 rounded-4xl">
           <div className="w-12 h-12 rounded-3xl flex items-center justify-center mb-4" style={{ background: '#ECFDF5' }}>
             <TrendingUp size={24} color="#059669" />
@@ -552,3 +552,5 @@ export default function Degrees({ onNavigate }: { onNavigate: (page: Page) => vo
     </div>
   );
 }
+
+

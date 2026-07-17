@@ -78,7 +78,7 @@ const CATEGORIES = [
 
 export default function Categories({ onNavigate }: { onNavigate: (page: Page) => void }) {
   return (
-    <div className="flex-1 py-4 pr-4 pl-2 overflow-y-auto no-scrollbar space-y-5 animate-in">
+    <div className="flex-1 py-4 px-4 md:pr-4 md:pl-2 overflow-y-auto no-scrollbar space-y-5 animate-in">
 
       {/* Header */}
       <div className="card-static p-7 rounded-4xl">
@@ -87,7 +87,7 @@ export default function Categories({ onNavigate }: { onNavigate: (page: Page) =>
       </div>
 
       {/* Category Grid */}
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         {CATEGORIES.map((cat) => (
           <div
             key={cat.name}
@@ -143,3 +143,5 @@ export default function Categories({ onNavigate }: { onNavigate: (page: Page) =>
     </div>
   );
 }
+
+
