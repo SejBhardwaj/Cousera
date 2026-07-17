@@ -1,4 +1,4 @@
-﻿import { useState, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import { Search, Filter, SlidersHorizontal, TrendingUp, ChevronRight } from 'lucide-react';
 import CourseCard, { Course } from '../components/CourseCard';
 import { useOffline } from '../contexts/OfflineContext';
@@ -1151,7 +1151,7 @@ export default function Explore({ onCourseClick }: { onCourseClick: (id: string)
           <div className="grid grid-cols-3 gap-3 mb-5 p-4 rounded-3xl" style={{ background: '#F6F6F8' }}>
             {[
               { label: 'Level', options: ['All Levels', 'Beginner', 'Intermediate', 'Advanced'], value: level, set: setLevel },
-              { label: 'Duration', options: ['Any Duration', '< 1 month', '1â€“3 months', '3â€“6 months', '6+ months'], value: duration, set: setDuration },
+              { label: 'Duration', options: ['Any Duration', '< 1 month', '1-3 months', '3-6 months', '6+ months'], value: duration, set: setDuration },
             ].map((f) => (
               <div key={f.label}>
                 <p className="text-xs font-semibold text-muted mb-2">{f.label}</p>
@@ -1266,5 +1266,6 @@ export default function Explore({ onCourseClick }: { onCourseClick: (id: string)
     </div>
   );
 }
+
 
 

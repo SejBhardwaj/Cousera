@@ -37,11 +37,17 @@ export default function App() {
     } else if (page !== 'search') {
       setSearchQuery('');
     }
+    
+    // Scroll to top whenever navigating to a new page
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleCourseClick = (courseId: string) => {
     setSelectedCourseId(courseId);
     setActivePage('course-detail');
+    
+    // Scroll to top when opening a course
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const showRightPanel = !PAGES_WITHOUT_RIGHT_PANEL.includes(activePage);

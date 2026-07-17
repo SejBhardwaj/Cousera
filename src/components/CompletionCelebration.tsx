@@ -1,16 +1,29 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import confetti from 'canvas-confetti';
-import { Award, Share2, ArrowRight, X, Trophy, Clock, CheckCircle, Target, GraduationCap } from 'lucide-react';
+import { Award, Share2, ArrowRight, X, Trophy, Clock, CheckCircle, Target, GraduationCap, Download } from 'lucide-react';
 
 interface CompletionCelebrationProps {
   courseName: string;
   duration: string;
   lessonsCompleted: number;
   projectsCompleted: number;
-  onViewCertificate: () => void;
+  onViewCertificate: (certificateUrl: string) => void;
   onContinueLearning: () => void;
   onClose: () => void;
 }
+
+// Available certificate templates
+const CERTIFICATE_TEMPLATES = [
+  '/4ea3d43a265ee2fe179e46725dc9d525.jpg',
+  '/006b282426f45d4bc580ad68c7eed561.jpg',
+  '/7a0417bf7db91b0dd4de5c541b1eb55b.jpg',
+  '/68cfd7f5e403cdcbe6b4730a6a868c91.jpg',
+  '/86fa61c995cd12807633df5aa7b05b5c.jpg',
+  '/700ebd443a8d06589c86a00ff3f60c42.jpg',
+  '/893afe31083cc162f0d4c67623d71901.jpg',
+  '/6693a62807b86fb686b23c3ab6878a2d.jpg',
+  '/bed4c4100fb8c44549014e58f5feb035.jpg',
+];
 
 export default function CompletionCelebration({
   courseName,
@@ -22,16 +35,23 @@ export default function CompletionCelebration({
   onClose,
 }: CompletionCelebrationProps) {
   
+  // Select a random certificate template
+  const [certificateTemplate] = useState(() => {
+    const randomIndex = Math.floor(Math.random() * CERTIFICATE_TEMPLATES.length);
+    return CERTIFICATE_TEMPLATES[randomIndex];
+  });
+
   useEffect(() => {
     console.log('🎊 CompletionCelebration component mounted!');
     console.log('📚 Course:', courseName);
+    console.log('🎓 Certificate Template:', certificateTemplate);
     // Launch confetti celebration
     launchConfetti();
     
     return () => {
       console.log('👋 CompletionCelebration component unmounted');
     };
-  }, []);
+  }, [courseName, certificateTemplate]);
 
   const launchConfetti = () => {
     const duration = 3500; // 3.5 seconds - balanced duration
@@ -116,6 +136,36 @@ export default function CompletionCelebration({
     month: 'long', 
     day: 'numeric' 
   });
+
+  const handleDownloadCertificate = async () => {
+    try {
+      // Fetch the certificate image
+      const response = await fetch(certificateTemplate);
+      const blob = await response.blob();
+      
+      // Create a download link
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      
+      // Create filename with course name and date
+      const filename = `Certificate_${courseName.replace(/[^a-z0-9]/gi, '_')}_${new Date().toISOString().split('T')[0]}.jpg`;
+      link.download = filename;
+      
+      // Trigger download
+      document.body.appendChild(link);
+      link.click();
+      
+      // Cleanup
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+      
+      console.log('✅ Certificate downloaded:', filename);
+    } catch (error) {
+      console.error('❌ Error downloading certificate:', error);
+      alert('Failed to download certificate. Please try again.');
+    }
+  };
 
   return (
     <div 
@@ -265,7 +315,7 @@ export default function CompletionCelebration({
             {/* Action buttons */}
             <div className="space-y-3">
               <button
-                onClick={onViewCertificate}
+                onClick={() => onViewCertificate(certificateTemplate)}
                 className="w-full flex items-center justify-center gap-2 px-6 py-4 rounded-2xl font-bold text-sm transition-all duration-200 hover:opacity-90 active:scale-95"
                 style={{ 
                   background: 'linear-gradient(135deg, #D7FF54 0%, #A98BFF 100%)',
@@ -276,6 +326,20 @@ export default function CompletionCelebration({
                 <Award size={18} />
                 View Certificate
                 <ArrowRight size={18} />
+              </button>
+
+              <button
+                onClick={handleDownloadCertificate}
+                className="w-full flex items-center justify-center gap-2 px-6 py-4 rounded-2xl font-bold text-sm transition-all duration-200 hover:bg-white/10 active:scale-95"
+                style={{ 
+                  background: 'rgba(255,255,255,0.1)',
+                  color: 'white',
+                  border: '2px solid rgba(215,255,84,0.5)',
+                  boxShadow: '0 4px 16px rgba(215,255,84,0.2)'
+                }}
+              >
+                <Download size={18} />
+                Download Certificate
               </button>
 
               <div className="grid grid-cols-2 gap-3">

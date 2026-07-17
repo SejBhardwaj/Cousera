@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Play, Star, Clock, Users, Award, ChevronDown, ChevronUp, Check, BookOpen, Globe, Briefcase, ArrowLeft, Bookmark, Download, Trash2, Bell } from 'lucide-react';
 import CompletionCelebration from '../components/CompletionCelebration';
+import CertificateViewerModal from '../components/CertificateViewerModal';
 import { useOffline } from '../contexts/OfflineContext';
 import { useStreak } from '../contexts/StreakContext';
 import { useReminder } from '../contexts/ReminderContext';
@@ -43,6 +44,8 @@ export default function CourseDetail({ onBack, onNavigate }: CourseDetailProps) 
   const [progress, setProgress] = useState(68); // Current progress
   const [showCelebration, setShowCelebration] = useState(false);
   const [celebrationClosed, setCelebrationClosed] = useState(false); // Track if celebration was manually closed
+  const [showCertificateViewer, setShowCertificateViewer] = useState(false);
+  const [currentCertificateUrl, setCurrentCertificateUrl] = useState('');
   
   // Offline functionality
   const { isOnline, offlineCourses, refreshOfflineCourses } = useOffline();
@@ -81,6 +84,21 @@ export default function CourseDetail({ onBack, onNavigate }: CourseDetailProps) 
 
   const courseId = 'ml-specialization';
   const courseName = 'Machine Learning Specialization';
+
+  // Reset celebration state when navigating to a new course AND scroll to top
+  useEffect(() => {
+    console.log('🆕 Course loaded:', courseId);
+    setShowCelebration(false);
+    setCelebrationClosed(false);
+    setShowCertificateViewer(false);
+    
+    // Scroll to top of the page
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    
+    return () => {
+      console.log('🚪 Leaving course:', courseId);
+    };
+  }, [courseId]);
 
   // Track course activity on mount (viewing course = activity)
   useEffect(() => {
@@ -146,51 +164,56 @@ export default function CourseDetail({ onBack, onNavigate }: CourseDetailProps) 
 
   // Check if course is already completed
   useEffect(() => {
-    const completionKey = `course-${courseId}-completed`;
-    const isAlreadyCompleted = localStorage.getItem(completionKey);
-    
     console.log('🎯 Progress changed to:', progress);
-    console.log('📦 Already completed:', isAlreadyCompleted);
     console.log('📦 Celebration closed flag:', celebrationClosed);
+    console.log('📦 showCelebration:', showCelebration);
     
-    // Simulate course completion when progress reaches 100%
-    if (progress === 100 && !isAlreadyCompleted && !showCelebration) {
-      console.log('🎉 Progress reached 100%! Waiting 1 second...');
+    // Only trigger celebration if progress is 100 AND celebration is not already showing AND not manually closed
+    if (progress === 100 && !showCelebration && !celebrationClosed) {
+      console.log('🎉 Progress reached 100%! Waiting 500ms...');
       
-      // Wait 1 second before showing celebration
+      // Wait 500ms before showing celebration
       const timer = setTimeout(() => {
         console.log('🎊 TRIGGERING CELEBRATION NOW!');
         setShowCelebration(true);
-        localStorage.setItem(completionKey, 'true');
-        localStorage.setItem(`${completionKey}-date`, new Date().toISOString());
-      }, 1000);
+      }, 500);
 
       // Cleanup timer if component unmounts
       return () => clearTimeout(timer);
     }
-  }, [progress, courseId, showCelebration, celebrationClosed]);
+  }, [progress, showCelebration, celebrationClosed]);
 
-  // Function to simulate course completion (for testing)
+  // Function to simulate course completion
   const handleCompleteCourse = () => {
     console.log('🚀 COMPLETE COURSE BUTTON CLICKED!');
-    setProgress(100);
-    console.log('✅ Progress set to 100');
+    
+    // First reset progress to allow re-completion
+    setProgress(68);
+    
+    // Reset celebration flags
+    setShowCelebration(false);
+    setCelebrationClosed(false);
+    setShowCertificateViewer(false);
+    
+    // Then set progress to 100 after a tiny delay (this triggers the celebration)
+    setTimeout(() => {
+      setProgress(100);
+      console.log('✅ Progress set to 100 - celebration will trigger in 500ms');
+    }, 100);
   };
 
   // Reset celebration for testing
   const handleResetCelebration = () => {
-    const completionKey = `course-${courseId}-completed`;
-    localStorage.removeItem(completionKey);
-    localStorage.removeItem(`${completionKey}-date`);
     setProgress(68);
     setShowCelebration(false);
-    setCelebrationClosed(false); // Reset the closed flag
+    setCelebrationClosed(false);
     console.log('🔄 Reset complete - you can test again!');
   };
 
-  const handleViewCertificate = () => {
+  const handleViewCertificate = (certificateUrl: string) => {
     setShowCelebration(false);
-    setActiveTab('Certificate');
+    setCurrentCertificateUrl(certificateUrl);
+    setShowCertificateViewer(true);
   };
 
   const handleContinueLearning = () => {
@@ -201,7 +224,7 @@ export default function CourseDetail({ onBack, onNavigate }: CourseDetailProps) 
   const handleCloseCelebration = () => {
     console.log('🚪 Modal closed manually');
     setShowCelebration(false);
-    setCelebrationClosed(true); // Mark that celebration was closed
+    setCelebrationClosed(true); // Mark as closed to prevent reopening
   };
 
   // Download course for offline
@@ -533,27 +556,23 @@ export default function CourseDetail({ onBack, onNavigate }: CourseDetailProps) 
           )}
         </div>
         
-        {/* Complete button */}
-        {progress < 100 && (
-          <button
-            onClick={handleCompleteCourse}
-            className="w-full mt-3 px-4 py-2 rounded-2xl text-sm font-bold transition-all duration-200 hover:opacity-90"
-            style={{ background: '#D7FF54', color: '#111' }}
-          >
-            ✓ Complete the Course (Mark as Complete)
-          </button>
-        )}
+        {/* Complete button - ALWAYS VISIBLE */}
+        <button
+          onClick={handleCompleteCourse}
+          className="w-full mt-3 px-4 py-2 rounded-2xl text-sm font-bold transition-all duration-200 hover:opacity-90"
+          style={{ background: '#D7FF54', color: '#111' }}
+        >
+          ✓ Mark as Complete & Get Certificate
+        </button>
         
-        {/* Reset button - Only shown after modal is closed */}
-        {progress === 100 && celebrationClosed && (
-          <button
-            onClick={handleResetCelebration}
-            className="w-full mt-3 px-4 py-2 rounded-2xl text-sm font-bold transition-all duration-200 hover:opacity-90"
-            style={{ background: '#FF6D70', color: 'white' }}
-          >
-            🔄 Reset & Test Again
-          </button>
-        )}
+        {/* Reset button - ALWAYS VISIBLE */}
+        <button
+          onClick={handleResetCelebration}
+          className="w-full mt-3 px-4 py-2 rounded-2xl text-sm font-bold transition-all duration-200 hover:opacity-90"
+          style={{ background: '#A98BFF', color: 'white' }}
+        >
+          🔄 Reset Progress (Test Again)
+        </button>
       </div>
 
       {/* Resume Watching Button */}
@@ -939,6 +958,14 @@ export default function CourseDetail({ onBack, onNavigate }: CourseDetailProps) 
           />
         </>
       )}
+
+      {/* Certificate Viewer Modal */}
+      <CertificateViewerModal
+        isOpen={showCertificateViewer}
+        certificateUrl={currentCertificateUrl}
+        courseName={courseName}
+        onClose={() => setShowCertificateViewer(false)}
+      />
 
       {/* Reminder Modal */}
       <ReminderModal

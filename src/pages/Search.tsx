@@ -12,7 +12,7 @@ const SUGGESTIONS = [
 
 const FILTERS = {
   level: ['All Levels', 'Beginner', 'Intermediate', 'Advanced'],
-  duration: ['Any Duration', '< 1 month', '1–3 months', '3–6 months'],
+  duration: ['Any Duration', '< 1 month', '1-3 months', '3-6 months'],
   type: ['All', 'Course', 'Specialization', 'Certificate', 'Degree'],
   language: ['English', 'Spanish', 'French', 'Chinese'],
 };

@@ -5,7 +5,9 @@ import {
   generateReminderId, 
   calculateReminderTime, 
   formatReminderTime,
-  CourseReminder 
+  CourseReminder,
+  getAllReminders,
+  getDueReminders
 } from '../utils/reminderStorage';
 
 interface ReminderModalProps {
@@ -47,15 +49,6 @@ export default function ReminderModal({ isOpen, onClose, courseId, courseName }:
 
   // Handle quick reminder selection
   const handleQuickReminder = async (type: '1hour' | 'tomorrow' | '1week') => {
-    // Check notification permission
-    if (notificationPermission !== 'granted') {
-      const permission = await requestPermission();
-      if (permission !== 'granted') {
-        alert('⚠️ Please enable notifications to use reminders!');
-        return;
-      }
-    }
-
     setSelectedType(type);
     const reminderTime = calculateReminderTime(type);
 
@@ -69,12 +62,27 @@ export default function ReminderModal({ isOpen, onClose, courseId, courseName }:
       notified: false,
     };
 
+    // SAVE REMINDER FIRST
     const success = setReminder(newReminder);
+    console.log('💾 Reminder save result:', success);
+    console.log('📅 Reminder time:', new Date(reminderTime).toLocaleString());
+    console.log('⏰ Current time:', new Date().toLocaleString());
+    
     if (success) {
+      // THEN check notification permission
+      if (notificationPermission !== 'granted') {
+        const permission = await requestPermission();
+        if (permission !== 'granted') {
+          alert('⚠️ Reminder saved! But please enable notifications to receive alerts.');
+        }
+      }
+      
       setShowSuccess(true);
       setTimeout(() => {
         onClose();
       }, 1500);
+    } else {
+      alert('❌ Failed to save reminder. Please try again.');
     }
   };
 
@@ -83,15 +91,6 @@ export default function ReminderModal({ isOpen, onClose, courseId, courseName }:
     if (!customDate) {
       alert('Please select a date');
       return;
-    }
-
-    // Check notification permission
-    if (notificationPermission !== 'granted') {
-      const permission = await requestPermission();
-      if (permission !== 'granted') {
-        alert('⚠️ Please enable notifications to use reminders!');
-        return;
-      }
     }
 
     const dateTime = new Date(`${customDate}T${customTime}`);
@@ -113,12 +112,27 @@ export default function ReminderModal({ isOpen, onClose, courseId, courseName }:
       notified: false,
     };
 
+    // SAVE REMINDER FIRST
     const success = setReminder(newReminder);
+    console.log('💾 Custom reminder save result:', success);
+    console.log('📅 Reminder time:', new Date(reminderTime).toLocaleString());
+    console.log('⏰ Current time:', new Date().toLocaleString());
+    
     if (success) {
+      // THEN check notification permission
+      if (notificationPermission !== 'granted') {
+        const permission = await requestPermission();
+        if (permission !== 'granted') {
+          alert('⚠️ Reminder saved! But please enable notifications to receive alerts.');
+        }
+      }
+      
       setShowSuccess(true);
       setTimeout(() => {
         onClose();
       }, 1500);
+    } else {
+      alert('❌ Failed to save reminder. Please try again.');
     }
   };
 
@@ -135,10 +149,24 @@ export default function ReminderModal({ isOpen, onClose, courseId, courseName }:
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4" style={{ background: 'rgba(0,0,0,0.6)' }}>
+    <div 
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 overflow-y-auto" 
+      style={{ 
+        background: 'rgba(0,0,0,0.5)', 
+        backdropFilter: 'blur(8px)',
+        WebkitBackdropFilter: 'blur(8px)'
+      }}
+      onClick={onClose}
+    >
       <div 
-        className="relative w-full max-w-md rounded-4xl p-6 animate-in"
-        style={{ background: 'white' }}
+        className="relative w-full max-w-lg rounded-3xl p-8 my-8 animate-in"
+        style={{ 
+          background: 'white',
+          boxShadow: '0 20px 60px rgba(0,0,0,0.4)',
+          animation: 'slideIn 0.3s ease-out',
+          maxHeight: 'calc(100vh - 64px)',
+          overflowY: 'auto'
+        }}
         onClick={(e) => e.stopPropagation()}
       >
         {/* Close button */}
@@ -294,6 +322,26 @@ export default function ReminderModal({ isOpen, onClose, courseId, courseName }:
             >
               No reminders for now
             </button>
+
+            {/* DEBUG: Manual check button */}
+            <button
+              onClick={() => {
+                const allReminders = getAllReminders();
+                const dueReminders = getDueReminders();
+                const now = Date.now();
+                
+                console.log('=== MANUAL REMINDER CHECK ===');
+                console.log('Current time:', new Date(now).toLocaleString());
+                console.log('All reminders:', allReminders);
+                console.log('Due reminders:', dueReminders);
+                
+                alert(`Total reminders: ${allReminders.length}\nDue reminders: ${dueReminders.length}\n\nCheck console for details!`);
+              }}
+              className="w-full mt-2 py-2 rounded-xl font-bold text-xs transition-colors"
+              style={{ background: '#FEE2E2', color: '#DC2626' }}
+            >
+              🐛 DEBUG: Check Reminders Now
+            </button>
           </>
         )}
 
@@ -306,6 +354,19 @@ export default function ReminderModal({ isOpen, onClose, courseId, courseName }:
           </div>
         )}
       </div>
+
+      <style>{`
+        @keyframes slideIn {
+          from {
+            opacity: 0;
+            transform: translateY(20px) scale(0.95);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+          }
+        }
+      `}</style>
     </div>
   );
 }

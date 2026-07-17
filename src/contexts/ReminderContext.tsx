@@ -96,12 +96,21 @@ export const ReminderProvider = ({ children }: ReminderProviderProps) => {
   // Check for due reminders periodically
   useEffect(() => {
     const checkInterval = setInterval(() => {
+      const now = Date.now();
       const dueReminders = getDueReminders();
       
+      console.log('⏰ Checking reminders at:', new Date().toLocaleTimeString());
+      console.log('📋 Total reminders:', reminders.length);
+      console.log('🔔 Due reminders:', dueReminders.length);
+      
       if (dueReminders.length > 0) {
-        console.log(`🔔 ${dueReminders.length} due reminder(s) found`);
+        console.log(`🔔 ${dueReminders.length} due reminder(s) found!`);
         
         dueReminders.forEach((reminder) => {
+          console.log('⏰ Sending notification for:', reminder.courseName);
+          console.log('⏰ Reminder time:', new Date(reminder.reminderTime).toLocaleString());
+          console.log('⏰ Current time:', new Date(now).toLocaleString());
+          
           // Show notification
           const notification = showCourseReminderNotification(
             reminder.courseName,
@@ -109,24 +118,27 @@ export const ReminderProvider = ({ children }: ReminderProviderProps) => {
             () => {
               // When notification is clicked, navigate to course
               console.log('🖱️ User clicked reminder for:', reminder.courseName);
-              // In a real app, this would navigate to the course
-              // For now, we'll just open an alert
               window.focus();
             }
           );
 
           if (notification) {
+            console.log('✅ Notification sent successfully!');
             // Mark as notified
             markAsNotified(reminder.id);
             refreshReminders();
+          } else {
+            console.error('❌ Failed to send notification');
           }
         });
       }
-    }, 60000); // Check every 60 seconds (1 minute)
+    }, 10000); // Check every 10 seconds for testing
 
     // Also check immediately on mount
     const checkImmediately = () => {
       const dueReminders = getDueReminders();
+      console.log('🚀 Initial check - Due reminders:', dueReminders.length);
+      
       if (dueReminders.length > 0) {
         console.log(`🔔 ${dueReminders.length} due reminder(s) found on mount`);
         dueReminders.forEach((reminder) => {
@@ -149,7 +161,7 @@ export const ReminderProvider = ({ children }: ReminderProviderProps) => {
     checkImmediately();
 
     return () => clearInterval(checkInterval);
-  }, [refreshReminders]);
+  }, [refreshReminders, reminders]);
 
   // Cleanup old reminders daily
   useEffect(() => {

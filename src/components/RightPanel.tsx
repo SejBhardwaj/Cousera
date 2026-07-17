@@ -15,8 +15,8 @@ const DEADLINES = [
 ];
 
 const CERTS = [
-  { name: 'Python for Everybody', org: 'University of Michigan', date: 'Jun 2024', logo: 'https://1000logos.net/wp-content/uploads/2021/04/University-of-Michigan-logo.png' },
-  { name: 'Data Science', org: 'IBM', date: 'Apr 2024', logo: 'https://1000logos.net/wp-content/uploads/2017/02/IBM-Logo.png' },
+  { name: 'IBM Data Science Professional', org: 'IBM', date: 'Jun 2024', logo: '/1a68e21c776065c70542e56ea014cfa5.jpg' },
+  { name: 'Stanford Machine Learning', org: 'Stanford University', date: 'Apr 2024', logo: '/a0380e4cc974803f294c86a131633a01.jpg' },
 ];
 
 function ProgressRing({ percent, color, size = 80 }: { percent: number; color: string; size?: number }) {
