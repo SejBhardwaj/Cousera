@@ -2232,6 +2232,19 @@ example();`,
     console.log('📹 Video progress:', progress.percentComplete + '%');
   };
 
+  // Scroll to curriculum section
+  const scrollToCurriculum = () => {
+    // Set active tab to Curriculum first
+    setActiveTab('Curriculum');
+    // Wait for tab to render, then scroll
+    setTimeout(() => {
+      const element = document.getElementById('curriculum-section');
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }, 100);
+  };
+
   const tabs = ['About', 'Curriculum', 'Projects', 'Reviews', 'Certificate'];
 
   return (
@@ -2388,13 +2401,17 @@ example();`,
 
           <div className="flex items-center gap-3">
             <button
+              onClick={scrollToCurriculum}
               className="flex items-center gap-2 px-7 py-3.5 rounded-2xl font-bold text-sm transition-all duration-200 hover:opacity-90 active:scale-95"
               style={{ background: '#D7FF54', color: '#111' }}
             >
               <Play size={15} fill="#111" color="#111" />
               Continue Learning
             </button>
-            <button className="flex items-center gap-2 px-7 py-3.5 rounded-2xl font-bold text-sm bg-white/10 text-white border border-white/20 hover:bg-white/20 transition-colors">
+            <button 
+              onClick={scrollToCurriculum}
+              className="flex items-center gap-2 px-7 py-3.5 rounded-2xl font-bold text-sm bg-white/10 text-white border border-white/20 hover:bg-white/20 transition-colors"
+            >
               Preview Course
             </button>
           </div>
@@ -2572,7 +2589,7 @@ example();`,
       )}
 
       {activeTab === 'Curriculum' && (
-        <div className="space-y-3">
+        <div id="curriculum-section" className="space-y-3">
           <div className="card-static p-5 rounded-3xl flex items-center justify-between">
             <div>
               <p className="font-bold text-text">86 lessons</p>
