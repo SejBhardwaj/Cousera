@@ -117,35 +117,46 @@ export default function MyLearning({ onCourseClick }: { onCourseClick: (id: stri
         ))}
       </div>
 
-      {/* Streak Badges Showcase - Professional & Elegant */}
-      <div className="card-static p-8 rounded-4xl relative overflow-hidden">
-        {/* Subtle gradient background */}
-        <div className="absolute inset-0 opacity-20 pointer-events-none">
-          <div className="absolute top-0 right-0 w-[500px] h-[500px] rounded-full blur-[120px]" style={{ background: 'radial-gradient(circle, #FF6D70, transparent 60%)' }} />
-          <div className="absolute bottom-0 left-0 w-[500px] h-[500px] rounded-full blur-[120px]" style={{ background: 'radial-gradient(circle, #FFB259, transparent 60%)' }} />
+      {/* Streak Badges Showcase - Ultra Modern & Cool */}
+      <div className="relative rounded-[32px] overflow-hidden" style={{ background: 'linear-gradient(135deg, #F8FAFC 0%, #F1F5F9 100%)', border: '1px solid #E2E8F0' }}>
+        {/* Animated background patterns */}
+        <div className="absolute inset-0 opacity-40 pointer-events-none">
+          <div className="absolute top-0 right-0 w-[600px] h-[600px] rounded-full blur-[150px]" style={{ background: 'radial-gradient(circle, #FF6D70, transparent 50%)' }} />
+          <div className="absolute bottom-0 left-0 w-[600px] h-[600px] rounded-full blur-[150px]" style={{ background: 'radial-gradient(circle, #60A5FA, transparent 50%)' }} />
         </div>
 
-        <div className="relative z-10">
-          {/* Header */}
+        <div className="relative z-10 p-8">
+          {/* Modern Header */}
           <div className="flex items-center justify-between mb-8">
             <div className="flex items-center gap-4">
-              <div className="w-14 h-14 rounded-[18px] flex items-center justify-center relative overflow-hidden shadow-xl" style={{ background: 'linear-gradient(135deg, #FF6D70 0%, #FF9A9C 100%)' }}>
-                <div className="absolute inset-0 bg-gradient-to-br from-white/30 to-transparent" />
-                <Trophy size={28} color="white" strokeWidth={2.5} />
+              <div className="relative">
+                <div className="w-16 h-16 rounded-[20px] flex items-center justify-center relative overflow-hidden shadow-2xl" style={{ background: 'linear-gradient(135deg, #FF6D70 0%, #FF9A9C 100%)' }}>
+                  <div className="absolute inset-0 bg-gradient-to-br from-white/40 via-transparent to-black/20" />
+                  <Trophy size={32} color="white" strokeWidth={2.5} className="relative z-10" />
+                </div>
+                {/* Floating sparkles */}
+                <div className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-yellow-400 animate-ping" />
+                <div className="absolute -bottom-1 -left-1 w-3 h-3 rounded-full bg-orange-400 animate-pulse" />
               </div>
               <div>
-                <h2 className="text-xl font-black text-text mb-1">Achievement Badges</h2>
-                <p className="text-sm text-muted">Keep your streak alive to unlock exclusive badges</p>
+                <h2 className="text-2xl font-black text-text mb-1 tracking-tight">Streak Badges</h2>
+                <p className="text-sm font-semibold text-muted">Keep learning daily to unlock exclusive achievements</p>
               </div>
             </div>
-            <div className="flex items-center gap-2 px-5 py-3 rounded-[18px] shadow-lg" style={{ background: 'linear-gradient(135deg, #FFF7ED 0%, #FFEDD5 100%)', border: '2px solid #FB923C' }}>
-              <Flame size={18} color="#EA580C" fill="#EA580C" className="animate-pulse" />
-              <span className="text-sm font-black text-orange-800">23 Day Streak</span>
+            
+            {/* Current Streak Badge */}
+            <div className="flex items-center gap-3 px-6 py-3 rounded-[20px] shadow-xl relative overflow-hidden" style={{ background: 'linear-gradient(135deg, #FFF7ED 0%, #FFEDD5 100%)', border: '2px solid #FB923C' }}>
+              <div className="absolute inset-0 bg-gradient-to-r from-orange-200/30 to-transparent" />
+              <Flame size={22} color="#EA580C" fill="#EA580C" className="relative z-10 animate-pulse" />
+              <div className="relative z-10">
+                <p className="text-xs font-bold text-orange-700 uppercase tracking-wide">Current Streak</p>
+                <p className="text-lg font-black text-orange-900">23 Days</p>
+              </div>
             </div>
           </div>
 
-          {/* Badges Grid - Professional Design */}
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-5">
+          {/* Ultra Modern Badges Grid */}
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 mb-8">
             {[
               { 
                 icon: Sparkles,
@@ -154,7 +165,7 @@ export default function MyLearning({ onCourseClick }: { onCourseClick: (id: stri
                 unlocked: true,
                 primaryColor: '#10B981',
                 secondaryColor: '#34D399',
-                bgColor: '#ECFDF5',
+                glowColor: 'rgba(16, 185, 129, 0.3)',
                 unlockedDate: 'Nov 28'
               },
               { 
@@ -164,7 +175,7 @@ export default function MyLearning({ onCourseClick }: { onCourseClick: (id: stri
                 unlocked: true,
                 primaryColor: '#F59E0B',
                 secondaryColor: '#FBBF24',
-                bgColor: '#FFF7ED',
+                glowColor: 'rgba(245, 158, 11, 0.3)',
                 unlockedDate: 'Dec 2'
               },
               { 
@@ -174,7 +185,7 @@ export default function MyLearning({ onCourseClick }: { onCourseClick: (id: stri
                 unlocked: true,
                 primaryColor: '#8B5CF6',
                 secondaryColor: '#A78BFA',
-                bgColor: '#F5F3FF',
+                glowColor: 'rgba(139, 92, 246, 0.3)',
                 unlockedDate: 'Dec 9'
               },
               { 
@@ -184,7 +195,7 @@ export default function MyLearning({ onCourseClick }: { onCourseClick: (id: stri
                 unlocked: false,
                 primaryColor: '#EF4444',
                 secondaryColor: '#F87171',
-                bgColor: '#FEF2F2',
+                glowColor: 'rgba(239, 68, 68, 0.3)',
                 unlockedDate: null
               },
               { 
@@ -194,7 +205,7 @@ export default function MyLearning({ onCourseClick }: { onCourseClick: (id: stri
                 unlocked: false,
                 primaryColor: '#3B82F6',
                 secondaryColor: '#60A5FA',
-                bgColor: '#EFF6FF',
+                glowColor: 'rgba(59, 130, 246, 0.3)',
                 unlockedDate: null
               },
               { 
@@ -204,7 +215,7 @@ export default function MyLearning({ onCourseClick }: { onCourseClick: (id: stri
                 unlocked: false,
                 primaryColor: '#EC4899',
                 secondaryColor: '#F472B6',
-                bgColor: '#FDF2F8',
+                glowColor: 'rgba(236, 72, 153, 0.3)',
                 unlockedDate: null
               },
             ].map((badge, index) => {
@@ -212,156 +223,192 @@ export default function MyLearning({ onCourseClick }: { onCourseClick: (id: stri
               return (
                 <div
                   key={badge.name}
-                  className={`group relative rounded-[24px] overflow-hidden transition-all duration-300 ${
+                  className={`group relative transition-all duration-500 ${
                     badge.unlocked 
-                      ? 'hover:-translate-y-3 hover:shadow-2xl cursor-pointer' 
+                      ? 'hover:-translate-y-4 cursor-pointer' 
                       : 'cursor-not-allowed'
                   }`}
                   style={{
-                    background: badge.unlocked ? 'white' : '#FAFAFA',
-                    border: badge.unlocked 
-                      ? `2px solid ${badge.primaryColor}20` 
-                      : '2px solid #E5E5E5',
-                    boxShadow: badge.unlocked 
-                      ? `0 4px 20px ${badge.primaryColor}15` 
-                      : '0 2px 8px rgba(0,0,0,0.04)',
-                    animation: badge.unlocked ? `fadeIn 0.6s ease-out ${index * 0.15}s backwards` : 'none',
+                    animation: badge.unlocked ? `fadeIn 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) ${index * 0.1}s backwards` : 'none',
                   }}
                 >
-                  {/* Top gradient bar */}
+                  {/* Glow effect on hover */}
                   {badge.unlocked && (
-                    <div className="absolute top-0 left-0 right-0 h-1" style={{ background: `linear-gradient(90deg, ${badge.primaryColor} 0%, ${badge.secondaryColor} 100%)` }} />
+                    <div 
+                      className="absolute inset-0 rounded-[28px] opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-xl"
+                      style={{ background: badge.glowColor }}
+                    />
                   )}
 
-                  {/* Content */}
-                  <div className="p-5">
-                    {/* Badge Icon - Premium Design */}
-                    <div className="relative mb-4">
-                      <div 
-                        className={`w-20 h-20 mx-auto rounded-[20px] flex items-center justify-center relative overflow-hidden transition-all duration-300 ${
-                          badge.unlocked ? 'group-hover:scale-110' : ''
-                        }`}
-                        style={{
-                          background: badge.unlocked 
-                            ? `linear-gradient(135deg, ${badge.primaryColor} 0%, ${badge.secondaryColor} 100%)`
-                            : 'linear-gradient(135deg, #E5E5E5 0%, #D4D4D8 100%)',
-                          boxShadow: badge.unlocked 
-                            ? `0 8px 24px ${badge.primaryColor}40, inset 0 1px 2px rgba(255,255,255,0.3)` 
-                            : 'inset 0 2px 4px rgba(0,0,0,0.1)',
-                        }}
-                      >
-                        {/* Glossy overlay */}
-                        <div className="absolute inset-0 bg-gradient-to-br from-white/30 via-transparent to-black/10" />
-                        
-                        {/* Icon */}
-                        <IconComponent 
-                          size={36} 
-                          color="white" 
-                          strokeWidth={2.5}
-                          fill={badge.icon === Flame || badge.icon === Crown ? 'white' : 'none'}
-                          className="relative z-10"
-                        />
-                        
-                        {/* Lock overlay for locked badges */}
-                        {!badge.unlocked && (
-                          <div className="absolute inset-0 bg-black/40 backdrop-blur-[2px] flex items-center justify-center z-20">
-                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
-                              <rect x="6" y="11" width="12" height="9" rx="2" fill="white" fillOpacity="0.9"/>
-                              <path d="M8 11V7C8 5.34315 9.34315 4 11 4H13C14.6569 4 16 5.34315 16 7V11" stroke="white" strokeWidth="2.5" strokeLinecap="round" fill="none"/>
-                              <circle cx="12" cy="15.5" r="1.5" fill="#666"/>
-                            </svg>
+                  {/* Card */}
+                  <div
+                    className="relative rounded-[28px] overflow-hidden transition-all duration-300"
+                    style={{
+                      background: badge.unlocked ? 'white' : '#FAFAFA',
+                      border: badge.unlocked 
+                        ? `2px solid ${badge.primaryColor}30` 
+                        : '2px dashed #E5E5E5',
+                      boxShadow: badge.unlocked 
+                        ? `0 10px 30px ${badge.primaryColor}20, 0 0 0 1px ${badge.primaryColor}10` 
+                        : '0 4px 12px rgba(0,0,0,0.05)',
+                    }}
+                  >
+                    {/* Top accent bar */}
+                    {badge.unlocked && (
+                      <div className="absolute top-0 left-0 right-0 h-1.5" style={{ background: `linear-gradient(90deg, ${badge.primaryColor} 0%, ${badge.secondaryColor} 100%)` }} />
+                    )}
+
+                    <div className="p-5">
+                      {/* Badge Icon - Premium 3D Effect */}
+                      <div className="relative mb-4">
+                        <div 
+                          className={`w-24 h-24 mx-auto rounded-[24px] flex items-center justify-center relative overflow-hidden transition-all duration-500 ${
+                            badge.unlocked ? 'group-hover:scale-110 group-hover:rotate-6' : ''
+                          }`}
+                          style={{
+                            background: badge.unlocked 
+                              ? `linear-gradient(135deg, ${badge.primaryColor} 0%, ${badge.secondaryColor} 100%)`
+                              : 'linear-gradient(135deg, #E5E5E5 0%, #D4D4D8 100%)',
+                            boxShadow: badge.unlocked 
+                              ? `0 12px 32px ${badge.primaryColor}50, inset 0 2px 4px rgba(255,255,255,0.4), inset 0 -2px 4px rgba(0,0,0,0.1)` 
+                              : 'inset 0 2px 6px rgba(0,0,0,0.15)',
+                          }}
+                        >
+                          {/* 3D light effect */}
+                          <div className="absolute inset-0 bg-gradient-to-br from-white/50 via-white/10 to-black/20" style={{ clipPath: 'polygon(0 0, 100% 0, 100% 60%, 0 40%)' }} />
+                          
+                          {/* Icon */}
+                          <IconComponent 
+                            size={42} 
+                            color="white" 
+                            strokeWidth={2.5}
+                            fill={badge.icon === Flame || badge.icon === Crown ? 'white' : 'none'}
+                            className="relative z-10 drop-shadow-lg"
+                          />
+                          
+                          {/* Lock overlay */}
+                          {!badge.unlocked && (
+                            <div className="absolute inset-0 bg-gradient-to-br from-black/50 to-black/30 backdrop-blur-[1px] flex items-center justify-center z-20">
+                              <div className="w-10 h-10 rounded-full bg-white/90 flex items-center justify-center shadow-xl">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                                  <rect x="7" y="11" width="10" height="8" rx="1.5" fill="#666" fillOpacity="0.8"/>
+                                  <path d="M9 11V8C9 6.34315 10.3431 5 12 5C13.6569 5 15 6.34315 15 8V11" stroke="#666" strokeWidth="2.5" strokeLinecap="round"/>
+                                </svg>
+                              </div>
+                            </div>
+                          )}
+                        </div>
+
+                        {/* Star badge for unlocked */}
+                        {badge.unlocked && (
+                          <div 
+                            className="absolute -top-2 -right-2 w-9 h-9 rounded-full flex items-center justify-center shadow-xl animate-bounce"
+                            style={{ 
+                              background: `linear-gradient(135deg, ${badge.primaryColor} 0%, ${badge.secondaryColor} 100%)`,
+                              animation: 'bounce 2s ease-in-out infinite'
+                            }}
+                          >
+                            <Star size={16} fill="white" color="white" strokeWidth={2.5} />
                           </div>
                         )}
                       </div>
 
-                      {/* Sparkle indicator for unlocked */}
-                      {badge.unlocked && (
-                        <div className="absolute -top-1 -right-1 w-7 h-7 rounded-full flex items-center justify-center shadow-lg" style={{ background: badge.primaryColor }}>
-                          <Star size={14} fill="white" color="white" />
+                      {/* Badge Info */}
+                      <div className="text-center">
+                        <h3 className={`font-black text-base mb-1.5 leading-tight ${badge.unlocked ? 'text-text' : 'text-gray-400'}`}>
+                          {badge.name}
+                        </h3>
+                        
+                        <div className="flex items-center justify-center gap-2 mb-3">
+                          <div 
+                            className="w-2 h-2 rounded-full transition-all duration-300 group-hover:scale-150" 
+                            style={{ background: badge.unlocked ? badge.primaryColor : '#D4D4D8' }}
+                          />
+                          <p className={`text-xs font-bold ${badge.unlocked ? 'text-muted' : 'text-gray-400'}`}>
+                            {badge.days} Day Streak
+                          </p>
+                          <div 
+                            className="w-2 h-2 rounded-full transition-all duration-300 group-hover:scale-150" 
+                            style={{ background: badge.unlocked ? badge.primaryColor : '#D4D4D8' }}
+                          />
                         </div>
-                      )}
-                    </div>
-
-                    {/* Badge Info */}
-                    <div className="text-center">
-                      <h3 className={`font-black text-sm mb-1 ${badge.unlocked ? 'text-text' : 'text-muted'}`}>
-                        {badge.name}
-                      </h3>
-                      <div className="flex items-center justify-center gap-1 mb-3">
-                        <div 
-                          className="w-1.5 h-1.5 rounded-full" 
-                          style={{ background: badge.unlocked ? badge.primaryColor : '#D4D4D8' }}
-                        />
-                        <p className="text-xs font-bold text-muted">{badge.days} Days</p>
-                        <div 
-                          className="w-1.5 h-1.5 rounded-full" 
-                          style={{ background: badge.unlocked ? badge.primaryColor : '#D4D4D8' }}
-                        />
+                        
+                        {badge.unlocked && badge.unlockedDate ? (
+                          <div 
+                            className="px-3 py-2 rounded-xl text-[11px] font-black uppercase tracking-wider"
+                            style={{ 
+                              background: `${badge.primaryColor}15`,
+                              color: badge.primaryColor,
+                              border: `1px solid ${badge.primaryColor}30`
+                            }}
+                          >
+                            Unlocked {badge.unlockedDate}
+                          </div>
+                        ) : (
+                          <div className="px-3 py-2 rounded-xl text-[11px] font-bold bg-gray-100 text-gray-500 border border-gray-200">
+                            {badge.days - 23} days to unlock
+                          </div>
+                        )}
                       </div>
-                      
-                      {badge.unlocked && badge.unlockedDate ? (
-                        <div 
-                          className="px-3 py-1.5 rounded-xl text-[10px] font-black uppercase tracking-wide"
-                          style={{ 
-                            background: `${badge.primaryColor}15`,
-                            color: badge.primaryColor 
-                          }}
-                        >
-                          Unlocked {badge.unlockedDate}
-                        </div>
-                      ) : (
-                        <div className="px-3 py-1.5 rounded-xl text-[10px] font-bold bg-gray-100 text-muted">
-                          {badge.days - 23} days remaining
-                        </div>
-                      )}
                     </div>
                   </div>
-
-                  {/* Hover glow effect */}
-                  {badge.unlocked && (
-                    <div 
-                      className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none rounded-[24px]"
-                      style={{ 
-                        boxShadow: `0 0 40px ${badge.primaryColor}40, inset 0 0 20px ${badge.primaryColor}10` 
-                      }}
-                    />
-                  )}
                 </div>
               );
             })}
           </div>
 
-          {/* Progress Bar to Next Badge - Elegant Design */}
-          <div className="mt-8 p-6 rounded-[24px] relative overflow-hidden" style={{ background: 'linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%)', border: '2px solid #FCD34D' }}>
-            <div className="absolute top-0 right-0 w-32 h-32 rounded-full blur-3xl opacity-20" style={{ background: '#F59E0B' }} />
+          {/* Ultra Modern Progress Bar */}
+          <div className="relative p-7 rounded-[28px] overflow-hidden" style={{ background: 'linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%)', border: '2px solid #FCD34D' }}>
+            {/* Animated background orb */}
+            <div className="absolute top-0 right-0 w-40 h-40 rounded-full blur-3xl opacity-30 animate-pulse" style={{ background: '#F59E0B' }} />
             
             <div className="relative z-10">
-              <div className="flex items-center justify-between mb-3">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-[14px] flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #EF4444 0%, #F87171 100%)', boxShadow: '0 4px 12px rgba(239, 68, 68, 0.3)' }}>
-                    <Award size={20} color="white" strokeWidth={2.5} />
+              <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center gap-4">
+                  <div 
+                    className="w-12 h-12 rounded-[16px] flex items-center justify-center relative overflow-hidden"
+                    style={{ 
+                      background: 'linear-gradient(135deg, #EF4444 0%, #F87171 100%)', 
+                      boxShadow: '0 8px 24px rgba(239, 68, 68, 0.4), inset 0 2px 4px rgba(255,255,255,0.3)'
+                    }}
+                  >
+                    <div className="absolute inset-0 bg-gradient-to-br from-white/40 to-transparent" />
+                    <Award size={24} color="white" strokeWidth={2.5} className="relative z-10" />
                   </div>
-                  <span className="text-base font-black text-text">Next: Monthly Master Badge</span>
+                  <div>
+                    <p className="text-xs font-bold text-orange-700 uppercase tracking-wide mb-0.5">Next Milestone</p>
+                    <p className="text-lg font-black text-text">Monthly Master Badge</p>
+                  </div>
                 </div>
-                <span className="text-sm font-black text-orange-700">23 / 30 days</span>
+                <div className="text-right">
+                  <p className="text-sm font-bold text-orange-700">Progress</p>
+                  <p className="text-2xl font-black text-orange-900">23 / 30</p>
+                </div>
               </div>
               
-              <div className="h-4 bg-white rounded-full overflow-hidden shadow-inner relative">
+              {/* 3D Progress Bar */}
+              <div className="relative h-5 bg-white rounded-full overflow-hidden shadow-inner">
+                <div className="absolute inset-0 bg-gradient-to-b from-black/5 to-transparent" />
                 <div 
                   className="h-full rounded-full transition-all duration-1000 relative overflow-hidden"
                   style={{ 
                     width: '77%',
                     background: 'linear-gradient(90deg, #F59E0B 0%, #EF4444 100%)',
-                    boxShadow: '0 2px 8px rgba(245, 158, 11, 0.4)'
+                    boxShadow: '0 2px 12px rgba(245, 158, 11, 0.5), inset 0 1px 2px rgba(255,255,255,0.5)'
                   }}
                 >
-                  <div className="absolute inset-0 bg-gradient-to-r from-white/40 via-transparent to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-r from-white/50 via-white/20 to-transparent" />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent" />
+                  {/* Animated shimmer */}
+                  <div 
+                    className="absolute inset-0 bg-gradient-to-r from-transparent via-white/60 to-transparent"
+                    style={{ animation: 'shimmer 2s infinite', width: '50%' }}
+                  />
                 </div>
               </div>
               
-              <p className="text-xs font-semibold text-center mt-3" style={{ color: '#92400E' }}>
-                Only 7 more days to unlock your Monthly Master badge! Keep the momentum going! 💪
+              <p className="text-sm font-bold text-center mt-4 leading-relaxed" style={{ color: '#92400E' }}>
+                Only <span className="text-orange-600 font-black">7 more days</span> to unlock Monthly Master! Keep crushing it! 💪🔥
               </p>
             </div>
           </div>

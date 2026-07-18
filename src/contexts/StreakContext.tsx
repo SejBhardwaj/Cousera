@@ -10,6 +10,8 @@ import {
 } from '../utils/streakTracking';
 import { addStreakNotification } from '../utils/streakNotificationStorage';
 import StreakNotification from '../components/StreakNotification';
+import BadgeEarnedNotification from '../components/BadgeEarnedNotification';
+import { Sparkles, Flame, Zap } from 'lucide-react';
 
 interface StreakContextType {
   streakData: StreakData;
@@ -26,6 +28,8 @@ export const StreakProvider = ({ children }: { children: ReactNode }) => {
   const [newBadges, setNewBadges] = useState<Badge[]>([]);
   const [showStreakNotification, setShowStreakNotification] = useState(false);
   const [notificationStreak, setNotificationStreak] = useState(0);
+  const [showBadgeNotification, setShowBadgeNotification] = useState(false);
+  const [earnedBadge, setEarnedBadge] = useState<Badge | null>(null);
 
   // Initialize and track login on mount
   useEffect(() => {
@@ -62,6 +66,14 @@ export const StreakProvider = ({ children }: { children: ReactNode }) => {
       
       // Save streak notification to history
       addStreakNotification(data.currentStreak);
+      
+      // If a badge was earned, show badge notification after streak notification
+      if (badges.length > 0) {
+        setTimeout(() => {
+          setEarnedBadge(badges[0]); // Show first earned badge
+          setShowBadgeNotification(true);
+        }, 5500); // Show 0.5s after streak notification closes
+      }
     }
     
     if (badges.length > 0) {
@@ -82,6 +94,14 @@ export const StreakProvider = ({ children }: { children: ReactNode }) => {
     setNewBadges([]);
   }, []);
 
+  // Get icon for badge
+  const getBadgeIcon = (streakRequired: number) => {
+    if (streakRequired === 3) return Sparkles;
+    if (streakRequired === 7) return Flame;
+    if (streakRequired === 14) return Zap;
+    return Sparkles; // Default
+  };
+
   return (
     <StreakContext.Provider
       value={{
@@ -99,6 +119,19 @@ export const StreakProvider = ({ children }: { children: ReactNode }) => {
         <StreakNotification
           streakCount={notificationStreak}
           onClose={() => setShowStreakNotification(false)}
+        />
+      )}
+
+      {/* Badge Earned Notification - Shows after streak notification */}
+      {showBadgeNotification && earnedBadge && (
+        <BadgeEarnedNotification
+          badgeName={earnedBadge.name}
+          badgeIcon={getBadgeIcon(earnedBadge.streakRequired)}
+          streakDays={earnedBadge.streakRequired}
+          onClose={() => {
+            setShowBadgeNotification(false);
+            setEarnedBadge(null);
+          }}
         />
       )}
     </StreakContext.Provider>
