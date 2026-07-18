@@ -1093,8 +1093,41 @@ export default function Explore({ onCourseClick }: { onCourseClick: (id: string)
   const [filtersOpen, setFiltersOpen] = useState(false);
   const [level, setLevel] = useState('All Levels');
   const [duration, setDuration] = useState('Any Duration');
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
 
-  // Filter courses based on selected category, search, and filters
+  // Extract all unique tags from courses
+  const allTags = useMemo(() => {
+    const tags = new Set<string>();
+    FEATURED_COURSES.forEach(course => {
+      course.tags?.forEach(tag => tags.add(tag));
+    });
+    return Array.from(tags).sort();
+  }, []);
+
+  // Toggle tag selection
+  const toggleTag = (tag: string) => {
+    setSelectedTags(prev => {
+      if (prev.includes(tag)) {
+        return prev.filter(t => t !== tag);
+      } else {
+        return [...prev, tag];
+      }
+    });
+  };
+
+  // Clear all filters
+  const clearAllFilters = () => {
+    setSearch('');
+    setActiveCategory('All');
+    setSelectedTags([]);
+    setLevel('All Levels');
+    setDuration('Any Duration');
+  };
+
+  // Check if any filters are active
+  const hasActiveFilters = search !== '' || activeCategory !== 'All' || selectedTags.length > 0 || level !== 'All Levels' || duration !== 'Any Duration';
+
+  // Filter courses based on selected category, search, tags, and filters
   const filteredCourses = useMemo(() => {
     return FEATURED_COURSES.filter(course => {
       // Category filter
@@ -1109,12 +1142,18 @@ export default function Explore({ onCourseClick }: { onCourseClick: (id: string)
         course.instructor.toLowerCase().includes(searchLower) ||
         course.provider.toLowerCase().includes(searchLower);
       
+      // Tag filter (AND logic - course must have ALL selected tags)
+      const matchesTags = selectedTags.length === 0 || 
+        selectedTags.every(selectedTag => 
+          course.tags?.some(courseTag => courseTag.toLowerCase() === selectedTag.toLowerCase())
+        );
+      
       // Level filter
       const matchesLevel = level === 'All Levels' || course.difficulty === level;
       
-      return matchesCategory && matchesSearch && matchesLevel;
+      return matchesCategory && matchesSearch && matchesTags && matchesLevel;
     });
-  }, [activeCategory, search, level]);
+  }, [activeCategory, search, selectedTags, level]);
 
   return (
     <div className="flex-1 py-4 px-4 md:pr-4 md:pl-2 overflow-y-auto no-scrollbar space-y-5 animate-in">
@@ -1168,7 +1207,7 @@ export default function Explore({ onCourseClick }: { onCourseClick: (id: string)
         )}
 
         {/* Category pills */}
-        <div className="flex gap-2 overflow-x-auto no-scrollbar pb-1">
+        <div className="flex gap-2 overflow-x-auto no-scrollbar pb-1 mb-4">
           {CATEGORIES.map((c) => (
             <button
               key={c.name}
@@ -1183,6 +1222,87 @@ export default function Explore({ onCourseClick }: { onCourseClick: (id: string)
               <span className="ml-1.5 text-xs opacity-60">({c.count.toLocaleString()})</span>
             </button>
           ))}
+        </div>
+
+        {/* Tag Filter Section */}
+        <div className="border-t border-border pt-4">
+          <div className="flex items-center justify-between mb-3">
+            <div className="flex items-center gap-2">
+              <h3 className="text-sm font-bold text-text">Filter by Tags</h3>
+              {selectedTags.length > 0 && (
+                <span className="px-2 py-0.5 rounded-full text-xs font-bold bg-primary/10" style={{ color: '#A98BFF' }}>
+                  {selectedTags.length} selected
+                </span>
+              )}
+            </div>
+            {hasActiveFilters && (
+              <button
+                onClick={clearAllFilters}
+                className="text-xs font-bold text-muted hover:text-text transition-colors flex items-center gap-1"
+              >
+                <span>Clear All Filters</span>
+                <span className="text-lg leading-none">×</span>
+              </button>
+            )}
+          </div>
+          
+          <div className="flex gap-2 flex-wrap">
+            {allTags.map((tag) => {
+              const isSelected = selectedTags.includes(tag);
+              return (
+                <button
+                  key={tag}
+                  onClick={() => toggleTag(tag)}
+                  className="px-3 py-1.5 rounded-full text-xs font-semibold transition-all duration-200 hover:scale-105 active:scale-95"
+                  style={{
+                    background: isSelected ? '#A98BFF' : '#F0F0F5',
+                    color: isSelected ? 'white' : '#6B6B7B',
+                    border: isSelected ? '2px solid #A98BFF' : '2px solid transparent',
+                    boxShadow: isSelected ? '0 2px 8px rgba(169,139,255,0.3)' : 'none',
+                  }}
+                >
+                  {tag}
+                  {isSelected && <span className="ml-1">✓</span>}
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Active filters display */}
+          {(selectedTags.length > 0 || search !== '') && (
+            <div className="mt-3 p-3 rounded-2xl" style={{ background: '#F6F6F8' }}>
+              <p className="text-xs font-semibold text-muted mb-2">Active Filters:</p>
+              <div className="flex flex-wrap gap-2">
+                {search && (
+                  <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-white border border-border">
+                    <span className="text-muted">Search:</span>
+                    <span className="text-text">"{search}"</span>
+                    <button
+                      onClick={() => setSearch('')}
+                      className="ml-1 text-muted hover:text-text transition-colors"
+                    >
+                      ×
+                    </button>
+                  </div>
+                )}
+                {selectedTags.map(tag => (
+                  <div
+                    key={tag}
+                    className="flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold text-white"
+                    style={{ background: '#A98BFF' }}
+                  >
+                    <span>{tag}</span>
+                    <button
+                      onClick={() => toggleTag(tag)}
+                      className="text-white/80 hover:text-white transition-colors"
+                    >
+                      ×
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       </div>
 
@@ -1213,30 +1333,44 @@ export default function Explore({ onCourseClick }: { onCourseClick: (id: string)
       {/* Course Grid */}
       <div>
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-card-title text-text">
-            {search ? `Results for "${search}"` : activeCategory === 'All' ? 'All Courses' : activeCategory}
-          </h2>
-          <div className="flex items-center gap-2 text-xs text-muted">
-            <Filter size={12} />
-            {filteredCourses.length} courses
+          <div>
+            <h2 className="text-card-title text-text">
+              {search ? `Results for "${search}"` : activeCategory === 'All' ? 'All Courses' : activeCategory}
+            </h2>
+            {selectedTags.length > 0 && (
+              <p className="text-xs text-muted mt-1">
+                Filtered by: {selectedTags.join(', ')}
+              </p>
+            )}
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 text-xs text-muted">
+              <Filter size={12} />
+              <span className="font-bold" style={{ color: filteredCourses.length === 0 ? '#FF6D70' : '#059669' }}>
+                {filteredCourses.length}
+              </span>
+              <span>/ {FEATURED_COURSES.length} courses</span>
+            </div>
           </div>
         </div>
         
         {filteredCourses.length === 0 ? (
           <div className="card-static p-12 rounded-4xl text-center">
-            <div className="w-16 h-16 rounded-3xl mx-auto mb-4 flex items-center justify-center" style={{ background: '#F0F0F5' }}>
-              <Search size={28} color="#6B6B7B" />
+            <div className="w-16 h-16 rounded-3xl mx-auto mb-4 flex items-center justify-center" style={{ background: '#FFF0F0' }}>
+              <Search size={28} color="#FF6D70" />
             </div>
             <h3 className="text-lg font-bold text-text mb-2">No courses found</h3>
             <p className="text-sm text-muted mb-5 max-w-md mx-auto">
-              Try adjusting your search terms or filters to find what you're looking for.
+              {search && selectedTags.length > 0 
+                ? `No courses match "${search}" with tags: ${selectedTags.join(', ')}`
+                : search 
+                ? `No courses match "${search}". Try different search terms.`
+                : selectedTags.length > 0
+                ? `No courses have all selected tags: ${selectedTags.join(', ')}`
+                : 'Try adjusting your filters to find what you\'re looking for.'}
             </p>
             <button
-              onClick={() => {
-                setSearch('');
-                setActiveCategory('All');
-                setLevel('All Levels');
-              }}
+              onClick={clearAllFilters}
               className="px-6 py-3 rounded-2xl text-sm font-bold transition-all duration-200 hover:opacity-90 active:scale-95"
               style={{ background: '#D7FF54', color: '#111' }}
             >

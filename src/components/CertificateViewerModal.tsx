@@ -1,4 +1,6 @@
 import { X, Download, Share2 } from 'lucide-react';
+import { useEffect } from 'react';
+import confetti from 'canvas-confetti';
 
 interface CertificateViewerModalProps {
   isOpen: boolean;
@@ -14,6 +16,30 @@ export default function CertificateViewerModal({
   onClose,
 }: CertificateViewerModalProps) {
   if (!isOpen) return null;
+
+  // Launch confetti when modal opens
+  useEffect(() => {
+    if (isOpen) {
+      launchConfetti();
+    }
+  }, [isOpen]);
+
+  const launchConfetti = () => {
+    const duration = 3000;
+    const animationEnd = Date.now() + duration;
+    const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 100000 };
+
+    const interval = setInterval(() => {
+      const timeLeft = animationEnd - Date.now();
+      if (timeLeft <= 0) return clearInterval(interval);
+
+      confetti({
+        ...defaults,
+        particleCount: 50,
+        origin: { x: Math.random(), y: Math.random() - 0.2 }
+      });
+    }, 250);
+  };
 
   const handleDownloadCertificate = async () => {
     try {
@@ -99,17 +125,17 @@ export default function CertificateViewerModal({
           <X size={20} color="#6B6B7B" strokeWidth={2.5} />
         </button>
 
-        {/* Certificate Container */}
+        {/* Certificate Container - Dark Gradient Background */}
         <div 
-          className="rounded-3xl overflow-hidden bg-white p-6"
+          className="rounded-3xl overflow-hidden bg-gradient-to-br from-gray-900 via-purple-900 to-gray-900 p-6"
           style={{ 
             boxShadow: '0 20px 60px rgba(0,0,0,0.4)'
           }}
         >
           {/* Certificate Image */}
-          <div className="relative rounded-2xl overflow-hidden mb-4" style={{ background: '#F6F6F8' }}>
-            <img 
-              src={certificateUrl} 
+          <div className="relative rounded-2xl overflow-hidden mb-4" style={{ background: 'rgba(255,255,255,0.95)' }}>
+            <img
+              src={certificateUrl}
               alt={`Certificate for ${courseName}`}
               className="w-full h-auto object-contain"
               style={{ maxHeight: '70vh' }}
@@ -119,18 +145,18 @@ export default function CertificateViewerModal({
           {/* Certificate Info & Actions */}
           <div className="flex items-center justify-between gap-4">
             <div className="flex-1">
-              <h3 className="font-bold text-text text-lg mb-1">{courseName}</h3>
-              <p className="text-sm text-muted">Certificate of Completion</p>
+              <h3 className="font-bold text-white text-lg mb-1">{courseName}</h3>
+              <p className="text-sm text-white/70">Certificate of Completion</p>
             </div>
 
             <div className="flex gap-3">
               <button
                 onClick={handleShare}
-                className="flex items-center justify-center gap-2 px-5 py-3 rounded-2xl font-semibold text-sm transition-all duration-200 hover:bg-gray-100 active:scale-95"
+                className="flex items-center justify-center gap-2 px-5 py-3 rounded-2xl font-semibold text-sm transition-all duration-200 hover:bg-white/10 active:scale-95"
                 style={{ 
-                  background: '#F6F6F8',
-                  color: '#0F0F0F',
-                  border: '1px solid #E0E0E8'
+                  background: 'rgba(255,255,255,0.1)',
+                  color: 'white',
+                  border: '1px solid rgba(255,255,255,0.2)'
                 }}
               >
                 <Share2 size={16} />

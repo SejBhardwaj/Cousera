@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { User, Bell, Lock, CreditCard, Globe, Palette, Download, Shield, Mail, Smartphone, Trash2, LogOut, ChevronRight, Check } from 'lucide-react';
+import IOSToggle from '../components/IOSToggle';
 
 type SettingsTab = 'account' | 'notifications' | 'privacy' | 'billing' | 'appearance' | 'language';
 
@@ -261,18 +262,11 @@ export default function Settings() {
                         <p className="font-bold text-sm text-text mb-1">{item.label}</p>
                         <p className="text-xs text-muted">{item.desc}</p>
                       </div>
-                      <button
-                        onClick={() => toggleSetting(item.key)}
-                        className={`w-12 h-7 rounded-full transition-all relative ${
-                          settings[item.key] ? 'bg-text' : 'bg-gray-300'
-                        }`}
-                      >
-                        <div
-                          className={`absolute top-1 w-5 h-5 rounded-full bg-white transition-all ${
-                            settings[item.key] ? 'right-1' : 'left-1'
-                          }`}
-                        />
-                      </button>
+                      <IOSToggle
+                        checked={settings[item.key]}
+                        onChange={() => toggleSetting(item.key)}
+                        size="md"
+                      />
                     </div>
                   ))}
                 </div>
@@ -286,18 +280,11 @@ export default function Settings() {
                       <p className="font-bold text-sm text-text mb-1">Push Notifications</p>
                       <p className="text-xs text-muted">Receive push notifications on your devices</p>
                     </div>
-                    <button
-                      onClick={() => toggleSetting('pushNotifications')}
-                      className={`w-12 h-7 rounded-full transition-all relative ${
-                        settings.pushNotifications ? 'bg-text' : 'bg-gray-300'
-                      }`}
-                    >
-                      <div
-                        className={`absolute top-1 w-5 h-5 rounded-full bg-white transition-all ${
-                          settings.pushNotifications ? 'right-1' : 'left-1'
-                        }`}
-                      />
-                    </button>
+                    <IOSToggle
+                      checked={settings.pushNotifications}
+                      onChange={() => toggleSetting('pushNotifications')}
+                      size="md"
+                    />
                   </div>
                 </div>
               </div>
@@ -320,18 +307,11 @@ export default function Settings() {
                         <p className="font-bold text-sm text-text mb-1">{item.label}</p>
                         <p className="text-xs text-muted">{item.desc}</p>
                       </div>
-                      <button
-                        onClick={() => toggleSetting(item.key)}
-                        className={`w-12 h-7 rounded-full transition-all relative ${
-                          settings[item.key] ? 'bg-text' : 'bg-gray-300'
-                        }`}
-                      >
-                        <div
-                          className={`absolute top-1 w-5 h-5 rounded-full bg-white transition-all ${
-                            settings[item.key] ? 'right-1' : 'left-1'
-                          }`}
-                        />
-                      </button>
+                      <IOSToggle
+                        checked={settings[item.key]}
+                        onChange={() => toggleSetting(item.key)}
+                        size="md"
+                      />
                     </div>
                   ))}
                 </div>
@@ -519,18 +499,11 @@ export default function Settings() {
                       <p className="font-bold text-sm text-text mb-1">Auto-Download Videos</p>
                       <p className="text-xs text-muted">Automatically download for offline viewing</p>
                     </div>
-                    <button
-                      onClick={() => toggleSetting('autoDownload')}
-                      className={`w-12 h-7 rounded-full transition-all relative ${
-                        settings.autoDownload ? 'bg-text' : 'bg-gray-300'
-                      }`}
-                    >
-                      <div
-                        className={`absolute top-1 w-5 h-5 rounded-full bg-white transition-all ${
-                          settings.autoDownload ? 'right-1' : 'left-1'
-                        }`}
-                      />
-                    </button>
+                    <IOSToggle
+                      checked={settings.autoDownload}
+                      onChange={() => toggleSetting('autoDownload')}
+                      size="md"
+                    />
                   </div>
                 </div>
               </div>

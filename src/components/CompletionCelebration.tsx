@@ -193,8 +193,8 @@ export default function CompletionCelebration({
         {/* Close button */}
         <button
           onClick={onClose}
-          className="absolute -top-2 -right-2 w-8 h-8 rounded-full bg-white border-2 border-gray-200 flex items-center justify-center hover:bg-gray-50 transition-all duration-200 hover:scale-110 z-10"
-          style={{ boxShadow: '0 4px 12px rgba(0,0,0,0.15)' }}
+          className="absolute -top-2 -right-2 w-8 h-8 rounded-full bg-white border-2 border-gray-200 flex items-center justify-center hover:bg-gray-50 transition-all duration-200 hover:scale-110"
+          style={{ boxShadow: '0 4px 12px rgba(0,0,0,0.15)', zIndex: 100 }}
         >
           <X size={16} color="#6B6B7B" />
         </button>
