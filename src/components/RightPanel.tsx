@@ -46,12 +46,32 @@ function ProgressRing({ percent, color, size = 80 }: { percent: number; color: s
 function StudyTimer() {
   const [running, setRunning] = useState(false);
   const [seconds, setSeconds] = useState(25 * 60);
+  const [hasPlayedSound, setHasPlayedSound] = useState(false);
 
   useEffect(() => {
     if (!running) return;
     const id = setInterval(() => setSeconds((s) => (s > 0 ? s - 1 : 0)), 1000);
     return () => clearInterval(id);
   }, [running]);
+
+  // Play sound when timer reaches 00:00
+  useEffect(() => {
+    if (seconds === 0 && !hasPlayedSound) {
+      // Play notification sound
+      const audio = new Audio('/universfield-new-notification-040-493469.mp3');
+      audio.volume = 0.6;
+      audio.play().catch(error => {
+        console.log('Could not play notification sound:', error);
+      });
+      setHasPlayedSound(true);
+      setRunning(false); // Stop the timer
+    }
+    
+    // Reset sound flag when timer is reset
+    if (seconds > 0 && hasPlayedSound) {
+      setHasPlayedSound(false);
+    }
+  }, [seconds, hasPlayedSound]);
 
   const m = Math.floor(seconds / 60).toString().padStart(2, '0');
   const s = (seconds % 60).toString().padStart(2, '0');
@@ -70,13 +90,31 @@ function StudyTimer() {
           <div className="text-4xl font-bold text-white tracking-tight">{m}:{s}</div>
           <div className="text-xs text-white/40 mt-1">Pomodoro Session</div>
         </div>
-        <button
-          onClick={() => setRunning(!running)}
-          className="w-12 h-12 rounded-full flex items-center justify-center transition-all duration-200 hover:scale-110"
-          style={{ background: '#D7FF54' }}
-        >
-          {running ? <Pause size={18} fill="#111" color="#111" /> : <Play size={18} fill="#111" color="#111" />}
-        </button>
+        <div className="flex gap-2">
+          {seconds !== 25 * 60 && (
+            <button
+              onClick={() => {
+                setSeconds(25 * 60);
+                setRunning(false);
+                setHasPlayedSound(false);
+              }}
+              className="w-10 h-10 rounded-full flex items-center justify-center transition-all duration-200 hover:scale-110 bg-white/10"
+              title="Reset"
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#D7FF54" strokeWidth="2">
+                <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
+                <path d="M3 3v5h5"></path>
+              </svg>
+            </button>
+          )}
+          <button
+            onClick={() => setRunning(!running)}
+            className="w-12 h-12 rounded-full flex items-center justify-center transition-all duration-200 hover:scale-110"
+            style={{ background: '#D7FF54' }}
+          >
+            {running ? <Pause size={18} fill="#111" color="#111" /> : <Play size={18} fill="#111" color="#111" />}
+          </button>
+        </div>
       </div>
     </div>
   );
@@ -86,6 +124,22 @@ export default function RightPanel() {
   const { bookmarks } = useBookmark();
   const weekDays = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
   const hours = [1.5, 2.8, 3.2, 0.5, 2.0, 1.8, 2.5];
+
+  // Goals state - make them toggleable
+  const [goals, setGoals] = useState([
+    { label: 'Complete Python Module', done: true },
+    { label: 'Watch ML lecture', done: true },
+    { label: 'Practice exercises', done: false },
+    { label: 'Read course notes', done: false },
+  ]);
+
+  const toggleGoal = (index: number) => {
+    const newGoals = [...goals];
+    newGoals[index].done = !newGoals[index].done;
+    setGoals(newGoals);
+  };
+
+  const completedGoals = goals.filter(g => g.done).length;
   const maxH = Math.max(...hours);
 
   return (
@@ -111,11 +165,15 @@ export default function RightPanel() {
             </div>
             <span className="text-sm font-bold text-text">Today's Goals</span>
           </div>
-          <span className="text-xs font-semibold text-muted">2/4</span>
+          <span className="text-xs font-semibold text-muted">{completedGoals}/{goals.length}</span>
         </div>
         <div className="space-y-2.5">
-          {GOALS.map((g, i) => (
-            <div key={i} className="flex items-center gap-2.5">
+          {goals.map((g, i) => (
+            <button
+              key={i}
+              onClick={() => toggleGoal(i)}
+              className="w-full flex items-center gap-2.5 text-left hover:bg-bg/50 rounded-xl p-1.5 -ml-1.5 transition-all cursor-pointer"
+            >
               <div
                 className="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 border-2 transition-all duration-200"
                 style={{
@@ -130,7 +188,7 @@ export default function RightPanel() {
                 )}
               </div>
               <span className={`text-xs ${g.done ? 'line-through text-muted' : 'text-text font-medium'}`}>{g.label}</span>
-            </div>
+            </button>
           ))}
         </div>
       </div>
