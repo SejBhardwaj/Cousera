@@ -5,9 +5,7 @@ import {
   generateReminderId, 
   calculateReminderTime, 
   formatReminderTime,
-  CourseReminder,
-  getAllReminders,
-  getDueReminders
+  CourseReminder
 } from '../utils/reminderStorage';
 
 interface ReminderModalProps {
@@ -62,14 +60,10 @@ export default function ReminderModal({ isOpen, onClose, courseId, courseName }:
       notified: false,
     };
 
-    // SAVE REMINDER FIRST
     const success = setReminder(newReminder);
-    console.log('💾 Reminder save result:', success);
-    console.log('📅 Reminder time:', new Date(reminderTime).toLocaleString());
-    console.log('⏰ Current time:', new Date().toLocaleString());
     
     if (success) {
-      // THEN check notification permission
+      // Check notification permission
       if (notificationPermission !== 'granted') {
         const permission = await requestPermission();
         if (permission !== 'granted') {
@@ -112,14 +106,10 @@ export default function ReminderModal({ isOpen, onClose, courseId, courseName }:
       notified: false,
     };
 
-    // SAVE REMINDER FIRST
     const success = setReminder(newReminder);
-    console.log('💾 Custom reminder save result:', success);
-    console.log('📅 Reminder time:', new Date(reminderTime).toLocaleString());
-    console.log('⏰ Current time:', new Date().toLocaleString());
     
     if (success) {
-      // THEN check notification permission
+      // Check notification permission
       if (notificationPermission !== 'granted') {
         const permission = await requestPermission();
         if (permission !== 'granted') {
@@ -321,26 +311,6 @@ export default function ReminderModal({ isOpen, onClose, courseId, courseName }:
               className="w-full mt-4 py-3 rounded-xl font-bold text-sm text-muted hover:bg-gray-50 transition-colors"
             >
               No reminders for now
-            </button>
-
-            {/* DEBUG: Manual check button */}
-            <button
-              onClick={() => {
-                const allReminders = getAllReminders();
-                const dueReminders = getDueReminders();
-                const now = Date.now();
-                
-                console.log('=== MANUAL REMINDER CHECK ===');
-                console.log('Current time:', new Date(now).toLocaleString());
-                console.log('All reminders:', allReminders);
-                console.log('Due reminders:', dueReminders);
-                
-                alert(`Total reminders: ${allReminders.length}\nDue reminders: ${dueReminders.length}\n\nCheck console for details!`);
-              }}
-              className="w-full mt-2 py-2 rounded-xl font-bold text-xs transition-colors"
-              style={{ background: '#FEE2E2', color: '#DC2626' }}
-            >
-              🐛 DEBUG: Check Reminders Now
             </button>
           </>
         )}

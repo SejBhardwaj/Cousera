@@ -43,10 +43,9 @@ export const saveReminder = (reminder: CourseReminder): boolean => {
     filtered.push(reminder);
     
     localStorage.setItem(STORAGE_KEY, JSON.stringify(filtered));
-    console.log('✅ Reminder saved:', reminder);
     return true;
   } catch (error) {
-    console.error('❌ Error saving reminder:', error);
+    console.error('Error saving reminder:', error);
     return false;
   }
 };
@@ -57,10 +56,9 @@ export const deleteReminder = (courseId: string): boolean => {
     const reminders = getAllReminders();
     const filtered = reminders.filter(r => r.courseId !== courseId);
     localStorage.setItem(STORAGE_KEY, JSON.stringify(filtered));
-    console.log('✅ Reminder deleted for:', courseId);
     return true;
   } catch (error) {
-    console.error('❌ Error deleting reminder:', error);
+    console.error('Error deleting reminder:', error);
     return false;
   }
 };
@@ -74,12 +72,11 @@ export const markAsNotified = (reminderId: string): boolean => {
     if (reminder) {
       reminder.notified = true;
       localStorage.setItem(STORAGE_KEY, JSON.stringify(reminders));
-      console.log('✅ Reminder marked as notified:', reminderId);
       return true;
     }
     return false;
   } catch (error) {
-    console.error('❌ Error marking reminder:', error);
+    console.error('Error marking reminder:', error);
     return false;
   }
 };
@@ -111,9 +108,8 @@ export const cleanupOldReminders = (): void => {
     });
     
     localStorage.setItem(STORAGE_KEY, JSON.stringify(filtered));
-    console.log('🧹 Cleaned up old reminders');
   } catch (error) {
-    console.error('❌ Error cleaning reminders:', error);
+    console.error('Error cleaning reminders:', error);
   }
 };
 

@@ -18,16 +18,14 @@ export const getNotificationPermission = (): NotificationPermissionStatus => {
 // Request notification permission
 export const requestNotificationPermission = async (): Promise<NotificationPermissionStatus> => {
   if (!isNotificationSupported()) {
-    console.warn('⚠️ Notifications not supported in this browser');
     return 'unsupported';
   }
 
   try {
     const permission = await Notification.requestPermission();
-    console.log('🔔 Notification permission:', permission);
     return permission as NotificationPermissionStatus;
   } catch (error) {
-    console.error('❌ Error requesting notification permission:', error);
+    console.error('Error requesting notification permission:', error);
     return 'denied';
   }
 };
@@ -45,12 +43,10 @@ export const showNotification = (
   }
 ): Notification | null => {
   if (!isNotificationSupported()) {
-    console.warn('⚠️ Notifications not supported');
     return null;
   }
 
   if (Notification.permission !== 'granted') {
-    console.warn('⚠️ Notification permission not granted');
     return null;
   }
 
@@ -65,10 +61,9 @@ export const showNotification = (
       silent: false,
     });
 
-    console.log('🔔 Notification shown:', title);
     return notification;
   } catch (error) {
-    console.error('❌ Error showing notification:', error);
+    console.error('Error showing notification:', error);
     return null;
   }
 };
@@ -92,7 +87,6 @@ export const showCourseReminderNotification = (
 
   if (notification && onClickCallback) {
     notification.onclick = () => {
-      console.log('🖱️ Notification clicked');
       onClickCallback();
       notification.close();
     };

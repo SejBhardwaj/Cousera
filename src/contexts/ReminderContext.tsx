@@ -49,7 +49,6 @@ export const ReminderProvider = ({ children }: ReminderProviderProps) => {
 
   // Load reminders on mount
   useEffect(() => {
-    console.log('🔔 ReminderProvider initialized');
     const loadedReminders = getAllReminders();
     setReminders(loadedReminders);
     
@@ -107,18 +106,8 @@ export const ReminderProvider = ({ children }: ReminderProviderProps) => {
       const now = Date.now();
       const dueReminders = getDueReminders();
       
-      console.log('⏰ Checking reminders at:', new Date().toLocaleTimeString());
-      console.log('📋 Total reminders:', reminders.length);
-      console.log('🔔 Due reminders:', dueReminders.length);
-      
       if (dueReminders.length > 0) {
-        console.log(`🔔 ${dueReminders.length} due reminder(s) found!`);
-        
         dueReminders.forEach((reminder) => {
-          console.log('⏰ Sending notification for:', reminder.courseName);
-          console.log('⏰ Reminder time:', new Date(reminder.reminderTime).toLocaleString());
-          console.log('⏰ Current time:', new Date(now).toLocaleString());
-          
           // Show IN-APP notification (no browser permission needed!)
           setDueReminderNotification({
             courseName: reminder.courseName,
@@ -136,34 +125,38 @@ export const ReminderProvider = ({ children }: ReminderProviderProps) => {
             );
           }
 
-          console.log('✅ In-app notification shown!');
           // Mark as notified
           markAsNotified(reminder.id);
           refreshReminders();
         });
       }
-    }, 10000); // Check every 10 seconds for testing
+    }, 60000); // Check every 60 seconds (1 minute)
 
     // Also check immediately on mount
     const checkImmediately = () => {
       const dueReminders = getDueReminders();
-      console.log('🚀 Initial check - Due reminders:', dueReminders.length);
       
       if (dueReminders.length > 0) {
-        console.log(`🔔 ${dueReminders.length} due reminder(s) found on mount`);
         dueReminders.forEach((reminder) => {
-          const notification = showCourseReminderNotification(
-            reminder.courseName,
-            reminder.courseId,
-            () => {
-              window.focus();
-            }
-          );
+          // Show IN-APP notification
+          setDueReminderNotification({
+            courseName: reminder.courseName,
+            courseId: reminder.courseId,
+          });
 
-          if (notification) {
-            markAsNotified(reminder.id);
-            refreshReminders();
+          // Try browser notification if permission granted
+          if (notificationPermission === 'granted') {
+            showCourseReminderNotification(
+              reminder.courseName,
+              reminder.courseId,
+              () => {
+                window.focus();
+              }
+            );
           }
+
+          markAsNotified(reminder.id);
+          refreshReminders();
         });
       }
     };
@@ -171,7 +164,7 @@ export const ReminderProvider = ({ children }: ReminderProviderProps) => {
     checkImmediately();
 
     return () => clearInterval(checkInterval);
-  }, [refreshReminders, reminders]);
+  }, [refreshReminders, reminders, notificationPermission]);
 
   // Cleanup old reminders daily
   useEffect(() => {
