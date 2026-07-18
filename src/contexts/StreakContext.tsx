@@ -8,6 +8,8 @@ import {
   checkStreakStatus,
   saveStreakData,
 } from '../utils/streakTracking';
+import { addStreakNotification } from '../utils/streakNotificationStorage';
+import StreakNotification from '../components/StreakNotification';
 
 interface StreakContextType {
   streakData: StreakData;
@@ -22,6 +24,8 @@ const StreakContext = createContext<StreakContextType | undefined>(undefined);
 export const StreakProvider = ({ children }: { children: ReactNode }) => {
   const [streakData, setStreakData] = useState<StreakData>(loadStreakData());
   const [newBadges, setNewBadges] = useState<Badge[]>([]);
+  const [showStreakNotification, setShowStreakNotification] = useState(false);
+  const [notificationStreak, setNotificationStreak] = useState(0);
 
   // Initialize and track login on mount
   useEffect(() => {
@@ -47,15 +51,25 @@ export const StreakProvider = ({ children }: { children: ReactNode }) => {
 
   // Track course activity
   const trackCourseActivity = useCallback((): Badge[] => {
+    const previousStreak = streakData.currentStreak;
     const { data, newBadges: badges } = trackCourseActivityUtil();
     setStreakData(data);
+    
+    // Show streak notification if streak increased
+    if (data.currentStreak > previousStreak && data.currentStreak > 0) {
+      setNotificationStreak(data.currentStreak);
+      setShowStreakNotification(true);
+      
+      // Save streak notification to history
+      addStreakNotification(data.currentStreak);
+    }
     
     if (badges.length > 0) {
       setNewBadges(badges);
     }
     
     return badges;
-  }, []);
+  }, [streakData.currentStreak]);
 
   // Refresh streak data from storage
   const refreshStreakData = useCallback(() => {
@@ -79,6 +93,14 @@ export const StreakProvider = ({ children }: { children: ReactNode }) => {
       }}
     >
       {children}
+      
+      {/* Streak Notification */}
+      {showStreakNotification && (
+        <StreakNotification
+          streakCount={notificationStreak}
+          onClose={() => setShowStreakNotification(false)}
+        />
+      )}
     </StreakContext.Provider>
   );
 };

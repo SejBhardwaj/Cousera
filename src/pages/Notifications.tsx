@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
 import { Bell, Award, TrendingUp, MessageCircle, Users, Calendar, Star, CheckCheck, Trash2, Settings, Filter, Trophy, Library, Flame, Play, Clock, Sparkles, Check } from 'lucide-react';
 import { getRecentlyWatchedVideos, formatTimeRemaining, formatVideoTime } from '../utils/videoProgressStorage';
+import { loadStreakNotifications, markStreakNotificationAsRead, deleteStreakNotification, type StreakNotificationRecord } from '../utils/streakNotificationStorage';
 
-type NotificationType = 'achievement' | 'course' | 'social' | 'reminder' | 'system' | 'video';
+type NotificationType = 'achievement' | 'course' | 'social' | 'reminder' | 'system' | 'video' | 'streak';
 
 type Notification = {
   id: string;
@@ -16,6 +17,7 @@ type Notification = {
   image?: string;
   courseId?: string;  // For video notifications
   videoId?: string;   // For video notifications
+  streakCount?: number; // For streak notifications
 };
 
 // Helper function to format time ago
@@ -153,7 +155,7 @@ export default function Notifications({ onCourseClick }: { onCourseClick?: (cour
       const staticNotifications = NOTIFICATIONS;
       
       // Generate video pause notifications from recent videos
-      const recentVideos = getRecentlyWatchedVideos(5); // Get last 5 incomplete videos
+      const recentVideos = getRecentlyWatchedVideos(5);
       const videoNotifications: Notification[] = recentVideos.map((video, index) => {
         const timeAgo = formatTimeAgo(video.lastWatchedAt);
         const timeLeft = formatTimeRemaining(video.duration - video.currentTime);
@@ -171,13 +173,30 @@ export default function Notifications({ onCourseClick }: { onCourseClick?: (cour
         };
       });
 
-      // Combine all notifications (video notifications first for visibility)
-      setNotifications([...videoNotifications, ...staticNotifications]);
+      // Load streak notifications from localStorage
+      const streakRecords = loadStreakNotifications();
+      const streakNotifications: Notification[] = streakRecords.map((record) => ({
+        id: record.id,
+        type: 'streak' as NotificationType,
+        title: `🔥 ${record.streakCount} Day Streak!`,
+        message: record.message,
+        timestamp: formatTimeAgo(record.timestamp),
+        read: record.read,
+        streakCount: record.streakCount,
+      }));
+
+      // If no streak notifications exist, show a placeholder for demo
+      if (streakNotifications.length === 0) {
+        // Don't add demo notifications, let the empty state show
+      }
+
+      // Combine all notifications (streak, video, then static)
+      setNotifications([...streakNotifications, ...videoNotifications, ...staticNotifications]);
     };
 
     loadNotifications();
 
-    // Refresh video notifications every 60 seconds
+    // Refresh notifications every 60 seconds
     const interval = setInterval(loadNotifications, 60000);
     return () => clearInterval(interval);
   }, []);
@@ -188,6 +207,10 @@ export default function Notifications({ onCourseClick }: { onCourseClick?: (cour
     setNotifications(
       notifications.map((n) => (n.id === id ? { ...n, read: true } : n))
     );
+    // Also mark in localStorage if it's a streak notification
+    if (id.startsWith('streak-')) {
+      markStreakNotificationAsRead(id);
+    }
   };
 
   const markAllAsRead = () => {
@@ -196,6 +219,10 @@ export default function Notifications({ onCourseClick }: { onCourseClick?: (cour
 
   const deleteNotification = (id: string) => {
     setNotifications(notifications.filter((n) => n.id !== id));
+    // Also delete from localStorage if it's a streak notification
+    if (id.startsWith('streak-')) {
+      deleteStreakNotification(id);
+    }
   };
 
   const getIcon = (type: NotificationType) => {
@@ -212,6 +239,8 @@ export default function Notifications({ onCourseClick }: { onCourseClick?: (cour
         return <Bell size={18} color="#6B6B7B" />;
       case 'video':
         return <Play size={18} color="#A98BFF" />;
+      case 'streak':
+        return <Flame size={18} color="#FF6D70" fill="#FF6D70" />;
     }
   };
 
@@ -229,6 +258,8 @@ export default function Notifications({ onCourseClick }: { onCourseClick?: (cour
         return '#F6F6F8';
       case 'video':
         return '#EDE9FF';
+      case 'streak':
+        return '#FFE5E5';
     }
   };
 
@@ -239,6 +270,7 @@ export default function Notifications({ onCourseClick }: { onCourseClick?: (cour
 
   const filters: { id: 'all' | NotificationType; label: string; icon: React.ReactNode }[] = [
     { id: 'all', label: 'All', icon: <Bell size={16} strokeWidth={2.5} /> },
+    { id: 'streak', label: 'Streaks', icon: <Flame size={16} strokeWidth={2.5} /> },
     { id: 'video', label: 'Videos', icon: <Play size={16} strokeWidth={2.5} /> },
     { id: 'achievement', label: 'Achievements', icon: <Award size={16} strokeWidth={2.5} /> },
     { id: 'course', label: 'Courses', icon: <TrendingUp size={16} strokeWidth={2.5} /> },

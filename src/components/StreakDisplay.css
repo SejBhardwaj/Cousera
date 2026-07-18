@@ -132,3 +132,15 @@
 .fire-flicker.fire-glow {
   animation: fireFlicker 1.5s ease-in-out infinite, fireGlow 2s ease-in-out infinite;
 }
+
+/* Tooltip fade in animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-5px) translateX(-50%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) translateX(-50%);
+  }
+}

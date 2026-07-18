@@ -10,6 +10,11 @@ export interface Badge {
   unlockedAt?: string;
 }
 
+export interface DailyCourseCount {
+  date: string; // YYYY-MM-DD format
+  count: number;
+}
+
 export interface StreakData {
   currentStreak: number;
   longestStreak: number;
@@ -19,6 +24,7 @@ export interface StreakData {
   badges: Badge[];
   totalDaysActive: number;
   totalCoursesInteracted: number;
+  dailyCourseCounts: DailyCourseCount[]; // Track courses per day
 }
 
 const STORAGE_KEY = 'coursera-streak-data';
@@ -123,6 +129,7 @@ const getDefaultStreakData = (): StreakData => ({
   badges: [],
   totalDaysActive: 0,
   totalCoursesInteracted: 0,
+  dailyCourseCounts: [],
 });
 
 // Load streak data from localStorage
@@ -206,12 +213,34 @@ export const trackCourseActivity = (): { data: StreakData; newBadges: Badge[] } 
   let data = loadStreakData();
   const today = new Date().toISOString();
   const todayMidnight = getTodayMidnight();
+  const todayDateStr = todayMidnight.toISOString().split('T')[0]; // YYYY-MM-DD
 
   // Check streak status first
   data = checkStreakStatus(data);
 
-  // Check if activity already tracked today
+  // Initialize dailyCourseCounts if not exists (for backward compatibility)
+  if (!data.dailyCourseCounts) {
+    data.dailyCourseCounts = [];
+  }
+
+  // Update daily course count (always increment, even if clicked multiple times today)
+  const todayRecord = data.dailyCourseCounts.find(d => d.date === todayDateStr);
+  if (todayRecord) {
+    todayRecord.count += 1;
+  } else {
+    data.dailyCourseCounts.push({ date: todayDateStr, count: 1 });
+  }
+
+  // Keep only last 30 days of records
+  const thirtyDaysAgo = new Date(todayMidnight);
+  thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+  const thirtyDaysAgoStr = thirtyDaysAgo.toISOString().split('T')[0];
+  data.dailyCourseCounts = data.dailyCourseCounts.filter(d => d.date >= thirtyDaysAgoStr);
+
+  // Check if activity already tracked today (for streak counting)
   if (data.lastActivityDate && isSameDay(getDateMidnight(data.lastActivityDate), todayMidnight)) {
+    // Don't update streak, but save the course count
+    saveStreakData(data);
     return { data, newBadges: [] };
   }
 
