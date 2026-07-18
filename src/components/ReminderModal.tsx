@@ -159,12 +159,12 @@ export default function ReminderModal({ isOpen, onClose, courseId, courseName }:
       onClick={onClose}
     >
       <div 
-        className="relative w-full max-w-lg rounded-3xl p-8 my-8 animate-in"
+        className="relative w-full max-w-lg rounded-3xl p-6 my-8 animate-in"
         style={{ 
           background: 'white',
           boxShadow: '0 20px 60px rgba(0,0,0,0.4)',
           animation: 'slideIn 0.3s ease-out',
-          maxHeight: 'calc(100vh - 64px)',
+          maxHeight: '85vh',
           overflowY: 'auto'
         }}
         onClick={(e) => e.stopPropagation()}
@@ -178,7 +178,7 @@ export default function ReminderModal({ isOpen, onClose, courseId, courseName }:
         </button>
 
         {/* Header */}
-        <div className="flex items-center gap-3 mb-6">
+        <div className="flex items-center gap-3 mb-4">
           <div className="w-12 h-12 rounded-2xl flex items-center justify-center" style={{ background: '#EDE9FF' }}>
             <Bell size={20} color="#A98BFF" />
           </div>
@@ -189,14 +189,14 @@ export default function ReminderModal({ isOpen, onClose, courseId, courseName }:
         </div>
 
         {/* Course name */}
-        <div className="mb-6 p-4 rounded-2xl" style={{ background: '#F6F6F8' }}>
+        <div className="mb-4 p-4 rounded-2xl" style={{ background: '#F6F6F8' }}>
           <p className="text-xs text-muted mb-1">Course</p>
           <p className="text-sm font-bold text-text">{courseName}</p>
         </div>
 
         {/* Existing reminder */}
         {existingReminder && !showSuccess && (
-          <div className="mb-6 p-4 rounded-2xl border-2" style={{ borderColor: '#D7FF54', background: '#FAFFF0' }}>
+          <div className="mb-4 p-4 rounded-2xl border-2" style={{ borderColor: '#D7FF54', background: '#FAFFF0' }}>
             <div className="flex items-start justify-between">
               <div className="flex-1">
                 <p className="text-xs font-bold mb-1" style={{ color: '#059669' }}>✓ Active Reminder</p>
@@ -218,7 +218,7 @@ export default function ReminderModal({ isOpen, onClose, courseId, courseName }:
 
         {/* Success message */}
         {showSuccess && (
-          <div className="mb-6 p-4 rounded-2xl" style={{ background: '#ECFDF5', border: '2px solid #059669' }}>
+          <div className="mb-4 p-4 rounded-2xl" style={{ background: '#ECFDF5', border: '2px solid #059669' }}>
             <div className="flex items-center gap-3">
               <CheckCircle size={20} color="#059669" />
               <p className="text-sm font-bold" style={{ color: '#059669' }}>
@@ -232,7 +232,7 @@ export default function ReminderModal({ isOpen, onClose, courseId, courseName }:
         {!showSuccess && (
           <>
             <p className="text-xs font-bold text-muted mb-3 uppercase tracking-wide">Quick Options</p>
-            <div className="space-y-2 mb-6">
+            <div className="space-y-2 mb-4">
               <button
                 onClick={() => handleQuickReminder('1hour')}
                 className="w-full flex items-center gap-3 p-4 rounded-2xl transition-all duration-200 hover:scale-[1.02]"
@@ -283,7 +283,7 @@ export default function ReminderModal({ isOpen, onClose, courseId, courseName }:
             </div>
 
             {/* Custom date/time */}
-            <div className="pt-6 border-t border-border">
+            <div className="pt-4 border-t border-border">
               <p className="text-xs font-bold text-muted mb-3 uppercase tracking-wide">Custom Time</p>
               <div className="space-y-3">
                 <div>

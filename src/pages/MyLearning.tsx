@@ -1,6 +1,9 @@
 import { BookOpen, Clock, Trophy, TrendingUp, Play, ChevronRight, Star, BarChart2 } from 'lucide-react';
+import { useState } from 'react';
 import CourseCard, { Course } from '../components/CourseCard';
 import { useOffline } from '../contexts/OfflineContext';
+import NotificationPermissionBanner from '../components/NotificationPermissionBanner';
+import ReminderModal from '../components/ReminderModal';
 
 const IN_PROGRESS: Course[] = [
   {
@@ -80,10 +83,21 @@ const SKILL_RADAR = [
 
 export default function MyLearning({ onCourseClick }: { onCourseClick: (id: string) => void }) {
   const { offlineCourses } = useOffline();
+  const [showReminderModal, setShowReminderModal] = useState(false);
+  const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
   const maxHours = Math.max(...WEEKLY_DATA.map((d) => d.hours));
 
   return (
     <div className="flex-1 py-4 px-4 md:pr-4 md:pl-2 overflow-y-auto no-scrollbar space-y-5 animate-in">
+
+      {/* Notification Permission Banner */}
+      <NotificationPermissionBanner onEnableClick={() => {
+        // Open reminder modal for the first in-progress course
+        if (IN_PROGRESS.length > 0) {
+          setSelectedCourse(IN_PROGRESS[0]);
+          setShowReminderModal(true);
+        }
+      }} />
 
       {/* Header Stats */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
@@ -287,6 +301,15 @@ export default function MyLearning({ onCourseClick }: { onCourseClick: (id: stri
       </div>
 
       <div className="h-4" />
+
+      {/* Reminder Modal */}
+      {showReminderModal && selectedCourse && (
+        <ReminderModal
+          courseName={selectedCourse.title}
+          courseId={selectedCourse.id}
+          onClose={() => setShowReminderModal(false)}
+        />
+      )}
     </div>
   );
 }

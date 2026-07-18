@@ -43,6 +43,7 @@
 
   .card-static {
     @apply bg-white rounded-4xl shadow-float p-7;
+    border: 1.5px solid rgba(215, 255, 84, 0.3);
   }
 
   .sidebar-icon {

@@ -678,7 +678,10 @@ export default function Messages() {
                       ? 'bg-text text-white rounded-br-lg'
                       : 'bg-white text-text rounded-bl-lg'
                   }`}
-                  style={{ boxShadow: message.isMe ? 'none' : '0 2px 8px rgba(0,0,0,0.06)' }}
+                  style={{ 
+                    boxShadow: message.isMe ? 'none' : '0 2px 8px rgba(0,0,0,0.06)',
+                    border: message.isMe ? 'none' : '1.5px solid rgba(215, 255, 84, 0.3)'
+                  }}
                 >
                   <p className="text-sm leading-relaxed">{message.text}</p>
                 </div>
@@ -728,7 +731,7 @@ export default function Messages() {
       <div className="w-80 border-l border-border bg-white overflow-y-auto no-scrollbar">
         <div className="p-5">
           {/* Contact Card */}
-          <div className="text-center mb-6">
+          <div className="text-center mb-6 p-4 rounded-3xl bg-white" style={{ border: '1.5px solid rgba(215, 255, 84, 0.3)' }}>
             <img
               src={selectedContact.avatar}
               alt={selectedContact.name}
@@ -749,7 +752,7 @@ export default function Messages() {
           </div>
 
           {/* Quick Actions */}
-          <div className="space-y-2 mb-6">
+          <div className="space-y-2 mb-6 p-4 rounded-3xl bg-white" style={{ border: '1.5px solid rgba(215, 255, 84, 0.3)' }}>
             <button className="w-full flex items-center gap-3 p-3 rounded-2xl hover:bg-bg transition-colors">
               <Star size={16} color="#6B6B7B" />
               <span className="text-sm font-semibold text-text">Star Conversation</span>
@@ -769,7 +772,7 @@ export default function Messages() {
           </div>
 
           {/* Shared Files */}
-          <div className="mb-6">
+          <div className="mb-6 p-4 rounded-3xl bg-white" style={{ border: '1.5px solid rgba(215, 255, 84, 0.3)' }}>
             <h4 className="text-sm font-bold text-text mb-3">Shared Files</h4>
             <div className="space-y-2">
               {['gradient_descent_notes.pdf', 'week2_assignment.ipynb', 'learning_rate_chart.png'].map((file, idx) => (
@@ -788,7 +791,7 @@ export default function Messages() {
 
           {/* About */}
           {selectedContact.type === 'instructor' && (
-            <div>
+            <div className="p-4 rounded-3xl bg-white" style={{ border: '1.5px solid rgba(215, 255, 84, 0.3)' }}>
               <h4 className="text-sm font-bold text-text mb-3">About Instructor</h4>
               <p className="text-xs text-muted leading-relaxed mb-3">
                 Teaches Machine Learning Specialization. Available for questions during office hours Monday-Friday 2-4 PM EST.
