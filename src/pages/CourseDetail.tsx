@@ -18,6 +18,7 @@ import {
   deleteCourseOffline,
   formatBytes 
 } from '../utils/offlineStorage';
+import { getVideoForCourse } from '../utils/videoMapping';
 
 const CURRICULUM = [
   { section: 'Week 1–2: Foundations', lessons: ['Introduction to ML', 'Supervised Learning Overview', 'Linear Regression', 'Gradient Descent', 'Quiz: Week 1'], duration: '4h 20m', open: true },
@@ -872,8 +873,8 @@ export default function CourseDetail({ courseId: propCourseId, onBack, onNavigat
     CURRICULUM.forEach((section, sectionIdx) => {
       section.lessons.forEach((lesson, lessonIdx) => {
         const videoId = `${courseId}-week${sectionIdx + 1}-lesson${lessonIdx + 1}`;
-        // Use the video URL from videoMapping (these are the actual video files)
-        const videoUrl = getVideoUrl(videoId);
+        // Use the video URL from videoMapping
+        const videoUrl = getVideoForCourse(courseId, videoId);
         videoUrls.push(videoUrl);
       });
     });
@@ -2299,13 +2300,13 @@ example();`,
             <div className="flex-1">
               <p className="font-bold text-sm mb-1" style={{ color: '#0369A1' }}>Offline Mode Active</p>
               <p className="text-xs mb-2" style={{ color: '#075985' }}>
-                You can access course materials offline. However, videos require an internet connection.
+                All course materials including videos are available offline.
               </p>
               <div className="flex items-center gap-4 text-xs" style={{ color: '#075985' }}>
                 <span>✓ Text content</span>
                 <span>✓ Images</span>
                 <span>✓ Curriculum</span>
-                <span className="opacity-50">✗ Videos</span>
+                <span>✓ Videos</span>
               </div>
             </div>
           </div>
