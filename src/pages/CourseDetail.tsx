@@ -870,16 +870,20 @@ export default function CourseDetail({ courseId: propCourseId, onBack, onNavigat
 
     // Generate all video URLs for the course
     const videoUrls: string[] = [];
+    const videoIdsList: string[] = [];
     CURRICULUM.forEach((section, sectionIdx) => {
       section.lessons.forEach((lesson, lessonIdx) => {
         const videoId = `${courseId}-week${sectionIdx + 1}-lesson${lessonIdx + 1}`;
         // Use the video URL from videoMapping
         const videoUrl = getVideoForCourse(courseId, videoId);
         videoUrls.push(videoUrl);
+        videoIdsList.push(videoId);
       });
     });
 
-    console.log(`📹 Downloading ${videoUrls.length} videos for offline access...`);
+    console.log(`📹 Will download ${videoUrls.length} videos`);
+    console.log('📝 Video IDs:', videoIdsList);
+    console.log('📝 Video URLs:', videoUrls);
 
     const courseData = {
       title: courseName,
@@ -931,6 +935,7 @@ export default function CourseDetail({ courseId: propCourseId, onBack, onNavigat
     const success = await downloadCourseForOffline(
       courseData, 
       videoUrls,
+      videoIdsList,
       (progress, status) => {
         setDownloadProgress(progress);
         setDownloadStatus(status);

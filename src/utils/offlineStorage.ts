@@ -98,6 +98,7 @@ const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 export const downloadCourseForOffline = async (
   courseData: OfflineCourseData['courseData'],
   videoUrls: string[], // Array of video URLs to download
+  videoIds: string[], // Array of corresponding video IDs
   onProgress?: (progress: number, status: string) => void
 ): Promise<boolean> => {
   try {
@@ -144,22 +145,29 @@ export const downloadCourseForOffline = async (
       
       for (let i = 0; i < videoUrls.length; i++) {
         const videoUrl = videoUrls[i];
-        const videoId = `${courseId}-video-${i + 1}`;
+        const videoId = videoIds[i]; // Use the provided videoId
         
         onProgress?.(40 + (i * 40 / videoUrls.length), `Downloading video ${i + 1}/${videoUrls.length}...`);
+        
+        console.log(`📹 Downloading video ${i + 1}/${videoUrls.length}: ${videoId}`);
         
         try {
           const success = await downloadVideoForOffline(videoId, courseId, videoUrl);
           if (success) {
             downloadedVideoIds.push(videoId);
+            console.log(`✅ Video ${i + 1} downloaded:`, videoId);
+          } else {
+            console.error(`❌ Failed to download video ${i + 1}:`, videoId);
           }
         } catch (error) {
-          console.error(`Failed to download video ${i + 1}:`, error);
+          console.error(`💥 Error downloading video ${i + 1}:`, videoId, error);
         }
         
         await delay(500);
       }
     }
+    
+    console.log(`✅ Downloaded ${downloadedVideoIds.length}/${videoUrls.length} videos successfully`);
     
     onProgress?.(85, 'Saving course data...');
     await delay(400);
@@ -363,26 +371,36 @@ export const downloadVideoForOffline = async (
 // Get offline video blob URL
 export const getOfflineVideoUrl = async (videoId: string): Promise<string | null> => {
   try {
+    console.log('🔍 Searching for offline video:', videoId);
     const db = await initDB();
     const transaction = db.transaction([VIDEO_STORE_NAME], 'readonly');
     const store = transaction.objectStore(VIDEO_STORE_NAME);
     
     const videoData: OfflineVideoData | null = await new Promise((resolve) => {
       const request = store.get(videoId);
-      request.onsuccess = () => resolve(request.result || null);
-      request.onerror = () => resolve(null);
+      request.onsuccess = () => {
+        console.log('📦 IndexedDB query result:', request.result ? 'FOUND' : 'NOT FOUND');
+        resolve(request.result || null);
+      };
+      request.onerror = () => {
+        console.error('❌ IndexedDB query error:', request.error);
+        resolve(null);
+      };
     });
     
     if (videoData && videoData.videoBlob) {
       // Create blob URL from stored blob
       const blobUrl = URL.createObjectURL(videoData.videoBlob);
-      console.log('✅ Loaded offline video:', videoId);
+      console.log('✅ Created blob URL:', blobUrl);
+      console.log('   Blob size:', videoData.videoBlob.size, 'bytes');
+      console.log('   Blob type:', videoData.videoBlob.type);
       return blobUrl;
     }
     
+    console.log('❌ No video blob found in data');
     return null;
   } catch (error) {
-    console.error('Error getting offline video:', error);
+    console.error('💥 Error getting offline video:', error);
     return null;
   }
 };
@@ -432,5 +450,26 @@ export const deleteCourseVideos = async (courseId: string): Promise<boolean> => 
   } catch (error) {
     console.error('Error deleting course videos:', error);
     return false;
+  }
+};
+
+// DEBUG: List all videos in IndexedDB
+export const listAllOfflineVideos = async (): Promise<string[]> => {
+  try {
+    const db = await initDB();
+    const transaction = db.transaction([VIDEO_STORE_NAME], 'readonly');
+    const store = transaction.objectStore(VIDEO_STORE_NAME);
+    
+    const allKeys: string[] = await new Promise((resolve) => {
+      const request = store.getAllKeys();
+      request.onsuccess = () => resolve(request.result as string[]);
+      request.onerror = () => resolve([]);
+    });
+    
+    console.log('📹 All offline videos in IndexedDB:', allKeys);
+    return allKeys;
+  } catch (error) {
+    console.error('Error listing videos:', error);
+    return [];
   }
 };

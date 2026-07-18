@@ -47,16 +47,18 @@ export default function VideoModal({
   useEffect(() => {
     const loadVideo = async () => {
       if (!isOnline) {
-        console.log('📵 Offline mode - checking for offline video:', videoId);
+        console.log('📵 OFFLINE MODE - Loading video for:', videoId);
         const offlineUrl = await getOfflineVideoUrl(videoId);
+        console.log('🎥 Offline video URL result:', offlineUrl);
         if (offlineUrl) {
-          console.log('✅ Using offline video');
+          console.log('✅ Using offline video URL (blob)');
           setActualVideoUrl(offlineUrl);
         } else {
-          console.log('❌ No offline video available');
-          setActualVideoUrl(videoUrl); // Fallback to online URL
+          console.log('❌ No offline video found, falling back to online URL');
+          setActualVideoUrl(videoUrl);
         }
       } else {
+        console.log('🌐 ONLINE MODE - Using online video URL');
         setActualVideoUrl(videoUrl);
       }
     };
