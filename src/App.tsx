@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Calendar, MessageCircle, GraduationCap, Settings as SettingsIcon, Menu, X, Home as HomeIcon, Search, BookOpen, Grid3x3, User } from 'lucide-react';
 import Sidebar, { Page } from './components/Sidebar';
 import RightPanel from './components/RightPanel';
 import InAppNotification from './components/InAppNotification';
+import LoadingScreen from './components/LoadingScreen';
 import Home from './pages/Home';
 import Explore from './pages/Explore';
 import MyLearning from './pages/MyLearning';
@@ -30,6 +31,7 @@ function AppContent() {
   const [selectedCourseId, setSelectedCourseId] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const { dueReminderNotification, clearDueReminder } = useReminder();
 
   const handleNavigate = (page: Page, query?: string) => {
@@ -100,6 +102,17 @@ function AppContent() {
         return <Home onNavigate={handleNavigate} onCourseClick={handleCourseClick} />;
     }
   };
+
+  // Show loading screen only on first load
+  if (isLoading) {
+    return (
+      <LoadingScreen
+        onComplete={() => setIsLoading(false)}
+        fillColor="#D7FF54"
+        duration={3200}
+      />
+    );
+  }
 
   return (
     <div
