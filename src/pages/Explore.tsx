@@ -1166,14 +1166,17 @@ export default function Explore({ onCourseClick }: { onCourseClick: (id: string)
         course.instructor.toLowerCase().includes(searchLower) ||
         course.provider.toLowerCase().includes(searchLower);
       
-      // Tag filter (AND logic - course must have ALL selected tags)
+      // Tag filter (OR logic - course must have ANY of the selected tags)
       const matchesTags = selectedTags.length === 0 || 
-        selectedTags.every(selectedTag => 
+        selectedTags.some(selectedTag => 
           course.tags?.some(courseTag => courseTag.toLowerCase() === selectedTag.toLowerCase())
         );
       
       // Level filter
       const matchesLevel = level === 'All Levels' || course.difficulty === level;
+      
+      // Provider filter (must check BEFORE duration)
+      const matchesProvider = selectedProviders.length === 0 || selectedProviders.includes(course.provider);
       
       // Duration filter - Enhanced with better parsing
       const matchesDuration = (() => {
@@ -1222,10 +1225,9 @@ export default function Explore({ onCourseClick }: { onCourseClick: (id: string)
         return true;
       })();
       
-      // Provider filter
-      const matchesProvider = selectedProviders.length === 0 || selectedProviders.includes(course.provider);
+      const result = matchesCategory && matchesSearch && matchesTags && matchesLevel && matchesDuration && matchesRating && matchesProvider;
       
-      return matchesCategory && matchesSearch && matchesTags && matchesLevel && matchesDuration && matchesRating && matchesProvider;
+      return result;
     });
 
     // Sort courses - Create a copy to avoid mutating the filtered array
@@ -1236,7 +1238,13 @@ export default function Explore({ onCourseClick }: { onCourseClick: (id: string)
         sortedCourses.sort((a, b) => b.reviews - a.reviews);
         break;
       case 'Highest Rated':
-        sortedCourses.sort((a, b) => b.rating - a.rating);
+        sortedCourses.sort((a, b) => {
+          if (b.rating !== a.rating) {
+            return b.rating - a.rating;
+          }
+          // If ratings are equal, sort by reviews as tiebreaker
+          return b.reviews - a.reviews;
+        });
         break;
       case 'Shortest Duration':
         sortedCourses.sort((a, b) => {
@@ -1251,9 +1259,10 @@ export default function Explore({ onCourseClick }: { onCourseClick: (id: string)
         });
         break;
       case 'Newest':
-        // Keep original order (assuming newest are first)
+        // Keep original order (assuming newest are first in FEATURED_COURSES)
         break;
       default:
+        sortedCourses.sort((a, b) => b.reviews - a.reviews); // Default to Most Popular
         break;
     }
 
@@ -1647,10 +1656,10 @@ export default function Explore({ onCourseClick }: { onCourseClick: (id: string)
           </div>
         ) : (
           <>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {filteredCourses.map((c) => (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" key={`grid-${sortBy}`}>
+              {filteredCourses.map((c, index) => (
                 <CourseCard 
-                  key={c.id} 
+                  key={`${c.id}-${sortBy}-${index}`} 
                   course={c} 
                   onClick={() => onCourseClick(c.id)}
                   isOfflineAvailable={offlineCourses.has(c.title.toLowerCase().replace(/\s+/g, '-'))}
