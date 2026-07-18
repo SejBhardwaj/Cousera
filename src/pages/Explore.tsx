@@ -1153,6 +1153,16 @@ export default function Explore({ onCourseClick }: { onCourseClick: (id: string)
 
   // Filter courses based on selected category, search, tags, and filters
   const filteredCourses = useMemo(() => {
+    console.log('🔍 Filtering with:', {
+      activeCategory,
+      selectedProviders,
+      selectedTags,
+      level,
+      duration,
+      minRating,
+      search
+    });
+    
     let courses = FEATURED_COURSES.filter(course => {
       // Category filter
       const matchesCategory = activeCategory === 'All' || course.category === activeCategory;
@@ -1175,7 +1185,7 @@ export default function Explore({ onCourseClick }: { onCourseClick: (id: string)
       // Level filter
       const matchesLevel = level === 'All Levels' || course.difficulty === level;
       
-      // Provider filter (must check BEFORE duration)
+      // Provider filter (OR logic - course matches if provider is in selected list)
       const matchesProvider = selectedProviders.length === 0 || selectedProviders.includes(course.provider);
       
       // Duration filter - Enhanced with better parsing
@@ -1227,8 +1237,32 @@ export default function Explore({ onCourseClick }: { onCourseClick: (id: string)
       
       const result = matchesCategory && matchesSearch && matchesTags && matchesLevel && matchesDuration && matchesRating && matchesProvider;
       
+      // Debug: Log courses that match provider but fail overall
+      if (selectedProviders.length > 0 && matchesProvider && !result) {
+        console.log('❌ Course matched provider but failed other filters:', {
+          title: course.title,
+          provider: course.provider,
+          category: course.category,
+          difficulty: course.difficulty,
+          duration: course.duration,
+          rating: course.rating,
+          tags: course.tags,
+          filters: {
+            matchesCategory,
+            matchesSearch,
+            matchesTags,
+            matchesLevel,
+            matchesDuration,
+            matchesRating,
+            matchesProvider
+          }
+        });
+      }
+      
       return result;
     });
+    
+    console.log(`✅ Filtered ${courses.length} courses from ${FEATURED_COURSES.length} total`);
 
     // Sort courses - Create a copy to avoid mutating the filtered array
     const sortedCourses = [...courses];
