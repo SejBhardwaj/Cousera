@@ -31,7 +31,6 @@ function AppContent() {
   const [selectedCourseId, setSelectedCourseId] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
   const { dueReminderNotification, clearDueReminder } = useReminder();
 
   const handleNavigate = (page: Page, query?: string) => {
@@ -103,22 +102,11 @@ function AppContent() {
     }
   };
 
-  // Show loading screen only on first load
   return (
-    <>
-      {isLoading && (
-        <LoadingScreen
-          onComplete={() => setIsLoading(false)}
-          fillColor="#D7FF54"
-          duration={3200}
-        />
-      )}
-      
-      {!isLoading && (
-        <div
-          className="min-h-screen flex overflow-visible"
-          style={{ background: '#F6F6F8' }}
-        >
+    <div
+      className="min-h-screen flex overflow-visible"
+      style={{ background: '#F6F6F8' }}
+    >
       {/* Desktop Sidebar */}
       <div className="hidden lg:block">
         <Sidebar activePage={activePage} onNavigate={handleNavigate} />
@@ -240,9 +228,7 @@ function AppContent() {
           onClose={clearDueReminder}
         />
       )}
-      </div>
-      )}
-    </>
+    </div>
   );
 }
 
