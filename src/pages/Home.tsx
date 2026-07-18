@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { Search, Sparkles, TrendingUp, Play, ArrowRight, Star, Users, Clock, Zap, ChevronRight, BookOpen, Award, GraduationCap } from 'lucide-react';
 import Lottie from 'lottie-react';
 import CourseCard, { Course } from '../components/CourseCard';
+import CountUp from '../components/CountUp';
+import TextType from '../components/TextType';
 import type { Page } from '../components/Sidebar';
 import { useOffline } from '../contexts/OfflineContext';
 
@@ -107,10 +109,10 @@ const RECOMMENDED: Course[] = [
 ];
 
 const STATS = [
-  { label: 'Courses Available', value: '7,000+', accent: '#A98BFF', bg: '#EDE9FF', icon: <BookOpen size={18} color="#A98BFF" /> },
-  { label: 'Learners Enrolled', value: '100M+', accent: '#D7FF54', bg: '#F5FFDB', icon: <Users size={18} color="#666" /> },
-  { label: 'Certifications', value: '2,400+', accent: '#FF6D70', bg: '#FFF0F0', icon: <Award size={18} color="#FF6D70" /> },
-  { label: 'Universities', value: '300+', accent: '#83D6FF', bg: '#E0F5FF', icon: <GraduationCap size={18} color="#0099CC" /> },
+  { label: 'Courses Available', value: 7000, suffix: '+', accent: '#A98BFF', bg: '#EDE9FF', icon: <BookOpen size={18} color="#A98BFF" /> },
+  { label: 'Learners Enrolled', value: 100, suffix: 'M+', accent: '#D7FF54', bg: '#F5FFDB', icon: <Users size={18} color="#666" /> },
+  { label: 'Certifications', value: 2400, suffix: '+', accent: '#FF6D70', bg: '#FFF0F0', icon: <Award size={18} color="#FF6D70" /> },
+  { label: 'Universities', value: 300, suffix: '+', accent: '#83D6FF', bg: '#E0F5FF', icon: <GraduationCap size={18} color="#0099CC" /> },
 ];
 
 const PARTNERS = [
@@ -170,9 +172,18 @@ export default function Home({ onNavigate, onCourseClick }: HomeProps) {
           </div>
 
           <h1 className="text-hero text-white mb-3">
-            Learn without
-            <br />
-            <span style={{ color: '#D7FF54' }}>limits.</span>
+            <TextType 
+              text={['Learn without limits.', 'Master new skills.', 'Advance your career.']}
+              as="span"
+              typingSpeed={100}
+              deletingSpeed={50}
+              pauseDuration={2000}
+              showCursor={true}
+              cursorCharacter="|"
+              cursorBlinkDuration={0.7}
+              loop={true}
+              className="inline-block"
+            />
           </h1>
           <p className="text-white/60 text-base mb-7 max-w-md leading-relaxed">
             Advance your career with world-class courses from top universities and companies.
@@ -288,7 +299,16 @@ export default function Home({ onNavigate, onCourseClick }: HomeProps) {
               {s.icon}
             </div>
             <div>
-              <p className="font-black text-xl text-text">{s.value}</p>
+              <p className="font-black text-xl text-text">
+                <CountUp 
+                  from={0} 
+                  to={s.value} 
+                  duration={2} 
+                  separator="," 
+                  className="inline-block"
+                />
+                {s.suffix}
+              </p>
               <p className="text-xs text-muted">{s.label}</p>
             </div>
           </div>
