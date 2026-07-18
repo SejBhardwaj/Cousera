@@ -115,8 +115,9 @@ export default function Sidebar({ activePage, onNavigate, mobile = false }: Side
   // Desktop version - icon sidebar
   return (
     <aside
-      className="flex flex-col items-center gap-0 py-3 px-2 m-3 sticky top-3"
+      className="flex flex-col items-center gap-0 py-3 px-2 m-3 sticky"
       style={{
+        top: 'calc(0.75rem + 0.3cm)',
         background: '#111111',
         borderRadius: '28px',
         width: '60px',
