@@ -1153,16 +1153,6 @@ export default function Explore({ onCourseClick }: { onCourseClick: (id: string)
 
   // Filter courses based on selected category, search, tags, and filters
   const filteredCourses = useMemo(() => {
-    console.log('🔍 Filtering with:', {
-      activeCategory,
-      selectedProviders,
-      selectedTags,
-      level,
-      duration,
-      minRating,
-      search
-    });
-    
     let courses = FEATURED_COURSES.filter(course => {
       // Category filter
       const matchesCategory = activeCategory === 'All' || course.category === activeCategory;
@@ -1235,34 +1225,8 @@ export default function Explore({ onCourseClick }: { onCourseClick: (id: string)
         return true;
       })();
       
-      const result = matchesCategory && matchesSearch && matchesTags && matchesLevel && matchesDuration && matchesRating && matchesProvider;
-      
-      // Debug: Log courses that match provider but fail overall
-      if (selectedProviders.length > 0 && matchesProvider && !result) {
-        console.log('❌ Course matched provider but failed other filters:', {
-          title: course.title,
-          provider: course.provider,
-          category: course.category,
-          difficulty: course.difficulty,
-          duration: course.duration,
-          rating: course.rating,
-          tags: course.tags,
-          filters: {
-            matchesCategory,
-            matchesSearch,
-            matchesTags,
-            matchesLevel,
-            matchesDuration,
-            matchesRating,
-            matchesProvider
-          }
-        });
-      }
-      
-      return result;
+      return matchesCategory && matchesSearch && matchesTags && matchesLevel && matchesDuration && matchesRating && matchesProvider;
     });
-    
-    console.log(`✅ Filtered ${courses.length} courses from ${FEATURED_COURSES.length} total`);
 
     // Sort courses - Create a copy to avoid mutating the filtered array
     const sortedCourses = [...courses];
@@ -1359,10 +1323,10 @@ export default function Explore({ onCourseClick }: { onCourseClick: (id: string)
                   className="w-full bg-white border border-border rounded-xl px-3 py-2.5 text-sm outline-none hover:border-text/30 transition-colors cursor-pointer"
                 >
                   <option>Any Duration</option>
-                  <option>&lt; 4 weeks (Quick)</option>
+                  <option>{'< 4 weeks (Quick)'}</option>
                   <option>4-8 weeks (Short)</option>
                   <option>8-12 weeks (Medium)</option>
-                  <option>&gt; 12 weeks (Long)</option>
+                  <option>{'> 12 weeks (Long)'}</option>
                 </select>
               </div>
               <div>
