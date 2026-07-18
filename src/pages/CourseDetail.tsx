@@ -871,7 +871,7 @@ export default function CourseDetail({ courseId: propCourseId, onBack, onNavigat
     // Generate all video URLs for the course
     const videoUrls: string[] = [];
     const videoIdsList: string[] = [];
-    CURRICULUM.forEach((section, sectionIdx) => {
+    courseCurriculum.forEach((section, sectionIdx) => {
       section.lessons.forEach((lesson, lessonIdx) => {
         const videoId = `${courseId}-week${sectionIdx + 1}-lesson${lessonIdx + 1}`;
         // Use the video URL from videoMapping
@@ -885,55 +885,37 @@ export default function CourseDetail({ courseId: propCourseId, onBack, onNavigat
     console.log('📝 Video IDs:', videoIdsList);
     console.log('📝 Video URLs:', videoUrls);
 
-    const courseData = {
-      title: courseName,
-      description: 'Master the fundamentals of machine learning and build practical ML models using the latest techniques from Stanford University and DeepLearning.AI.',
-      provider: 'Stanford University, DeepLearning.AI',
-      instructor: 'Andrew Ng',
-      category: 'AI / ML',
-      categoryColor: '#A98BFF',
-      rating: 4.9,
-      reviews: 128400,
-      learners: '2.1M learners',
-      duration: '11 weeks · ~10h/week',
-      language: 'English · 20 languages subtitled',
-      curriculum: CURRICULUM,
-      whatYouLearn: [
-        'Build ML models with NumPy & scikit-learn',
-        'Train neural networks with TensorFlow',
-        'Apply best practices for ML development',
-        'Implement decision trees, random forests, SVMs',
-        'Use unsupervised learning algorithms',
-        'Build recommender systems from scratch',
-        'Deploy ML models to production',
-        'Understand the math behind ML algorithms',
-      ],
+    const courseDataForOffline = {
+      title: courseData.title,
+      description: courseData.description,
+      provider: courseData.provider,
+      instructor: courseData.instructor,
+      category: courseData.category,
+      categoryColor: courseData.categoryColor,
+      rating: courseData.rating,
+      reviews: courseData.reviews,
+      learners: courseData.learners,
+      duration: courseData.duration,
+      language: courseData.language,
+      curriculum: courseCurriculum,
+      whatYouLearn: courseData.whatYouLearn,
       stats: [
-        { label: 'Total Lessons', value: '86' },
-        { label: 'Projects', value: '12' },
+        { label: 'Total Lessons', value: String(videoUrls.length) },
+        { label: 'Projects', value: String(courseData.projects?.length || 0) },
         { label: 'Certificate', value: 'Yes' },
-        { label: 'Skill Level', value: 'All' },
+        { label: 'Skill Level', value: courseData.difficulty },
       ],
-      careerOutcomes: [
-        { role: 'ML Engineer', salary: '$148K', growth: '+23%' },
-        { role: 'Data Scientist', salary: '$136K', growth: '+18%' },
-        { role: 'AI Researcher', salary: '$162K', growth: '+31%' },
-      ],
+      careerOutcomes: courseData.careerOutcomes || [],
       reviewsList: REVIEWS,
-      projects: [
-        { title: 'House Price Predictor', desc: 'Build a regression model to predict housing prices using real data.', difficulty: 'Medium' },
-        { title: 'Email Spam Classifier', desc: 'Train a classification algorithm to detect spam emails.', difficulty: 'Easy' },
-        { title: 'Collaborative Filtering', desc: 'Build a movie recommendation engine using matrix factorization.', difficulty: 'Hard' },
-        { title: 'Anomaly Detection System', desc: 'Detect anomalies in network traffic using unsupervised learning.', difficulty: 'Hard' },
-      ],
+      projects: courseData.projects || [],
       progress,
-      thumbnail: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1200&q=80',
-      instructorImg: 'https://i.pravatar.cc/150?img=12',
-      difficulty: 'All Levels',
+      thumbnail: courseData.thumbnail,
+      instructorImg: courseData.instructorImg,
+      difficulty: courseData.difficulty,
     };
 
     const success = await downloadCourseForOffline(
-      courseData, 
+      courseDataForOffline, 
       videoUrls,
       videoIdsList,
       (progress, status) => {
@@ -2471,16 +2453,16 @@ example();`,
         {/* Instructor floating card */}
         <div className="absolute right-8 bottom-8 bg-white/10 backdrop-blur border border-white/10 rounded-3xl p-4 flex items-center gap-3">
           <img
-            src={offlineData ? offlineData.images.instructor : 'https://i.pravatar.cc/150?img=12'}
-            alt="Andrew Ng"
+            src={offlineData ? offlineData.images.instructor : courseData.instructorImg}
+            alt={courseData.instructor}
             className="w-12 h-12 rounded-full object-cover border-2 border-white/30"
           />
           <div>
-            <p className="text-white font-bold text-sm">Andrew Ng</p>
-            <p className="text-white/50 text-xs">Stanford University</p>
+            <p className="text-white font-bold text-sm">{courseData.instructor}</p>
+            <p className="text-white/50 text-xs">{courseData.provider}</p>
             <div className="flex items-center gap-1 mt-0.5">
               <Star size={10} fill="#D7FF54" color="#D7FF54" />
-              <span className="text-xs text-white/70">4.9 · 10M+ students</span>
+              <span className="text-xs text-white/70">{courseData.rating} · {courseData.learners}</span>
             </div>
           </div>
         </div>
