@@ -1,5 +1,6 @@
 import { Bookmark, Star, Clock, Play, ChevronRight, Download } from 'lucide-react';
 import { useState } from 'react';
+import { useBookmark } from '../contexts/BookmarkContext';
 
 interface Course {
   id: string;
@@ -34,9 +35,19 @@ const difficultyColors = {
 };
 
 export default function CourseCard({ course, onClick, compact = false, isOfflineAvailable = false }: CourseCardProps) {
-  const [bookmarked, setBookmarked] = useState(false);
+  const { addBookmark, removeBookmark, isBookmarked } = useBookmark();
+  const bookmarked = isBookmarked(course.title);
   const [hovered, setHovered] = useState(false);
   const [imageError, setImageError] = useState(false);
+
+  const handleBookmarkClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (bookmarked) {
+      removeBookmark(course.title);
+    } else {
+      addBookmark(course.title);
+    }
+  };
 
   const diff = difficultyColors[course.difficulty];
 
@@ -85,7 +96,7 @@ export default function CourseCard({ course, onClick, compact = false, isOffline
             </span>
           )}
           <button
-            onClick={(e) => { e.stopPropagation(); setBookmarked(!bookmarked); }}
+            onClick={handleBookmarkClick}
             className="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/90 flex items-center justify-center transition-all duration-200 hover:scale-110"
           >
             <Bookmark size={13} fill={bookmarked ? '#0F0F0F' : 'none'} color="#0F0F0F" />
@@ -173,7 +184,7 @@ export default function CourseCard({ course, onClick, compact = false, isOffline
           </span>
         )}
         <button
-          onClick={(e) => { e.stopPropagation(); setBookmarked(!bookmarked); }}
+          onClick={handleBookmarkClick}
           className="absolute top-4 right-4 w-9 h-9 rounded-full bg-white/90 flex items-center justify-center transition-all duration-200 hover:scale-110 hover:shadow-md"
         >
           <Bookmark size={15} fill={bookmarked ? '#0F0F0F' : 'none'} color="#0F0F0F" />

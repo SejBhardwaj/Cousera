@@ -23,6 +23,7 @@ import Placeholder from './pages/Placeholder';
 import { OfflineProvider } from './contexts/OfflineContext';
 import { StreakProvider } from './contexts/StreakContext';
 import { ReminderProvider, useReminder } from './contexts/ReminderContext';
+import { BookmarkProvider } from './contexts/BookmarkContext';
 
 const PAGES_WITHOUT_RIGHT_PANEL: Page[] = ['course-detail', 'messages', 'settings'];
 
@@ -237,7 +238,9 @@ export default function App() {
     <OfflineProvider>
       <StreakProvider>
         <ReminderProvider>
-          <AppContent />
+          <BookmarkProvider>
+            <AppContent />
+          </BookmarkProvider>
         </ReminderProvider>
       </StreakProvider>
     </OfflineProvider>

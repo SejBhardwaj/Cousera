@@ -1,4 +1,5 @@
 import { GraduationCap, TrendingUp, Star, Clock, Users, ChevronRight, Award, BookOpen, Globe } from 'lucide-react';
+import { useState } from 'react';
 import type { Page } from '../components/Sidebar';
 
 const DEGREE_PROGRAMS = [
@@ -252,6 +253,13 @@ const WHY_ONLINE_DEGREE = [
 ];
 
 export default function Degrees({ onNavigate }: { onNavigate: (page: Page) => void }) {
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+
+  // Filter degrees by selected category
+  const filteredDegrees = selectedCategory
+    ? DEGREE_PROGRAMS.filter(degree => degree.category === selectedCategory)
+    : DEGREE_PROGRAMS;
+
   return (
     <div className="flex-1 py-4 px-4 md:pr-4 md:pl-2 overflow-y-auto no-scrollbar space-y-5 animate-in">
 
@@ -325,25 +333,47 @@ export default function Degrees({ onNavigate }: { onNavigate: (page: Page) => vo
           {CATEGORIES.map((cat) => (
             <button
               key={cat.name}
-              className="px-4 py-2.5 rounded-2xl text-sm font-bold transition-all duration-200 hover:scale-105 hover:shadow-lg"
-              style={{ background: cat.color, color: cat.textColor }}
+              onClick={() => setSelectedCategory(selectedCategory === cat.name ? null : cat.name)}
+              className={`px-4 py-2.5 rounded-2xl text-sm font-bold transition-all duration-200 hover:scale-105 ${
+                selectedCategory === cat.name ? 'shadow-lg scale-105 ring-2 ring-offset-2' : 'hover:shadow-lg'
+              }`}
+              style={{ 
+                background: cat.color, 
+                color: cat.textColor,
+                ringColor: selectedCategory === cat.name ? cat.color : 'transparent'
+              }}
             >
               {cat.name} ({cat.count})
             </button>
           ))}
         </div>
+        {selectedCategory && (
+          <button
+            onClick={() => setSelectedCategory(null)}
+            className="mt-3 text-xs font-bold text-muted hover:text-text transition-colors"
+          >
+            Clear Filter
+          </button>
+        )}
       </div>
 
       {/* Featured Programs */}
       <div>
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-card-title text-text">Featured Degree Programs</h2>
+          <h2 className="text-card-title text-text">
+            {selectedCategory ? `${selectedCategory} Programs` : 'Featured Degree Programs'}
+          </h2>
           <div className="flex items-center gap-2">
-            <span className="text-xs text-muted">{DEGREE_PROGRAMS.length} programs available</span>
+            <span className="text-xs text-muted">{filteredDegrees.length} / {DEGREE_PROGRAMS.length} programs</span>
           </div>
         </div>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-          {DEGREE_PROGRAMS.map((degree) => (
+        {filteredDegrees.length === 0 ? (
+          <div className="card-static p-12 rounded-4xl text-center">
+            <p className="text-muted text-sm">No programs found in this category</p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            {filteredDegrees.map((degree) => (
             <div
               key={degree.id}
               className="card-static rounded-4xl overflow-hidden cursor-pointer hover:-translate-y-1 transition-all duration-200 hover:shadow-2xl group"
@@ -454,6 +484,7 @@ export default function Degrees({ onNavigate }: { onNavigate: (page: Page) => vo
             </div>
           ))}
         </div>
+        )}
       </div>
 
       {/* Why Choose Online Degree */}

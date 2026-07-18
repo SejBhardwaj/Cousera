@@ -1,4 +1,6 @@
+import { useState } from 'react';
 import { Award, Download, Share2, ExternalLink, ChevronRight, Star, Clock } from 'lucide-react';
+import CertificateViewerModal from '../components/CertificateViewerModal';
 
 const EARNED = [
   {
@@ -8,6 +10,7 @@ const EARNED = [
     id: 'CERT-IBM-2024-001',
     logo: '/1a68e21c776065c70542e56ea014cfa5.jpg',
     skills: ['Data Science', 'Machine Learning', 'Python', 'SQL'],
+    certificateUrl: '/4ea3d43a265ee2fe179e46725dc9d525.jpg', // Actual certificate template
   },
   {
     title: 'Adobe Certified Professional',
@@ -16,6 +19,7 @@ const EARNED = [
     id: 'CERT-ADOBE-2024-042',
     logo: '/4cda0b662effeca9c714884a3bc47ce1.jpg',
     skills: ['Photoshop', 'Illustrator', 'Design', 'Creative Cloud'],
+    certificateUrl: '/006b282426f45d4bc580ad68c7eed561.jpg', // Actual certificate template
   },
   {
     title: 'AWS Certified Solutions Architect',
@@ -24,6 +28,7 @@ const EARNED = [
     id: 'CERT-AWS-2023-189',
     logo: '/69ada9679e4233a8a33e1151027d820f.jpg',
     skills: ['Cloud Computing', 'AWS', 'EC2', 'S3', 'Lambda'],
+    certificateUrl: '/7a0417bf7db91b0dd4de5c541b1eb55b.jpg', // Actual certificate template
   },
 ];
 
@@ -82,6 +87,14 @@ const PROFESSIONAL_CERTS = [
 ];
 
 export default function Certificates() {
+  const [showCertificateViewer, setShowCertificateViewer] = useState(false);
+  const [selectedCertificate, setSelectedCertificate] = useState<{ url: string; name: string } | null>(null);
+
+  const handleViewCertificate = (certificateUrl: string, title: string) => {
+    setSelectedCertificate({ url: certificateUrl, name: title });
+    setShowCertificateViewer(true);
+  };
+
   return (
     <div className="flex-1 py-4 px-4 md:pr-4 md:pl-2 overflow-y-auto no-scrollbar space-y-5 animate-in">
 
@@ -126,7 +139,8 @@ export default function Certificates() {
           {EARNED.map((cert) => (
             <div
               key={cert.id}
-              className="card-static rounded-4xl overflow-hidden p-0 group hover:-translate-y-1 transition-transform duration-200"
+              className="card-static rounded-4xl overflow-hidden p-0 group hover:-translate-y-1 transition-transform duration-200 cursor-pointer"
+              onClick={() => handleViewCertificate(cert.certificateUrl, cert.title)}
             >
               <div className="flex">
                 {/* Color bar */}
@@ -237,6 +251,19 @@ export default function Certificates() {
       </div>
 
       <div className="h-4" />
+
+      {/* Certificate Viewer Modal */}
+      {selectedCertificate && (
+        <CertificateViewerModal
+          isOpen={showCertificateViewer}
+          certificateUrl={selectedCertificate.url}
+          courseName={selectedCertificate.name}
+          onClose={() => {
+            setShowCertificateViewer(false);
+            setSelectedCertificate(null);
+          }}
+        />
+      )}
     </div>
   );
 }

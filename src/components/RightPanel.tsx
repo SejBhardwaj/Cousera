@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Target, Flame, Clock, Sparkles, Calendar, Trophy, BookMarked, TrendingUp, ChevronRight, Play, Pause } from 'lucide-react';
+import { useBookmark } from '../contexts/BookmarkContext';
 
 const GOALS = [
   { label: 'Complete Python Module', done: true },
@@ -82,6 +83,7 @@ function StudyTimer() {
 }
 
 export default function RightPanel() {
+  const { bookmarks } = useBookmark();
   const weekDays = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
   const hours = [1.5, 2.8, 3.2, 0.5, 2.0, 1.8, 2.5];
   const maxH = Math.max(...hours);
@@ -305,11 +307,15 @@ export default function RightPanel() {
           <span className="text-sm font-bold text-text">Bookmarks</span>
         </div>
         <div className="space-y-2">
-          {['Deep Learning Specialization', 'React for Beginners', 'Product Management'].map((b, i) => (
-            <div key={i} className="text-xs text-text font-medium py-2 px-3 rounded-xl hover:bg-bg transition-colors cursor-pointer">
-              {b}
-            </div>
-          ))}
+          {bookmarks.length === 0 ? (
+            <p className="text-xs text-muted text-center py-4">No bookmarks yet</p>
+          ) : (
+            bookmarks.map((b, i) => (
+              <div key={i} className="text-xs text-text font-medium py-2 px-3 rounded-xl hover:bg-bg transition-colors cursor-pointer">
+                {b}
+              </div>
+            ))
+          )}
         </div>
       </div>
     </aside>
