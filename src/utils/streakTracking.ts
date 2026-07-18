@@ -142,7 +142,6 @@ export const loadStreakData = (): StreakData => {
 export const saveStreakData = (data: StreakData): void => {
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-    console.log('💾 Streak data saved:', data);
   } catch (error) {
     console.error('Error saving streak data:', error);
   }
@@ -174,7 +173,6 @@ export const checkStreakStatus = (data: StreakData): StreakData => {
   // More than 1 day gap - reset streak
   const daysSince = getDaysBetween(lastActivity, today);
   if (daysSince > 1) {
-    console.log(`💔 Streak reset! ${daysSince} days since last activity`);
     return {
       ...data,
       currentStreak: 0,
@@ -197,7 +195,6 @@ export const trackLogin = (): StreakData => {
   // Update last login date
   if (!data.lastLoginDate || !isSameDay(getDateMidnight(data.lastLoginDate), todayMidnight)) {
     data.lastLoginDate = today;
-    console.log('👋 Login tracked for today');
   }
 
   saveStreakData(data);
@@ -215,7 +212,6 @@ export const trackCourseActivity = (): { data: StreakData; newBadges: Badge[] } 
 
   // Check if activity already tracked today
   if (data.lastActivityDate && isSameDay(getDateMidnight(data.lastActivityDate), todayMidnight)) {
-    console.log('✅ Activity already tracked today');
     return { data, newBadges: [] };
   }
 
@@ -226,11 +222,9 @@ export const trackCourseActivity = (): { data: StreakData; newBadges: Badge[] } 
   // Update streak
   if (!data.lastActivityDate || isConsecutive) {
     data.currentStreak += 1;
-    console.log(`🔥 Streak increased to ${data.currentStreak}!`);
   } else {
     // First activity or streak was broken
     data.currentStreak = 1;
-    console.log('🆕 Starting new streak!');
   }
 
   // Update longest streak
@@ -265,7 +259,6 @@ export const checkBadgeUnlocks = (data: StreakData): Badge[] => {
       };
       data.badges.push(newBadge);
       newBadges.push(newBadge);
-      console.log(`🎉 Badge unlocked: ${newBadge.name}!`);
     }
   }
 
@@ -298,7 +291,6 @@ export const getProgressToNextBadge = (currentStreak: number): number => {
 // Reset streak (for testing)
 export const resetStreakData = (): void => {
   localStorage.removeItem(STORAGE_KEY);
-  console.log('🔄 Streak data reset');
 };
 
 // Get all badges with unlock status

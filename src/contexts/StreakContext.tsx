@@ -25,7 +25,6 @@ export const StreakProvider = ({ children }: { children: ReactNode }) => {
 
   // Initialize and track login on mount
   useEffect(() => {
-    console.log('🚀 StreakProvider initialized');
     const updatedData = trackLogin();
     setStreakData(updatedData);
   }, []);
@@ -38,7 +37,6 @@ export const StreakProvider = ({ children }: { children: ReactNode }) => {
       
       if (checkedData.currentStreak !== data.currentStreak) {
         // Streak was reset
-        console.log('⏰ Streak check: Streak reset due to inactivity');
         saveStreakData(checkedData);
         setStreakData(checkedData);
       }

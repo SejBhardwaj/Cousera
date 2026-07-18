@@ -737,7 +737,6 @@ export default function CourseDetail({ courseId: propCourseId, onBack, onNavigat
 
   // Track course activity on mount (viewing course = activity)
   useEffect(() => {
-    console.log('📚 Course viewed - tracking activity');
     const badges = trackCourseActivity();
     if (badges.length > 0) {
       setShowStreakCelebration(true);
