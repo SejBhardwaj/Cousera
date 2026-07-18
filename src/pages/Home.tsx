@@ -1,5 +1,6 @@
-import { useState } from 'react';
-import { Search, Sparkles, TrendingUp, Play, ArrowRight, Star, Users, Clock, Zap, ChevronRight, BookOpen, Award, GraduationCap, Flame } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { Search, Sparkles, TrendingUp, Play, ArrowRight, Star, Users, Clock, Zap, ChevronRight, BookOpen, Award, GraduationCap } from 'lucide-react';
+import Lottie from 'lottie-react';
 import CourseCard, { Course } from '../components/CourseCard';
 import type { Page } from '../components/Sidebar';
 import { useOffline } from '../contexts/OfflineContext';
@@ -132,6 +133,14 @@ export default function Home({ onNavigate, onCourseClick }: HomeProps) {
   const { offlineCourses } = useOffline();
   const [searchQuery, setSearchQuery] = useState('');
   const [searchFocused, setSearchFocused] = useState(false);
+  const [fireAnimation, setFireAnimation] = useState(null);
+
+  useEffect(() => {
+    fetch('/Fire Streak Orange.json')
+      .then(response => response.json())
+      .then(data => setFireAnimation(data))
+      .catch(err => console.error('Error loading fire animation:', err));
+  }, []);
 
   const recentSearches = ['Python', 'Machine Learning', 'React', 'Data Science'];
 
@@ -248,9 +257,15 @@ export default function Home({ onNavigate, onCourseClick }: HomeProps) {
                 <p className="text-white/50 text-xs">Keep it up!</p>
               </div>
             </div>
-            <div className="text-white flex items-center gap-2 text-3xl font-black">
+            <div className="text-white flex items-center gap-1 text-3xl font-black">
               <span>23</span>
-              <Flame size={28} />
+              {fireAnimation && (
+                <Lottie 
+                  animationData={fireAnimation} 
+                  loop={true}
+                  style={{ width: 40, height: 40, marginLeft: '-4px' }}
+                />
+              )}
             </div>
           </div>
           <div className="bg-white/10 backdrop-blur rounded-3xl p-4 w-52 border border-white/10">
