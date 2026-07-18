@@ -1093,6 +1093,9 @@ export default function Explore({ onCourseClick }: { onCourseClick: (id: string)
   const [filtersOpen, setFiltersOpen] = useState(false);
   const [level, setLevel] = useState('All Levels');
   const [duration, setDuration] = useState('Any Duration');
+  const [minRating, setMinRating] = useState('All Ratings');
+  const [sortBy, setSortBy] = useState('Most Popular');
+  const [selectedProviders, setSelectedProviders] = useState<string[]>([]);
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
 
   // Extract all unique tags from courses
@@ -1102,6 +1105,13 @@ export default function Explore({ onCourseClick }: { onCourseClick: (id: string)
       course.tags?.forEach(tag => tags.add(tag));
     });
     return Array.from(tags).sort();
+  }, []);
+
+  // Extract all unique providers
+  const allProviders = useMemo(() => {
+    const providers = new Set<string>();
+    FEATURED_COURSES.forEach(course => providers.add(course.provider));
+    return Array.from(providers).sort();
   }, []);
 
   // Toggle tag selection
@@ -1115,21 +1125,35 @@ export default function Explore({ onCourseClick }: { onCourseClick: (id: string)
     });
   };
 
+  // Toggle provider selection
+  const toggleProvider = (provider: string) => {
+    setSelectedProviders(prev => {
+      if (prev.includes(provider)) {
+        return prev.filter(p => p !== provider);
+      } else {
+        return [...prev, provider];
+      }
+    });
+  };
+
   // Clear all filters
   const clearAllFilters = () => {
     setSearch('');
     setActiveCategory('All');
     setSelectedTags([]);
+    setSelectedProviders([]);
     setLevel('All Levels');
     setDuration('Any Duration');
+    setMinRating('All Ratings');
+    setSortBy('Most Popular');
   };
 
   // Check if any filters are active
-  const hasActiveFilters = search !== '' || activeCategory !== 'All' || selectedTags.length > 0 || level !== 'All Levels' || duration !== 'Any Duration';
+  const hasActiveFilters = search !== '' || activeCategory !== 'All' || selectedTags.length > 0 || selectedProviders.length > 0 || level !== 'All Levels' || duration !== 'Any Duration' || minRating !== 'All Ratings';
 
   // Filter courses based on selected category, search, tags, and filters
   const filteredCourses = useMemo(() => {
-    return FEATURED_COURSES.filter(course => {
+    let courses = FEATURED_COURSES.filter(course => {
       // Category filter
       const matchesCategory = activeCategory === 'All' || course.category === activeCategory;
       
@@ -1151,9 +1175,90 @@ export default function Explore({ onCourseClick }: { onCourseClick: (id: string)
       // Level filter
       const matchesLevel = level === 'All Levels' || course.difficulty === level;
       
-      return matchesCategory && matchesSearch && matchesTags && matchesLevel;
+      // Duration filter - Enhanced with better parsing
+      const matchesDuration = (() => {
+        if (duration === 'Any Duration') return true;
+        
+        const durationText = course.duration.toLowerCase();
+        
+        // Helper function to convert duration to weeks
+        const getDurationInWeeks = (text: string): number => {
+          const weekMatch = text.match(/(\d+)\s*week/);
+          const monthMatch = text.match(/(\d+)\s*month/);
+          
+          if (weekMatch) return parseInt(weekMatch[1]);
+          if (monthMatch) return parseInt(monthMatch[1]) * 4; // 1 month = ~4 weeks
+          return 999; // Unknown duration
+        };
+        
+        const weeks = getDurationInWeeks(durationText);
+        
+        // Handle both old and new format (with or without labels)
+        if (duration.startsWith('< 4 weeks')) {
+          return weeks < 4;
+        }
+        if (duration.startsWith('4-8 weeks')) {
+          return weeks >= 4 && weeks <= 8;
+        }
+        if (duration.startsWith('8-12 weeks')) {
+          return weeks > 8 && weeks <= 12;
+        }
+        if (duration.startsWith('> 12 weeks')) {
+          return weeks > 12;
+        }
+        
+        return true;
+      })();
+      
+      // Rating filter
+      const matchesRating = (() => {
+        if (minRating === 'All Ratings') return true;
+        // Extract number from format like "4.9+ ⭐ (Excellent)" or "4.8+"
+        const match = minRating.match(/(\d+\.\d+)\+/);
+        if (match) {
+          const ratingValue = parseFloat(match[1]);
+          return course.rating >= ratingValue;
+        }
+        return true;
+      })();
+      
+      // Provider filter
+      const matchesProvider = selectedProviders.length === 0 || selectedProviders.includes(course.provider);
+      
+      return matchesCategory && matchesSearch && matchesTags && matchesLevel && matchesDuration && matchesRating && matchesProvider;
     });
-  }, [activeCategory, search, selectedTags, level]);
+
+    // Sort courses - Create a copy to avoid mutating the filtered array
+    const sortedCourses = [...courses];
+    
+    switch (sortBy) {
+      case 'Most Popular':
+        sortedCourses.sort((a, b) => b.reviews - a.reviews);
+        break;
+      case 'Highest Rated':
+        sortedCourses.sort((a, b) => b.rating - a.rating);
+        break;
+      case 'Shortest Duration':
+        sortedCourses.sort((a, b) => {
+          const getDurationInWeeks = (dur: string) => {
+            const weekMatch = dur.match(/(\d+)\s*week/);
+            const monthMatch = dur.match(/(\d+)\s*month/);
+            if (weekMatch) return parseInt(weekMatch[1]);
+            if (monthMatch) return parseInt(monthMatch[1]) * 4;
+            return 999;
+          };
+          return getDurationInWeeks(a.duration) - getDurationInWeeks(b.duration);
+        });
+        break;
+      case 'Newest':
+        // Keep original order (assuming newest are first)
+        break;
+      default:
+        break;
+    }
+
+    return sortedCourses;
+  }, [activeCategory, search, selectedTags, selectedProviders, level, duration, minRating, sortBy]);
 
   return (
     <div className="flex-1 py-4 px-4 md:pr-4 md:pl-2 overflow-y-auto no-scrollbar space-y-5 animate-in">
@@ -1187,22 +1292,98 @@ export default function Explore({ onCourseClick }: { onCourseClick: (id: string)
 
         {/* Filters */}
         {filtersOpen && (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-5 p-4 rounded-3xl" style={{ background: '#F6F6F8' }}>
-            {[
-              { label: 'Level', options: ['All Levels', 'Beginner', 'Intermediate', 'Advanced'], value: level, set: setLevel },
-              { label: 'Duration', options: ['Any Duration', '< 1 month', '1-3 months', '3-6 months', '6+ months'], value: duration, set: setDuration },
-            ].map((f) => (
-              <div key={f.label}>
-                <p className="text-xs font-semibold text-muted mb-2">{f.label}</p>
+          <div className="space-y-4 mb-5 p-5 rounded-3xl" style={{ background: '#F6F6F8' }}>
+            {/* Dropdowns Row 1 */}
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
+              <div>
+                <p className="text-xs font-semibold text-muted mb-2">Difficulty Level</p>
                 <select
-                  value={f.value}
-                  onChange={(e) => f.set(e.target.value)}
-                  className="w-full bg-white border border-border rounded-xl px-3 py-2.5 text-sm outline-none"
+                  value={level}
+                  onChange={(e) => setLevel(e.target.value)}
+                  className="w-full bg-white border border-border rounded-xl px-3 py-2.5 text-sm outline-none hover:border-text/30 transition-colors cursor-pointer"
                 >
-                  {f.options.map((o) => <option key={o}>{o}</option>)}
+                  <option>All Levels</option>
+                  <option>Beginner</option>
+                  <option>Intermediate</option>
+                  <option>Advanced</option>
                 </select>
               </div>
-            ))}
+              <div>
+                <p className="text-xs font-semibold text-muted mb-2">Duration</p>
+                <select
+                  value={duration}
+                  onChange={(e) => setDuration(e.target.value)}
+                  className="w-full bg-white border border-border rounded-xl px-3 py-2.5 text-sm outline-none hover:border-text/30 transition-colors cursor-pointer"
+                >
+                  <option>Any Duration</option>
+                  <option>&lt; 4 weeks (Quick)</option>
+                  <option>4-8 weeks (Short)</option>
+                  <option>8-12 weeks (Medium)</option>
+                  <option>&gt; 12 weeks (Long)</option>
+                </select>
+              </div>
+              <div>
+                <p className="text-xs font-semibold text-muted mb-2">Minimum Rating</p>
+                <select
+                  value={minRating}
+                  onChange={(e) => setMinRating(e.target.value)}
+                  className="w-full bg-white border border-border rounded-xl px-3 py-2.5 text-sm outline-none hover:border-text/30 transition-colors cursor-pointer"
+                >
+                  <option>All Ratings</option>
+                  <option>3.5+ ⭐ (Average)</option>
+                  <option>4.0+ ⭐ (Above Average)</option>
+                  <option>4.5+ ⭐ (Good)</option>
+                  <option>4.7+ ⭐ (Very Good)</option>
+                  <option>4.9+ ⭐ (Excellent)</option>
+                </select>
+              </div>
+              <div>
+                <p className="text-xs font-semibold text-muted mb-2">Sort By</p>
+                <select
+                  value={sortBy}
+                  onChange={(e) => setSortBy(e.target.value)}
+                  className="w-full bg-white border border-border rounded-xl px-3 py-2.5 text-sm outline-none hover:border-text/30 transition-colors cursor-pointer"
+                >
+                  <option>Most Popular</option>
+                  <option>Highest Rated</option>
+                  <option>Shortest Duration</option>
+                  <option>Newest</option>
+                </select>
+              </div>
+            </div>
+
+            {/* Provider Filter */}
+            <div>
+              <div className="flex items-center justify-between mb-2">
+                <p className="text-xs font-semibold text-muted">Provider</p>
+                {selectedProviders.length > 0 && (
+                  <span className="px-2 py-0.5 rounded-full text-xs font-bold" style={{ background: '#E0F5FF', color: '#0099CC' }}>
+                    {selectedProviders.length} selected
+                  </span>
+                )}
+              </div>
+              <div className="flex gap-2 flex-wrap max-h-32 overflow-y-auto no-scrollbar">
+                {allProviders.map((provider) => {
+                  const isSelected = selectedProviders.includes(provider);
+                  return (
+                    <button
+                      key={provider}
+                      onClick={() => toggleProvider(provider)}
+                      className="px-3 py-1.5 rounded-full text-xs font-semibold transition-all duration-200 hover:scale-105 active:scale-95 whitespace-nowrap"
+                      style={{
+                        background: isSelected ? '#0099CC' : '#fff',
+                        color: isSelected ? 'white' : '#6B6B7B',
+                        border: isSelected ? '2px solid #0099CC' : '2px solid #E5E5E5',
+                        boxShadow: isSelected ? '0 2px 8px rgba(0,153,204,0.3)' : 'none',
+                      }}
+                    >
+                      {provider}
+                      {isSelected && <span className="ml-1">✓</span>}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
           </div>
         )}
 
@@ -1269,9 +1450,18 @@ export default function Explore({ onCourseClick }: { onCourseClick: (id: string)
           </div>
 
           {/* Active filters display */}
-          {(selectedTags.length > 0 || search !== '') && (
+          {hasActiveFilters && (
             <div className="mt-3 p-3 rounded-2xl" style={{ background: '#F6F6F8' }}>
-              <p className="text-xs font-semibold text-muted mb-2">Active Filters:</p>
+              <div className="flex items-center justify-between mb-2">
+                <p className="text-xs font-semibold text-muted">Active Filters:</p>
+                <button
+                  onClick={clearAllFilters}
+                  className="text-xs font-bold hover:scale-105 transition-transform px-3 py-1 rounded-full"
+                  style={{ background: '#FF6D70', color: 'white' }}
+                >
+                  Clear All
+                </button>
+              </div>
               <div className="flex flex-wrap gap-2">
                 {search && (
                   <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-white border border-border">
@@ -1285,6 +1475,69 @@ export default function Explore({ onCourseClick }: { onCourseClick: (id: string)
                     </button>
                   </div>
                 )}
+                {activeCategory !== 'All' && (
+                  <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-white border border-border">
+                    <span className="text-muted">Category:</span>
+                    <span className="text-text">{activeCategory}</span>
+                    <button
+                      onClick={() => setActiveCategory('All')}
+                      className="ml-1 text-muted hover:text-text transition-colors"
+                    >
+                      ×
+                    </button>
+                  </div>
+                )}
+                {level !== 'All Levels' && (
+                  <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-white border border-border">
+                    <span className="text-muted">Level:</span>
+                    <span className="text-text">{level}</span>
+                    <button
+                      onClick={() => setLevel('All Levels')}
+                      className="ml-1 text-muted hover:text-text transition-colors"
+                    >
+                      ×
+                    </button>
+                  </div>
+                )}
+                {duration !== 'Any Duration' && (
+                  <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-white border border-border">
+                    <span className="text-muted">Duration:</span>
+                    <span className="text-text">{duration}</span>
+                    <button
+                      onClick={() => setDuration('Any Duration')}
+                      className="ml-1 text-muted hover:text-text transition-colors"
+                    >
+                      ×
+                    </button>
+                  </div>
+                )}
+                {minRating !== 'All Ratings' && (
+                  <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-white border border-border">
+                    <span className="text-muted">Rating:</span>
+                    <span className="text-text">{minRating}</span>
+                    <button
+                      onClick={() => setMinRating('All Ratings')}
+                      className="ml-1 text-muted hover:text-text transition-colors"
+                    >
+                      ×
+                    </button>
+                  </div>
+                )}
+                {selectedProviders.map(provider => (
+                  <div
+                    key={provider}
+                    className="flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold text-white"
+                    style={{ background: '#0099CC' }}
+                  >
+                    <span>{provider}</span>
+                    <button
+                      onClick={() => toggleProvider(provider)}
+                      className="text-white/80 hover:text-white transition-colors"
+                    >
+                      ×
+                    </button>
+                  </div>
+                ))}
                 {selectedTags.map(tag => (
                   <div
                     key={tag}
@@ -1337,20 +1590,27 @@ export default function Explore({ onCourseClick }: { onCourseClick: (id: string)
             <h2 className="text-card-title text-text">
               {search ? `Results for "${search}"` : activeCategory === 'All' ? 'All Courses' : activeCategory}
             </h2>
-            {selectedTags.length > 0 && (
+            {(selectedTags.length > 0 || selectedProviders.length > 0) && (
               <p className="text-xs text-muted mt-1">
-                Filtered by: {selectedTags.join(', ')}
+                {selectedTags.length > 0 && `Tags: ${selectedTags.join(', ')}`}
+                {selectedTags.length > 0 && selectedProviders.length > 0 && ' • '}
+                {selectedProviders.length > 0 && `Providers: ${selectedProviders.join(', ')}`}
               </p>
             )}
           </div>
-          <div className="flex items-center gap-2">
-            <div className="flex items-center gap-2 text-xs text-muted">
+          <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2 text-xs text-muted bg-white px-3 py-2 rounded-xl border border-border">
               <Filter size={12} />
               <span className="font-bold" style={{ color: filteredCourses.length === 0 ? '#FF6D70' : '#059669' }}>
                 {filteredCourses.length}
               </span>
-              <span>/ {FEATURED_COURSES.length} courses</span>
+              <span>/ {FEATURED_COURSES.length}</span>
             </div>
+            {sortBy !== 'Most Popular' && (
+              <div className="text-xs font-semibold text-muted bg-white px-3 py-2 rounded-xl border border-border">
+                Sorted by: <span className="text-text">{sortBy}</span>
+              </div>
+            )}
           </div>
         </div>
         
@@ -1361,13 +1621,21 @@ export default function Explore({ onCourseClick }: { onCourseClick: (id: string)
             </div>
             <h3 className="text-lg font-bold text-text mb-2">No courses found</h3>
             <p className="text-sm text-muted mb-5 max-w-md mx-auto">
-              {search && selectedTags.length > 0 
-                ? `No courses match "${search}" with tags: ${selectedTags.join(', ')}`
-                : search 
-                ? `No courses match "${search}". Try different search terms.`
-                : selectedTags.length > 0
-                ? `No courses have all selected tags: ${selectedTags.join(', ')}`
-                : 'Try adjusting your filters to find what you\'re looking for.'}
+              {(() => {
+                const activeFiltersCount = 
+                  (search ? 1 : 0) + 
+                  (activeCategory !== 'All' ? 1 : 0) + 
+                  selectedTags.length + 
+                  selectedProviders.length +
+                  (level !== 'All Levels' ? 1 : 0) +
+                  (duration !== 'Any Duration' ? 1 : 0) +
+                  (minRating !== 'All Ratings' ? 1 : 0);
+                
+                if (activeFiltersCount === 0) {
+                  return "No courses available. Try adjusting your filters.";
+                }
+                return `No courses match your ${activeFiltersCount} active filter${activeFiltersCount > 1 ? 's' : ''}. Try removing some filters to see more results.`;
+              })()}
             </p>
             <button
               onClick={clearAllFilters}

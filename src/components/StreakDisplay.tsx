@@ -1,6 +1,7 @@
 import { Flame, TrendingUp, Award } from 'lucide-react';
 import { useStreak } from '../contexts/StreakContext';
 import { getNextBadge, getProgressToNextBadge } from '../utils/streakTracking';
+import './StreakDisplay.css';
 
 interface StreakDisplayProps {
   compact?: boolean;
@@ -22,6 +23,7 @@ export default function StreakDisplay({ compact = false }: StreakDisplayProps) {
             size={14}
             color={currentStreak > 0 ? '#FF6D70' : '#6B6B7B'}
             fill={currentStreak > 0 ? '#FF6D70' : 'none'}
+            className={currentStreak > 0 ? 'fire-flicker' : ''}
           />
           <span className="text-sm font-bold" style={{ color: currentStreak > 0 ? '#FF6D70' : '#6B6B7B' }}>
             {currentStreak}
@@ -43,7 +45,12 @@ export default function StreakDisplay({ compact = false }: StreakDisplayProps) {
               background: currentStreak > 0 ? 'linear-gradient(135deg, #FF6D70 0%, #FF9A9C 100%)' : '#F6F6F8',
             }}
           >
-            <Flame size={24} color={currentStreak > 0 ? 'white' : '#6B6B7B'} fill={currentStreak > 0 ? 'white' : 'none'} />
+            <Flame 
+              size={24} 
+              color={currentStreak > 0 ? 'white' : '#6B6B7B'} 
+              fill={currentStreak > 0 ? 'white' : 'none'}
+              className={currentStreak > 0 ? 'fire-flicker' : ''}
+            />
           </div>
           <div>
             <h3 className="font-bold text-text text-lg">Learning Streak</h3>
@@ -100,7 +107,7 @@ export default function StreakDisplay({ compact = false }: StreakDisplayProps) {
           style={{ background: 'linear-gradient(135deg, #FFF7ED 0%, #FEF3C7 100%)' }}
         >
           <p className="text-sm font-bold text-text mb-1 flex items-center gap-1">
-            <Flame size={16} /> You're on fire!
+            <Flame size={16} className="fire-flicker" /> You're on fire!
           </p>
           <p className="text-xs text-muted">
             {currentStreak === longestStreak
@@ -137,7 +144,7 @@ export default function StreakDisplay({ compact = false }: StreakDisplayProps) {
           style={{ background: '#F6F6F8' }}
         >
           <div className="flex items-center justify-center mb-1">
-            <Flame size={14} color="#FF6D70" />
+            <Flame size={14} color="#FF6D70" className="fire-flicker" />
           </div>
           <div className="text-xl font-black text-text">{streakData.totalDaysActive}</div>
           <div className="text-xs text-muted">Total Days</div>

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Target, Flame, Clock, Sparkles, Calendar, Trophy, BookMarked, TrendingUp, ChevronRight, Play, Pause } from 'lucide-react';
 import { useBookmark } from '../contexts/BookmarkContext';
+import '../components/StreakDisplay.css';
 
 const GOALS = [
   { label: 'Complete Python Module', done: true },
@@ -242,7 +243,7 @@ export default function RightPanel() {
         style={{ background: 'linear-gradient(135deg, #FF6D70 0%, #FF9A8B 100%)' }}
       >
         <div className="flex items-center gap-2 mb-3">
-          <Flame size={18} color="white" fill="white" />
+          <Flame size={18} color="white" fill="white" className="fire-flicker" />
           <span className="text-sm font-bold text-white">Learning Streak</span>
         </div>
         <div className="text-5xl font-black text-white mb-1">23</div>
