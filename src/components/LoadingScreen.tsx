@@ -34,59 +34,55 @@ export default function LoadingScreen({
       setVariant('bar2');
     }, 1200));
 
-    // Variant 3 → Variant 4 (200ms delay)
-    timers.push(setTimeout(() => {
-      setVariant('bar3');
-    }, 1400));
-
     // Final complete state
     timers.push(setTimeout(() => {
       setVariant('complete');
     }, 1600));
 
-    // Fade out and call onComplete
+    // Hide loading screen and show website
     timers.push(setTimeout(() => {
       setIsVisible(false);
+      // Small delay to ensure loading screen is gone before showing content
       setTimeout(() => {
         onComplete?.();
-      }, 500);
-    }, duration));
+      }, 100);
+    }, 1800));
 
     return () => {
       timers.forEach(timer => clearTimeout(timer));
     };
   }, [onComplete, duration]);
 
-  // Calculate bar heights based on variant
-  const getBarHeight = (barIndex: number): string => {
+  // Calculate bar Y translation (slide down like curtain)
+  const getBarTranslateY = (barIndex: number): string => {
     switch (variant) {
       case 'initial':
-        return '100%';
+        return '0%';
       
       case 'bar1':
-        // Bar 3 (middle) starts filling
-        if (barIndex === 2) return '0%';
-        return '100%';
+        // Bar 3 (middle) slides down first
+        if (barIndex === 2) return '100%';
+        return '0%';
       
       case 'bar2':
-        // Bars 2, 3, 4 fill
-        if (barIndex === 1 || barIndex === 2 || barIndex === 3) return '0%';
-        return '100%';
+        // Bars 2, 3, 4 slide down
+        if (barIndex === 1 || barIndex === 2 || barIndex === 3) return '100%';
+        return '0%';
       
       case 'bar3':
       case 'complete':
-        // All bars filled
-        return '0%';
+        // All bars slid down
+        return '100%';
       
       default:
-        return '100%';
+        return '0%';
     }
   };
 
-  // Transition configuration
+  // Transition configuration - smooth curtain slide
   const barTransition = {
-    duration: variant === 'initial' ? 2 : 1,
-    ease: [1, 0, 0.56, 1],
+    duration: 0.8,
+    ease: [0.43, 0.13, 0.23, 0.96], // Smooth curtain easing
     type: 'tween' as const
   };
 
@@ -94,10 +90,10 @@ export default function LoadingScreen({
     <AnimatePresence>
       {isVisible && (
         <motion.div
-          initial={{ opacity: 0 }}
+          initial={{ opacity: 1 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 0 }}
           style={{
             position: 'fixed',
             top: 0,
@@ -112,98 +108,84 @@ export default function LoadingScreen({
             overflow: 'hidden',
           }}
         >
-          {/* Full-width container for bars */}
+          {/* Full-width container for bars with minimal gaps */}
           <div
             style={{
               position: 'relative',
               width: '100%',
               height: '100%',
               display: 'flex',
-              alignItems: 'stretch',
+              gap: '1px', // Ultra-thin gap
+              backgroundColor: '#0F0F0F',
             }}
           >
-            {/* Bar 1 - 10% position */}
+            {/* Bar 1 - Left */}
             <motion.div
               animate={{
-                height: getBarHeight(0),
+                y: getBarTranslateY(0),
               }}
               transition={barTransition}
               style={{
-                position: 'absolute',
-                left: '0%',
-                width: '20%',
+                flex: 1,
                 backgroundColor: fillColor,
-                borderLeft: '1px solid rgba(255, 255, 255, 0.2)',
-                bottom: 0,
-                top: 0,
+                height: '100%',
+                position: 'relative',
               }}
             />
 
-            {/* Bar 2 - 20% position */}
+            {/* Bar 2 */}
             <motion.div
               animate={{
-                height: getBarHeight(1),
+                y: getBarTranslateY(1),
               }}
               transition={barTransition}
               style={{
-                position: 'absolute',
-                left: '20%',
-                width: '20%',
+                flex: 1,
                 backgroundColor: fillColor,
-                borderLeft: '1px solid rgba(255, 255, 255, 0.2)',
-                bottom: 0,
-                top: 0,
+                height: '100%',
+                position: 'relative',
               }}
             />
 
-            {/* Bar 3 - 40% position (middle - fills first) */}
+            {/* Bar 3 - Middle (slides first) */}
             <motion.div
               animate={{
-                height: getBarHeight(2),
+                y: getBarTranslateY(2),
               }}
               transition={barTransition}
               style={{
-                position: 'absolute',
-                left: '40%',
-                width: '20%',
+                flex: 1,
                 backgroundColor: fillColor,
-                borderLeft: '1px solid rgba(255, 255, 255, 0.2)',
-                bottom: 0,
-                top: 0,
+                height: '100%',
+                position: 'relative',
               }}
             />
 
-            {/* Bar 4 - 60% position */}
+            {/* Bar 4 */}
             <motion.div
               animate={{
-                height: getBarHeight(3),
+                y: getBarTranslateY(3),
               }}
               transition={barTransition}
               style={{
-                position: 'absolute',
-                left: '60%',
-                width: '20%',
+                flex: 1,
                 backgroundColor: fillColor,
-                borderLeft: '1px solid rgba(255, 255, 255, 0.2)',
-                bottom: 0,
-                top: 0,
+                height: '100%',
+                position: 'relative',
               }}
             />
 
-            {/* Bar 5 - 80% position */}
+            {/* Bar 5 - Right */}
             <motion.div
               animate={{
-                height: getBarHeight(4),
+                y: getBarTranslateY(4),
               }}
               transition={barTransition}
               style={{
-                position: 'absolute',
-                left: '80%',
-                width: '20%',
+                flex: 1,
                 backgroundColor: fillColor,
-                borderLeft: '1px solid rgba(255, 255, 255, 0.2)',
-                bottom: 0,
-                top: 0,
+                height: '100%',
+                position: 'relative',
               }}
             />
 
@@ -214,8 +196,8 @@ export default function LoadingScreen({
               transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
               style={{
                 position: 'absolute',
-                top: 'calc(50% - 60px)',
-                left: 'calc(50% - 40px)',
+                top: '40%', // Bit upwards from center
+                left: '45%', // Bit leftwards from center
                 transform: 'translate(-50%, -50%)',
                 zIndex: 10,
                 display: 'flex',

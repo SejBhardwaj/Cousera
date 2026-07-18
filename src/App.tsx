@@ -104,21 +104,21 @@ function AppContent() {
   };
 
   // Show loading screen only on first load
-  if (isLoading) {
-    return (
-      <LoadingScreen
-        onComplete={() => setIsLoading(false)}
-        fillColor="#D7FF54"
-        duration={3200}
-      />
-    );
-  }
-
   return (
-    <div
-      className="min-h-screen flex overflow-visible"
-      style={{ background: '#F6F6F8' }}
-    >
+    <>
+      {isLoading && (
+        <LoadingScreen
+          onComplete={() => setIsLoading(false)}
+          fillColor="#D7FF54"
+          duration={3200}
+        />
+      )}
+      
+      {!isLoading && (
+        <div
+          className="min-h-screen flex overflow-visible"
+          style={{ background: '#F6F6F8' }}
+        >
       {/* Desktop Sidebar */}
       <div className="hidden lg:block">
         <Sidebar activePage={activePage} onNavigate={handleNavigate} />
@@ -240,7 +240,9 @@ function AppContent() {
           onClose={clearDueReminder}
         />
       )}
-    </div>
+      </div>
+      )}
+    </>
   );
 }
 
