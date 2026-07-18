@@ -320,13 +320,18 @@ export const downloadVideoForOffline = async (
   videoUrl: string
 ): Promise<boolean> => {
   try {
-    console.log('📹 Downloading video:', videoId);
+    console.log('📹 Downloading video:', videoId, 'from:', videoUrl);
     
-    // Fetch video as blob
-    const response = await fetch(videoUrl);
-    if (!response.ok) throw new Error('Video download failed');
+    // Fetch video as blob - handle relative URLs from public folder
+    const fullUrl = videoUrl.startsWith('/') ? window.location.origin + videoUrl : videoUrl;
+    const response = await fetch(fullUrl);
+    if (!response.ok) {
+      console.error('Video fetch failed:', response.status, response.statusText);
+      throw new Error('Video download failed');
+    }
     
     const videoBlob = await response.blob();
+    console.log('✅ Video blob created:', videoBlob.size, 'bytes');
     
     const videoData: OfflineVideoData = {
       videoId,
@@ -347,7 +352,7 @@ export const downloadVideoForOffline = async (
       request.onerror = () => reject(request.error);
     });
     
-    console.log('✅ Video downloaded:', videoId);
+    console.log('✅ Video stored in IndexedDB:', videoId);
     return true;
   } catch (error) {
     console.error('❌ Failed to download video:', videoId, error);

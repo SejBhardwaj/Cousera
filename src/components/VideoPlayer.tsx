@@ -44,8 +44,8 @@ export default function VideoPlayer({
   const [savedProgress, setSavedProgress] = useState<VideoProgress | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  // ALWAYS use mapped video based on courseId AND videoId (for per-lesson randomization)
-  const mappedVideoUrl = getVideoForCourse(courseId, videoId);
+  // Use provided videoUrl (which could be offline blob URL) OR fall back to mapped video
+  const actualVideoUrl = videoUrl || getVideoForCourse(courseId, videoId);
   const videoStyle = getVideoStyle();
 
   // Debug logging
@@ -53,8 +53,9 @@ export default function VideoPlayer({
     console.log('🎬 VideoPlayer mounted');
     console.log('   courseId:', courseId);
     console.log('   videoId:', videoId);
-    console.log('   mapped video URL:', mappedVideoUrl);
-  }, [courseId, videoId, mappedVideoUrl]);
+    console.log('   provided videoUrl:', videoUrl);
+    console.log('   actual video URL:', actualVideoUrl);
+  }, [courseId, videoId, videoUrl, actualVideoUrl]);
 
   // Load saved progress on mount
   useEffect(() => {
@@ -152,7 +153,8 @@ export default function VideoPlayer({
   // Handle video error
   const handleError = (e: React.SyntheticEvent<HTMLVideoElement, Event>) => {
     console.error('❌ Video error:', e);
-    console.error('   Video URL:', mappedVideoUrl);
+    console.error('   Video URL:', actualVideoUrl);
+    console.error('   Error details:', videoRef.current?.error);
     setIsLoading(false);
   };
 
@@ -243,7 +245,7 @@ export default function VideoPlayer({
       {/* Video element */}
       <video
         ref={videoRef}
-        src={mappedVideoUrl}
+        src={actualVideoUrl}
         onPlay={handlePlay}
         onPause={handlePause}
         onTimeUpdate={handleTimeUpdate}
