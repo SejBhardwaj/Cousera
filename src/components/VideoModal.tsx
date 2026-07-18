@@ -1,7 +1,9 @@
 import { X, BookOpen, FileText, Code } from 'lucide-react';
+import { useState, useEffect } from 'react';
 import VideoPlayer from './VideoPlayer';
 import { VideoProgress } from '../utils/videoProgressStorage';
-import { useState } from 'react';
+import { getOfflineVideoUrl } from '../utils/offlineStorage';
+import { useOffline } from '../contexts/OfflineContext';
 
 interface VideoModalProps {
   isOpen: boolean;
@@ -38,6 +40,31 @@ export default function VideoModal({
   onProgressUpdate,
 }: VideoModalProps) {
   const [activeTab, setActiveTab] = useState<'summary' | 'notes'>('summary');
+  const [actualVideoUrl, setActualVideoUrl] = useState(videoUrl);
+  const { isOnline } = useOffline();
+  
+  // Load offline video if available and offline
+  useEffect(() => {
+    const loadVideo = async () => {
+      if (!isOnline) {
+        console.log('📵 Offline mode - checking for offline video:', videoId);
+        const offlineUrl = await getOfflineVideoUrl(videoId);
+        if (offlineUrl) {
+          console.log('✅ Using offline video');
+          setActualVideoUrl(offlineUrl);
+        } else {
+          console.log('❌ No offline video available');
+          setActualVideoUrl(videoUrl); // Fallback to online URL
+        }
+      } else {
+        setActualVideoUrl(videoUrl);
+      }
+    };
+    
+    if (isOpen) {
+      loadVideo();
+    }
+  }, [isOpen, isOnline, videoId, videoUrl]);
   
   if (!isOpen) return null;
 
@@ -84,7 +111,7 @@ export default function VideoModal({
             <div className="absolute inset-0">
               <VideoPlayer
                 videoId={videoId}
-                videoUrl={videoUrl}
+                videoUrl={actualVideoUrl}
                 courseId={courseId}
                 videoTitle={videoTitle}
                 lessonTitle={lessonTitle}

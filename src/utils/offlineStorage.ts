@@ -1,8 +1,9 @@
 // IndexedDB utility for offline course storage
 
 const DB_NAME = 'courseraOfflineDB';
-const DB_VERSION = 1;
+const DB_VERSION = 2; // Increment version for video storage
 const STORE_NAME = 'courses';
+const VIDEO_STORE_NAME = 'videos';
 
 export interface OfflineCourseData {
   courseId: string;
@@ -35,7 +36,16 @@ export interface OfflineCourseData {
     instructor: string; // base64
     reviewers: string[]; // base64 array
   };
+  videoIds: string[]; // List of downloaded video IDs
   size: number; // in bytes
+}
+
+export interface OfflineVideoData {
+  videoId: string;
+  courseId: string;
+  videoBlob: Blob;
+  downloadedAt: string;
+  size: number;
 }
 
 // Initialize IndexedDB
@@ -52,6 +62,13 @@ export const initDB = (): Promise<IDBDatabase> => {
       if (!db.objectStoreNames.contains(STORE_NAME)) {
         const objectStore = db.createObjectStore(STORE_NAME, { keyPath: 'courseId' });
         objectStore.createIndex('downloadedAt', 'downloadedAt', { unique: false });
+      }
+
+      // Create video store if it doesn't exist
+      if (!db.objectStoreNames.contains(VIDEO_STORE_NAME)) {
+        const videoStore = db.createObjectStore(VIDEO_STORE_NAME, { keyPath: 'videoId' });
+        videoStore.createIndex('courseId', 'courseId', { unique: false });
+        videoStore.createIndex('downloadedAt', 'downloadedAt', { unique: false });
       }
     };
   });
@@ -80,36 +97,28 @@ const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 // Download course for offline access
 export const downloadCourseForOffline = async (
   courseData: OfflineCourseData['courseData'],
-  onProgress?: (progress: number) => void
+  videoUrls: string[], // Array of video URLs to download
+  onProgress?: (progress: number, status: string) => void
 ): Promise<boolean> => {
   try {
     const db = await initDB();
     
-    // Download images with progress tracking - with delays for smooth animation
-    onProgress?.(0);
+    // Download images with progress tracking
+    onProgress?.(0, 'Starting download...');
     await delay(300);
     
-    onProgress?.(5);
+    onProgress?.(5, 'Downloading images...');
     await delay(300);
-    
-    onProgress?.(10);
-    await delay(400);
     
     console.log('📥 Downloading thumbnail...');
     const thumbnail = await urlToBase64(courseData.thumbnail);
-    onProgress?.(25);
+    onProgress?.(15, 'Downloading thumbnail...');
     await delay(400);
-    
-    onProgress?.(35);
-    await delay(300);
     
     console.log('📥 Downloading instructor image...');
     const instructor = await urlToBase64(courseData.instructorImg);
-    onProgress?.(50);
+    onProgress?.(25, 'Downloading instructor image...');
     await delay(500);
-    
-    onProgress?.(60);
-    await delay(400);
     
     console.log('📥 Downloading reviewer images...');
     const reviewers: string[] = [];
@@ -117,20 +126,43 @@ export const downloadCourseForOffline = async (
       for (let i = 0; i < courseData.reviewsList.length; i++) {
         const reviewer = await urlToBase64(courseData.reviewsList[i].avatar || '');
         reviewers.push(reviewer);
-        const progressIncrement = 60 + (i + 1) * (20 / courseData.reviewsList.length);
-        onProgress?.(Math.floor(progressIncrement));
-        await delay(300);
+        const progressIncrement = 25 + (i + 1) * (10 / courseData.reviewsList.length);
+        onProgress?.(Math.floor(progressIncrement), `Downloading reviewer ${i + 1}...`);
+        await delay(200);
       }
     } else {
-      onProgress?.(80);
-      await delay(400);
+      onProgress?.(35, 'Processing images...');
+      await delay(300);
+    }
+
+    // Download videos
+    const courseId = courseData.title.toLowerCase().replace(/\s+/g, '-');
+    const downloadedVideoIds: string[] = [];
+    
+    if (videoUrls.length > 0) {
+      onProgress?.(40, 'Downloading videos...');
+      
+      for (let i = 0; i < videoUrls.length; i++) {
+        const videoUrl = videoUrls[i];
+        const videoId = `${courseId}-video-${i + 1}`;
+        
+        onProgress?.(40 + (i * 40 / videoUrls.length), `Downloading video ${i + 1}/${videoUrls.length}...`);
+        
+        try {
+          const success = await downloadVideoForOffline(videoId, courseId, videoUrl);
+          if (success) {
+            downloadedVideoIds.push(videoId);
+          }
+        } catch (error) {
+          console.error(`Failed to download video ${i + 1}:`, error);
+        }
+        
+        await delay(500);
+      }
     }
     
-    onProgress?.(85);
+    onProgress?.(85, 'Saving course data...');
     await delay(400);
-    
-    onProgress?.(90);
-    await delay(300);
 
     // Calculate approximate size
     console.log('💾 Saving to IndexedDB...');
@@ -139,7 +171,7 @@ export const downloadCourseForOffline = async (
     const totalSize = dataSize + imagesSize;
 
     const offlineData: OfflineCourseData = {
-      courseId: courseData.title.toLowerCase().replace(/\s+/g, '-'),
+      courseId,
       downloadedAt: new Date().toISOString(),
       courseData,
       images: {
@@ -147,6 +179,7 @@ export const downloadCourseForOffline = async (
         instructor,
         reviewers,
       },
+      videoIds: downloadedVideoIds,
       size: totalSize,
     };
 
@@ -160,13 +193,14 @@ export const downloadCourseForOffline = async (
       request.onerror = () => reject(request.error);
     });
 
-    onProgress?.(95);
+    onProgress?.(95, 'Finalizing...');
     await delay(400);
     
-    onProgress?.(100);
-    await delay(500); // Hold at 100% for a moment before completing
+    onProgress?.(100, 'Download complete!');
+    await delay(500);
     
     console.log('✅ Course downloaded for offline access:', offlineData.courseId);
+    console.log(`✅ Downloaded ${downloadedVideoIds.length} videos`);
     return true;
   } catch (error) {
     console.error('❌ Failed to download course:', error);
@@ -233,6 +267,10 @@ export const getAllOfflineCourses = async (): Promise<OfflineCourseData[]> => {
 // Delete offline course
 export const deleteCourseOffline = async (courseId: string): Promise<boolean> => {
   try {
+    // Delete course videos first
+    await deleteCourseVideos(courseId);
+    
+    // Then delete course data
     const db = await initDB();
     const transaction = db.transaction([STORE_NAME], 'readwrite');
     const store = transaction.objectStore(STORE_NAME);
@@ -273,4 +311,121 @@ export const formatBytes = (bytes: number): string => {
   const sizes = ['Bytes', 'KB', 'MB', 'GB'];
   const i = Math.floor(Math.log(bytes) / Math.log(k));
   return Math.round(bytes / Math.pow(k, i) * 100) / 100 + ' ' + sizes[i];
+};
+
+// Download single video for offline
+export const downloadVideoForOffline = async (
+  videoId: string,
+  courseId: string,
+  videoUrl: string
+): Promise<boolean> => {
+  try {
+    console.log('📹 Downloading video:', videoId);
+    
+    // Fetch video as blob
+    const response = await fetch(videoUrl);
+    if (!response.ok) throw new Error('Video download failed');
+    
+    const videoBlob = await response.blob();
+    
+    const videoData: OfflineVideoData = {
+      videoId,
+      courseId,
+      videoBlob,
+      downloadedAt: new Date().toISOString(),
+      size: videoBlob.size,
+    };
+    
+    // Store in IndexedDB
+    const db = await initDB();
+    const transaction = db.transaction([VIDEO_STORE_NAME], 'readwrite');
+    const store = transaction.objectStore(VIDEO_STORE_NAME);
+    
+    await new Promise<void>((resolve, reject) => {
+      const request = store.put(videoData);
+      request.onsuccess = () => resolve();
+      request.onerror = () => reject(request.error);
+    });
+    
+    console.log('✅ Video downloaded:', videoId);
+    return true;
+  } catch (error) {
+    console.error('❌ Failed to download video:', videoId, error);
+    return false;
+  }
+};
+
+// Get offline video blob URL
+export const getOfflineVideoUrl = async (videoId: string): Promise<string | null> => {
+  try {
+    const db = await initDB();
+    const transaction = db.transaction([VIDEO_STORE_NAME], 'readonly');
+    const store = transaction.objectStore(VIDEO_STORE_NAME);
+    
+    const videoData: OfflineVideoData | null = await new Promise((resolve) => {
+      const request = store.get(videoId);
+      request.onsuccess = () => resolve(request.result || null);
+      request.onerror = () => resolve(null);
+    });
+    
+    if (videoData && videoData.videoBlob) {
+      // Create blob URL from stored blob
+      const blobUrl = URL.createObjectURL(videoData.videoBlob);
+      console.log('✅ Loaded offline video:', videoId);
+      return blobUrl;
+    }
+    
+    return null;
+  } catch (error) {
+    console.error('Error getting offline video:', error);
+    return null;
+  }
+};
+
+// Check if video is available offline
+export const isVideoOfflineAvailable = async (videoId: string): Promise<boolean> => {
+  try {
+    const db = await initDB();
+    const transaction = db.transaction([VIDEO_STORE_NAME], 'readonly');
+    const store = transaction.objectStore(VIDEO_STORE_NAME);
+    
+    return new Promise((resolve) => {
+      const request = store.get(videoId);
+      request.onsuccess = () => resolve(!!request.result);
+      request.onerror = () => resolve(false);
+    });
+  } catch (error) {
+    console.error('Error checking video offline availability:', error);
+    return false;
+  }
+};
+
+// Delete all videos for a course
+export const deleteCourseVideos = async (courseId: string): Promise<boolean> => {
+  try {
+    const db = await initDB();
+    const transaction = db.transaction([VIDEO_STORE_NAME], 'readwrite');
+    const store = transaction.objectStore(VIDEO_STORE_NAME);
+    const index = store.index('courseId');
+    
+    const videoIds: string[] = await new Promise((resolve) => {
+      const request = index.getAllKeys(courseId);
+      request.onsuccess = () => resolve(request.result as string[]);
+      request.onerror = () => resolve([]);
+    });
+    
+    for (const videoId of videoIds) {
+      await new Promise<void>((resolve) => {
+        const request = store.delete(videoId);
+        request.onsuccess = () => resolve();
+        request.onerror = () => resolve();
+      });
+    }
+    
+    console.log(`✅ Deleted ${videoIds.length} videos for course:`, courseId);
+    return true;
+  } catch (error) {
+    console.error('Error deleting course videos:', error);
+    return false;
+  }
 };

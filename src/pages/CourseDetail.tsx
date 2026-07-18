@@ -52,6 +52,7 @@ export default function CourseDetail({ courseId: propCourseId, onBack, onNavigat
   const { isOnline, offlineCourses, refreshOfflineCourses } = useOffline();
   const [isDownloading, setIsDownloading] = useState(false);
   const [downloadProgress, setDownloadProgress] = useState(0);
+  const [downloadStatus, setDownloadStatus] = useState('');
   const [courseOffline, setCourseOffline] = useState(false);
   
   // Offline data state
@@ -864,6 +865,20 @@ export default function CourseDetail({ courseId: propCourseId, onBack, onNavigat
   const handleDownloadOffline = async () => {
     setIsDownloading(true);
     setDownloadProgress(0);
+    setDownloadStatus('Preparing download...');
+
+    // Generate all video URLs for the course
+    const videoUrls: string[] = [];
+    CURRICULUM.forEach((section, sectionIdx) => {
+      section.lessons.forEach((lesson, lessonIdx) => {
+        const videoId = `${courseId}-week${sectionIdx + 1}-lesson${lessonIdx + 1}`;
+        // Use the video URL from videoMapping (these are the actual video files)
+        const videoUrl = getVideoUrl(videoId);
+        videoUrls.push(videoUrl);
+      });
+    });
+
+    console.log(`📹 Downloading ${videoUrls.length} videos for offline access...`);
 
     const courseData = {
       title: courseName,
@@ -912,18 +927,26 @@ export default function CourseDetail({ courseId: propCourseId, onBack, onNavigat
       difficulty: 'All Levels',
     };
 
-    const success = await downloadCourseForOffline(courseData, setDownloadProgress);
+    const success = await downloadCourseForOffline(
+      courseData, 
+      videoUrls,
+      (progress, status) => {
+        setDownloadProgress(progress);
+        setDownloadStatus(status);
+      }
+    );
     
     if (success) {
       setCourseOffline(true);
       await refreshOfflineCourses();
-      alert('✅ Course downloaded successfully! You can now access it offline.');
+      alert(`✅ Course downloaded successfully! ${videoUrls.length} videos are now available offline.`);
     } else {
       alert('❌ Failed to download course. Please try again.');
     }
 
     setIsDownloading(false);
     setDownloadProgress(0);
+    setDownloadStatus('');
   };
 
   // Delete offline course
@@ -2268,6 +2291,27 @@ example();`,
         </div>
       )}
 
+      {/* Offline Mode Info */}
+      {!isOnline && courseOffline && (
+        <div className="p-5 rounded-3xl" style={{ background: '#E0F5FF', border: '2px solid #0EA5E9' }}>
+          <div className="flex items-start gap-3">
+            <div className="text-2xl">✓</div>
+            <div className="flex-1">
+              <p className="font-bold text-sm mb-1" style={{ color: '#0369A1' }}>Offline Mode Active</p>
+              <p className="text-xs mb-2" style={{ color: '#075985' }}>
+                You can access course materials offline. However, videos require an internet connection.
+              </p>
+              <div className="flex items-center gap-4 text-xs" style={{ color: '#075985' }}>
+                <span>✓ Text content</span>
+                <span>✓ Images</span>
+                <span>✓ Curriculum</span>
+                <span className="opacity-50">✗ Videos</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Loading offline data */}
       {isLoadingOffline && (
         <div className="p-5 rounded-3xl bg-white text-center">
@@ -2320,9 +2364,10 @@ example();`,
 
           {isDownloading ? (
             <div className="px-5 py-3 rounded-2xl bg-white border-2 border-border">
-              <div className="text-xs font-bold text-text mb-2">
-                {downloadProgress === 100 ? '✓ Download Complete!' : `Downloading... ${downloadProgress}%`}
+              <div className="text-xs font-bold text-text mb-1">
+                {downloadProgress === 100 ? '✓ Download Complete!' : `${downloadProgress}%`}
               </div>
+              <div className="text-xs text-muted mb-2">{downloadStatus}</div>
               <div className="w-40 h-2 bg-gray-100 rounded-full overflow-hidden">
                 <div 
                   className="h-full rounded-full transition-all duration-500 ease-out" 
