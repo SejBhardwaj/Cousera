@@ -157,4 +157,16 @@
   to { opacity: 1; transform: translateY(0); }
 }
 
+/* Pulse animation for notification orbs */
+@keyframes pulse {
+  0%, 100% { 
+    transform: scale(1);
+    opacity: 0.2;
+  }
+  50% { 
+    transform: scale(1.05);
+    opacity: 0.3;
+  }
+}
+
 

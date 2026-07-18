@@ -25,7 +25,7 @@ export interface CourseVideoProgress {
 const STORAGE_KEY = 'coursera_video_progress';
 const MAX_VIDEOS = 100; // Keep only 100 most recent videos
 const COMPLETION_THRESHOLD = 0.9; // 90% watched = completed
-const MIN_SAVE_TIME = 5; // Don't save first 5 seconds
+const MIN_SAVE_TIME = 3; // Don't save first 3 seconds (was 5)
 const CLEANUP_DAYS = 30; // Remove videos not watched in 30 days
 
 // Get all video progress data

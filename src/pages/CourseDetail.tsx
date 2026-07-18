@@ -804,7 +804,6 @@ export default function CourseDetail({ courseId: propCourseId, onBack, onNavigat
     
     // Only trigger celebration if progress is 100 AND celebration is not already showing AND not manually closed
     if (progress === 100 && !showCelebration && !celebrationClosed) {
-      console.log('🎉 Progress reached 100%! Waiting 500ms...');
       
       // Wait 500ms before showing celebration
       const timer = setTimeout(() => {
@@ -2473,7 +2472,7 @@ example();`,
           <div>
             <p className="font-bold text-text text-sm">Your Progress</p>
             <p className="text-xs text-muted">
-              {progress === 100 && !showCelebration ? 'Course Completed! 🎉' : progress === 100 ? 'Course Completed! 🎉' : `Week ${Math.ceil(progress / 12.5)} of 11 · ${progress < 62 ? 'Neural Networks' : 'Advanced Topics'}`}
+              {progress === 100 && !showCelebration ? '✅ Course Completed!' : progress === 100 ? '✅ Course Completed!' : `Week ${Math.ceil(progress / 12.5)} of 11 · ${progress < 62 ? 'Neural Networks' : 'Advanced Topics'}`}
             </p>
           </div>
           <span className="text-2xl font-black text-text">{progress}%</span>
@@ -2789,7 +2788,7 @@ example();`,
               <Award size={28} color="#111" />
             </div>
             <h2 className="text-section text-white mb-3">
-              {progress === 100 ? 'Certificate Earned! 🎉' : 'Professional Certificate'}
+              {progress === 100 ? '🏆 Certificate Earned!' : 'Professional Certificate'}
             </h2>
             <p className="text-white/60 text-sm mb-6 max-w-md mx-auto">
               {progress === 100 

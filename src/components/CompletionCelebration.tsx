@@ -110,7 +110,7 @@ export default function CompletionCelebration({
   };
 
   const handleShare = () => {
-    const text = `I just completed "${courseName}" on Coursera! 🎉`;
+    const text = `🎉 I just completed "${courseName}" on Coursera!`;
     const url = window.location.href;
     
     // Check if Web Share API is available

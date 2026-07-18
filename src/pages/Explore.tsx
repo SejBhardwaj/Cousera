@@ -1337,11 +1337,11 @@ export default function Explore({ onCourseClick }: { onCourseClick: (id: string)
                   className="w-full bg-white border border-border rounded-xl px-3 py-2.5 text-sm outline-none hover:border-text/30 transition-colors cursor-pointer"
                 >
                   <option>All Ratings</option>
-                  <option>3.5+ ⭐ (Average)</option>
-                  <option>4.0+ ⭐ (Above Average)</option>
-                  <option>4.5+ ⭐ (Good)</option>
-                  <option>4.7+ ⭐ (Very Good)</option>
-                  <option>4.9+ ⭐ (Excellent)</option>
+                  <option>⭐ 3.5+ (Average)</option>
+                  <option>⭐ 4.0+ (Above Average)</option>
+                  <option>⭐⭐ 4.5+ (Good)</option>
+                  <option>⭐⭐ 4.7+ (Very Good)</option>
+                  <option>⭐⭐⭐ 4.9+ (Excellent)</option>
                 </select>
               </div>
               <div>

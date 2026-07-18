@@ -65,7 +65,26 @@ export default function VideoPlayer({
     if (progress && shouldShowResumePrompt(videoId) && autoResume) {
       setShowResumePrompt(true);
     }
-  }, [videoId, autoResume]);
+
+    // Save progress on unmount (when user closes video)
+    return () => {
+      if (videoRef.current && videoRef.current.currentTime > 0) {
+        const finalProgress: VideoProgress = {
+          videoId,
+          courseId,
+          videoTitle,
+          lessonTitle,
+          currentTime: videoRef.current.currentTime,
+          duration: videoRef.current.duration || 0,
+          percentComplete: 0,
+          lastWatchedAt: Date.now(),
+          completed: false,
+          thumbnailUrl,
+        };
+        saveVideoProgress(finalProgress);
+      }
+    };
+  }, [videoId, autoResume, courseId, videoTitle, lessonTitle, thumbnailUrl]);
 
   // Auto-save progress every 5 seconds while playing
   useEffect(() => {

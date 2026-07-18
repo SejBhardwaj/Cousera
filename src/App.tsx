@@ -91,7 +91,7 @@ function AppContent() {
       case 'messages':
         return <Messages />;
       case 'notifications':
-        return <Notifications />;
+        return <Notifications onCourseClick={handleCourseClick} />;
       case 'calendar':
         return <CalendarPage />;
       case 'degrees':

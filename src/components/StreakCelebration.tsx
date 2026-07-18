@@ -45,7 +45,7 @@ export default function StreakCelebration({ badges, onClose }: StreakCelebration
   const badge = badges[0]; // Show first badge (usually only one unlocked at a time)
 
   const handleShare = () => {
-    const text = `I just unlocked the "${badge.name}" badge on Coursera! 🎉 ${badge.streakRequired} day learning streak!`;
+    const text = `🎉 I just unlocked the "${badge.name}" badge on Coursera! 🏆 ${badge.streakRequired} day learning streak!`;
     
     if (navigator.share) {
       navigator.share({
